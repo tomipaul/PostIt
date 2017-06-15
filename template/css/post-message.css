@@ -1,0 +1,46 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 10%;
+  width: 80%;
+  background-color: #4fb8c2;
+  height: 15%;
+}
+header > img {
+  margin-left: 0;
+  width: 17%;
+  height: 100%;
+}
+.form-div {
+  position: absolute;
+  top: 20%;
+}
+.select-group {
+  width: 40%;
+  float: right;
+}
+.textarea-height {
+  height: 6cm;
+}
+.fa-2x {
+  margin-left: -1.5%;
+  vertical-align: middle;
+  margin-bottom: -1%;
+}
+.show-markdown-info {
+  color:#527a7a;
+  font-size:12px;
+}
+.fa-info-circle {
+  color: green;
+  font-size: 20px;
+  margin-top: 1%;
+  margin-right: 0.5%
+}
+div.tab-content>div.tab-pane>.btn {
+  background-color: #4fb8c2;
+  color: white;
+}
+div.tab-content>div.tab-pane>.btn:hover{
+  background-color: #2e7e85;
+}
