@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/message-board.css">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <header>
+        <img src="../images/post-it-icon.png"></img>
+        <i class="fa fa-envelope fa-2x"></i>
+      </header>
+      <div class="group-msg-div">
+        <div class="list-groups">
+          <ul class="nav nav-pills nav-stacked" role="tablist">
+            <li class="active"><a data-toggle="pill" href="#friends">Friends<span class="badge">17</span></a></li>
+            <li><a data-toggle="pill" href="#family">Family<span class="badge">30</span></a></li>
+            <li><a data-toggle="pill" href="#colleagues">Colleagues<span class="badge">52</span></a></li>
+          </ul>
+        </div>
+        <div class="grp-messages">
+          <div class="msg-category">
+            <button type="button" class="btn btn-link">All</button>
+            <button type="button" class="btn btn-link">Sent</button>
+            <button type="button" class="btn btn-link">Unread</button>
+          </div>
+          <span class="label label-primary">normal</span>
+          <span class="label label-success">urgent</span>
+          <span class="label label-default">critical</span>
+          <div class="tab-content">
+            <div id="friends" class="tab-pane fade in active">
+              <div class="grp-unread-message" contenteditable="true" priority="urgent">
+                This is a React app. Currently it is under development. But I can assure you it will come out beautiful.
+              </div>
+              <span class="post-detail" priority="critical"><i class="glyphicon glyphicon-comment"></i> Vanessa Ejikeme </span>
+              <span class="post-detail" priority="normal">13/01/1994 00:23:07</span>
+              <span class="paginate-buttons">
+                <i class="glyphicon glyphicon-circle-arrow-left"></i>
+                <i class="glyphicon glyphicon-circle-arrow-right"></i>
+              </span>
+              <div class="table-responsive msg-table">
+                <table class="table">
+                  <tr priority="normal">
+                    <td><i class="glyphicon glyphicon-tag"></i></td>
+                    <td>Career choice</td>
+                    <td>I wish to become a whistle blower when I grow up</td>
+                    <td>450 B.C 00:00:01</td>
+                  </tr>
+                  <tr priority="urgent">
+                    <td><i class="glyphicon glyphicon-tag"></i></td>
+                    <td>Advice</td>
+                    <td>He that has ears, let him hear what the spirit is saying</td>
+                    <td>450 B.C 01:11:19</td>
+                  </tr>
+                  <tr priority="critical">
+                    <td><i class="glyphicon glyphicon-tag"></i></td>
+                    <td>Post</td>
+                    <td>Tis so hard like the bone of Hercules</td>
+                    <td>458 B.C 01:11:19</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div id="family" class="tab-pane fade">
+              <h3>Menu 1</h3>
+              <p>Some content in menu 1.</p>
+            </div>
+            <div id="colleagues" class="tab-pane fade">
+              <h3>Menu 2</h3>
+              <p>Some content in menu 2.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </body>
+</html>
