@@ -1,0 +1,58 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 10%;
+  width: 80%;
+  background-color: #4fb8c2;
+  height: 15%;
+}
+header > img {
+  margin-left: 0;
+  width: 17%;
+  height: 100%;
+}
+.form-div {
+  position: absolute;
+  top: 20%;
+}
+form {
+  position: relative;
+  width: 90%;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
+  border-color: rgb(0,221,255);
+  padding: 3%;
+}
+.form-group {
+  position: relative;
+  width: 50%;
+}
+#message {
+  margin-top: 4%;
+  font-size: 15px;
+  font-family: Tahoma;
+}
+.hidden {
+  display: none;
+}
+.fa-2x {
+  margin-left: -1.5%;
+  vertical-align: middle;
+  margin-bottom: -1%;
+}
+.header-nav {
+  display: inline-flex;
+  justify-content: space-around;
+  align-items: center;
+  float: right;
+  height: 100%;
+  width: 20%;
+}
+.header-nav > .glyphicon, .header-nav>.fa{
+  font-size: 20px;
+}
+.header-nav > .glyphicon:hover, .header-nav>.fa:hover{
+  cursor: pointer;
+  color: white;
+}
