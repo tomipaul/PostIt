@@ -1,0 +1,146 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 10%;
+  width: 80%;
+  background-color: #4fb8c2;
+  height: 15%;
+  z-index:1;
+}
+header > img {
+  margin-left: 0;
+  width: 17%;
+  height: 100%;
+}
+.group-msg-div {
+  position: absolute;
+  top: 20%;
+  width: 80%;
+  left:10%;
+}
+.list-groups {
+  width: 25%;
+  float: left;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #4fb8c2;
+  border-bottom-width: 0;
+}
+.nav-pills > li > a {
+  color: #4fb8c2;
+}
+.nav-pills > li.active > a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+  background-color: #4fb8c2;
+}
+.grp-messages {
+  width: 70%;
+  float: right;
+  margin-left: 5%;
+}
+.grp-messages > span {
+  display: inline-block;
+  margin: auto;
+  margin-bottom: 2%;
+}
+.label-primary{
+  background-color: purple;
+}
+.label-success{
+  background-color: teal;
+}
+.label-default{
+  background-color: red;
+}
+.fa-2x {
+  margin-left: -1.5%;
+  vertical-align: middle;
+  margin-bottom: -1%;
+}
+.grp-unread-message {
+  margin:auto;
+  width: 80%;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 16px;
+  border-style: solid;
+  border-width: 2px;
+  padding: 2%;
+  margin-top: 5%;
+  border-radius: 5px;
+  background-color: #e3e8e4;
+}
+.grp-unread-message[priority=normal], .post-detail[priority=normal]{
+  color: purple;
+}
+.grp-unread-message[priority=critical], .post-detail[priority=critical]{
+  color: red;
+}
+.grp-unread-message[priority=urgent], .post-detail[priority=urgent]{
+  color: teal;
+}
+.grp-messages>.tab-content>.tab-pane>span.paginate-buttons{
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  margin: auto;
+  margin-top: 3%;
+}
+.grp-messages>.tab-content>.tab-pane>span>.glyphicon{
+  font-size: 30px;
+  cursor: pointer;
+}
+.grp-messages>.tab-content>.tab-pane{
+  margin:auto;
+}
+.msg-category{
+  display: inline-block;
+  width: 60%;
+  border-style: solid;
+  border-width:1px;
+  border-bottom-width: 0;
+  border-color: #4fb8c2;
+}
+.post-detail{
+  display: block;
+  width:80%;
+  margin: auto;
+  text-align: right;
+  padding: 1%;
+  font-family: cursive;
+}
+.grp-messages>.tab-content>.tab-pane>span>.glyphicon-comment{
+  font-size:16px;
+}
+.table{
+  margin-top: 2%;
+}
+tr{
+  border-top-style: solid;
+  border-top-width: 2px; 
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 17px;
+}
+tr:hover{
+  cursor: pointer;
+  background-color: #e3e8e4;
+}
+tr[priority=normal]{
+  border-top-color: purple 
+}
+tr[priority=urgent]{
+  border-top-color: teal; 
+}
+tr[priority=critical]{
+  border-top-color: red;
+}
+i.glyphicon-tag{
+  font-size:20px;
+}
+tr[priority=normal]>td>i.glyphicon{
+  color: purple;
+}
+tr[priority=urgent]>td>i.glyphicon{
+  color: teal;
+}
+tr[priority=critical]>td>i.glyphicon{
+  color: red;
+}
