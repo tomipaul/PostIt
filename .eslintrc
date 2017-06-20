@@ -2,10 +2,10 @@
   "root": true,
   "extends": "airbnb",
   "plugins": [
-        "import",
-        "react",
-        "jsx-a11y"
-    ],
+    "import",
+    "react",
+    "jsx-a11y"
+  ],
   "env": {
     "node": true,
     "es6": true
