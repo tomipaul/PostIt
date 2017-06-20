@@ -30,6 +30,28 @@ class UserController {
   }
 
   /**
+   * Get Token sent in client request
+   * @method
+   * @memberof UserController
+   * @static
+   * @return {function} Express middleware function that gets
+   * authorization token from request body, query, header or cookies
+   * and passes request to next middleware function.
+   */
+  static getClientAuthToken() {
+    return (req, res, next) => {
+      const token = req.get('Authorization') || req.body.token
+      || req.cookies.token || req.query.token;
+      if (!token) {
+        return res.status(400).send('No Access token provided!');
+      }
+      const matched = /^Bearer (\S+)$/.exec(token);
+      req.token = (matched) ? matched[1] : token;
+      next();
+    };
+  }
+
+  /**
    * Authenticate a user with username and password
    * @method
    * @memberof UserController
@@ -56,6 +78,28 @@ class UserController {
         .catch((err) => {
           return res.status(401).send(err.message);
         });
+      })
+      .catch((err) => {
+        return res.status(401).send(err.message);
+      });
+    };
+  }
+
+  /**
+   * Verify user token and authorize user to access requested route
+   * @method
+   * @memberof UserController
+   * @static
+   * @return {function} Express middleware function that
+   * validates user token and pass request to route handler
+   */
+  static authorizeUser() {
+    return (req, res, next) => {
+      const rsaKey = process.env.PUBLIC_KEY;
+      return AuthService.verifyTokenGetPayload(req.token, rsaKey)
+      .then((decodedPayload) => {
+        req.username = decodedPayload.key;
+        next();
       })
       .catch((err) => {
         return res.status(401).send(err.message);
