@@ -140,7 +140,7 @@ class UserController {
   static deleteUser() {
     return (req, res) => {
       ModelService.deleteModelInstance(userModel, {
-        username: req.params.username
+        username: req.username
       })
       .then(() => {
         res.sendStatus(204);
@@ -162,7 +162,7 @@ class UserController {
   static updateUser() {
     return (req, res) => {
       ModelService.updateModelInstance(userModel, {
-        username: req.params.username
+        username: req.username
       }, req.body)
       .then((user) => {
         res.status(200).send(user);
@@ -205,7 +205,7 @@ class UserController {
    */
   static getUserGroups() {
     return (req, res) => {
-      AdhocModelService.getUserGroups(req.params.username)
+      AdhocModelService.getUserGroups(req.username)
       .then((groups) => {
         res.status(200).send(groups);
       })
