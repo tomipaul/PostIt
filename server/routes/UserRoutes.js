@@ -1,13 +1,16 @@
 import express from 'express';
 import UserController from '../controllers/UserController';
 
-const router = express.Router();
-
-router.post('/signup', UserController.createUser());
-router.post('/signin', [
+const userRouter = express.Router();
+userRouter.post('/api/user/signup', UserController.createUser());
+userRouter.post('/api/user/signin', [
   UserController.validateRequest(),
   UserController.authenticateUser()
 ]);
-router.get('/:username/groups', UserController.getUserGroups());
+userRouter.use('/api', [
+  UserController.getClientAuthToken(),
+  UserController.authorizeUser()
+]);
+userRouter.get('/api/user/groups', UserController.getUserGroups());
 
-export default router;
+export default userRouter;
