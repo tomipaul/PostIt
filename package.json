@@ -62,5 +62,8 @@
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.1.0",
     "sequelize-cli": "^2.7.0"
+  },
+  "engines": {
+    "node": "6.3.1"
   }
 }
