@@ -25,7 +25,7 @@ export default {
     dialect: 'postgres'
   },
   production: {
-    database_url: URL,
+    use_env_variable: URL,
     username: USERNAME,
     password: PASSWORD,
     database: DATABASE_NAME,
