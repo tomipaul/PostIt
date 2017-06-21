@@ -4,6 +4,7 @@ dotenv.config();
 const { URL, USERNAME, PASSWORD, DATABASE_NAME, HOST } = process.env;
 export default {
   development: {
+    database_url: URL,
     username: 'postgres',
     password: 'admin',
     database: 'PostIt',
@@ -11,6 +12,7 @@ export default {
     dialect: 'postgres'
   },
   test: {
+    database_url: URL,
     username: 'postgres',
     password: null,
     database: 'PostIt_test',
