@@ -4,7 +4,8 @@
   "description": "A simple application that allows friends and colleagues create groups for notifications",
   "main": "index.js",
   "scripts": {
-    "start": "npm run transpile && node dist/index.js",
+    "start": "npm run migrations && node dist/index.js",
+    "migrations": "sequelize db:migrate",
     "transpile": "babel server --out-dir dist --copy-files",
     "test": "echo \"Error: no test specified\""
   },
