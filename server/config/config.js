@@ -2,9 +2,15 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 const { URL, USERNAME, PASSWORD, DATABASE_NAME, HOST } = process.env;
+const {
+  USERNAME_TEST,
+  PASSWORD_TEST,
+  DATABASE_NAME_TEST,
+  HOST_TEST
+} = process.env;
+
 export default {
   development: {
-    database_url: URL,
     username: 'postgres',
     password: 'admin',
     database: 'PostIt',
@@ -12,11 +18,10 @@ export default {
     dialect: 'postgres'
   },
   test: {
-    database_url: URL,
-    username: 'postgres',
-    password: null,
-    database: 'PostIt_test',
-    host: '127.0.0.1',
+    username: USERNAME_TEST,
+    password: PASSWORD_TEST,
+    database: DATABASE_NAME_TEST,
+    host: HOST_TEST,
     dialect: 'postgres'
   },
   production: {
