@@ -28,6 +28,13 @@ export default (sequelize, DataTypes) => {
     description: {
       type: DataTypes.STRING
     }
+  }, {
+    classMethods: {
+      associate(models) {
+        Group.hasMany(models.Message);
+        Group.belongsToMany(models.User, { through: 'GroupUsers' });
+      }
+    }
   });
   Group.associate = function associate(models) {
     Group.hasMany(models.Message);
