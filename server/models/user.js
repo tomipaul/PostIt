@@ -60,27 +60,6 @@ export default (sequelize, DataTypes) => {
       }
     }
   }, {
-    classMethods: {
-      associate(models) {
-        User.belongsToMany(models.Message, {
-          through: 'UserUnreadMessages'
-        });
-        User.belongsToMany(models.Group, {
-          through: 'GroupUsers'
-        });
-      }
-    },
-    instanceMethods: {
-      verifyPassword(password) {
-        return bcrypt.compare(password, this.password)
-        .then((res) => {
-          return res;
-        })
-        .catch((err) => {
-          return err;
-        });
-      }
-    },
     hooks: {
       beforeCreate(user) {
         if (user.isNewRecord) {

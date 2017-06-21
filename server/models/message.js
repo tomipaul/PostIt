@@ -31,18 +31,6 @@ export default (sequelize, DataTypes) => {
         }
       }
     },
-  }, {
-    classMethods: {
-      associate(models) {
-        Message.belongsTo(models.User, {
-          as: 'Author',
-          onDelete: 'SET NULL'
-        });
-        Message.belongsToMany(models.User, {
-          through: 'UserUnreadMessages'
-        });
-      }
-    }
   });
   Message.associate = function associate(models) {
     Message.belongsTo(models.User, {
