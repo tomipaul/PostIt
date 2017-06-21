@@ -5,8 +5,9 @@ import app from './server';
 
 dotenv.config();
 dotenv.config({ path: `${__dirname}/key/rsapair.pem` });
+const env = process.env.NODE_ENV || 'development';
 const port = process.env.PORT || 8080;
-if (process.env.NODE_ENV === 'development') {
+if (env === 'development') {
   models.sequelize.sync({ force: true })
   .then(() => {
     app.listen(port, () => {
