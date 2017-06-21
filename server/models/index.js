@@ -10,8 +10,8 @@ const basename = path.basename(module.filename);
 const envConfig = config[env];
 const db = {};
 
-const sequelize = (envConfig.database_url) ?
-new Sequelize(envConfig.database_url, envConfig)
+const sequelize = (envConfig.use_env_variable) ?
+new Sequelize(process.env[envConfig.use_env_variable])
 : new Sequelize(
   envConfig.database, envConfig.username, envConfig.password, envConfig);
 
