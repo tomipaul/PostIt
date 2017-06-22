@@ -8,7 +8,9 @@
   ],
   "env": {
     "node": true,
-    "es6": true
+    "es6": true,
+    "mocha": true,
+    "jasmine": true
   },
   "globals": {
     "document": true
