@@ -55,6 +55,7 @@
     "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",
     "chai": "^4.0.2",
+    "chai-uuid": "^1.0.6",
     "cookie-parser": "^1.4.3",
     "dotenv": "^4.0.0",
     "express": "^4.15.3",
