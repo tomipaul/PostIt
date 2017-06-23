@@ -72,18 +72,18 @@ export default (sequelize, DataTypes) => {
             return err;
           });
         }
-      }
-    },
-    beforeUpdate(user) {
-      if (user.changed('password')) {
-        return bcrypt.hash(user.password, 10)
-        .then((hash) => {
-          user.password = hash;
-          return user.password;
-        })
-        .catch((err) => {
-          return err;
-        });
+      },
+      beforeUpdate(user) {
+        if (user.changed('password')) {
+          return bcrypt.hash(user.password, 10)
+          .then((hash) => {
+            user.password = hash;
+            return user.password;
+          })
+          .catch((err) => {
+            return err;
+          });
+        }
       }
     }
   });
