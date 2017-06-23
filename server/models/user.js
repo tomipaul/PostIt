@@ -26,7 +26,10 @@ export default (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      unique: {
+        args: true,
+        msg: 'email already exists!'
+      },
       validate: {
         isEmail: {
           msg: 'email is invalid',

@@ -4,6 +4,10 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
+      unique: {
+        args: true,
+        msg: 'id already exists!'
+      },
       validate: {
         isUUID: {
           args: 4,
