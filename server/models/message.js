@@ -22,7 +22,7 @@ export default (sequelize, DataTypes) => {
     },
     priority: {
       type: DataTypes.STRING,
-      allowNull: false,
+      defaultValue: 'normal',
       validate: {
         isIn: {
           args: [['normal', 'urgent', 'critical']],
