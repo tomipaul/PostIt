@@ -4,9 +4,10 @@
   "description": "A simple application that allows friends and colleagues create groups for notifications",
   "main": "index.js",
   "scripts": {
-    "start": "babel-watch server/index.js",
+    "start": "node dist/server/index.js",
+    "start:dev": "babel-watch server/index.js",
     "migrations": "sequelize db:migrate",
-    "transpile": "babel server --out-dir dist --copy-files",
+    "transpile": "babel **/*.js --ignore node_modules --out-dir dist --copy-files",
     "test": "echo \"Error: no test specified\""
   },
   "babel": {
