@@ -11,7 +11,7 @@ const hashedPasswords = passwords.map((password) => {
   return bcrypt.hashSync(password, 10);
 });
 module.exports = {
-  up(queryInterface, Sequelize) {
+  up(queryInterface) {
     return queryInterface.bulkInsert('Users', [{
       username: 'Tomi Paul',
       email: 'tomipaul95@gmail.com',
@@ -54,7 +54,7 @@ module.exports = {
     }], {});
   },
 
-  down(queryInterface, Sequelize) {
+  down(queryInterface) {
     return queryInterface.bulkDelete('Users', null, {});
   }
 };

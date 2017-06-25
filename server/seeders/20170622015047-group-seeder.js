@@ -1,5 +1,5 @@
 module.exports = {
-  up(queryInterface, Sequelize) {
+  up(queryInterface) {
     return queryInterface.bulkInsert('Groups', [{
       id: 'cc4022a6-7b42-45cb-ac34-0076a22032d3',
       name: 'FirstGroup',
@@ -37,7 +37,7 @@ module.exports = {
     }], {});
   },
 
-  down(queryInterface, Sequelize) {
+  down(queryInterface) {
     return queryInterface.bulkDelete('Groups', null, {});
   }
 };

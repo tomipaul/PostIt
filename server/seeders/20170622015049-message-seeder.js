@@ -1,5 +1,5 @@
 module.exports = {
-  up(queryInterface, Sequelize) {
+  up(queryInterface) {
     return queryInterface.bulkInsert('Messages', [{
       id: '1501cb03-26e0-4462-9bf1-5175fb3124f9',
       text: 'Who will bell the cat',
@@ -47,7 +47,7 @@ module.exports = {
     }], {});
   },
 
-  down(queryInterface, Sequelize) {
+  down(queryInterface) {
     return queryInterface.bulkDelete('Messages', null, {});
   }
 };
