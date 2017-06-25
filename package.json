@@ -4,7 +4,7 @@
   "description": "A simple application that allows friends and colleagues create groups for notifications",
   "main": "index.js",
   "scripts": {
-    "start": "npm run migrations && node dist/index.js",
+    "start": "babel-watch server/index.js",
     "migrations": "sequelize db:migrate",
     "transpile": "babel server --out-dir dist --copy-files",
     "test": "echo \"Error: no test specified\""
@@ -42,6 +42,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-register": "^6.24.1",
+    "babel-watch": "^2.0.6",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-plugin-import": "^2.3.0",
