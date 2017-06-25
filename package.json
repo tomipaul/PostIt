@@ -8,7 +8,7 @@
     "start:dev": "babel-watch server/index.js",
     "migrations": "sequelize db:migrate",
     "transpile": "babel **/*.js --ignore node_modules --out-dir dist --copy-files",
-    "test": "nyc mocha server/tests/models --timeout 10000"
+    "test": "nyc mocha server/tests/**/*.js --timeout 10000"
   },
   "repository": {
     "type": "git",
@@ -44,10 +44,10 @@
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-jsx-a11y": "^5.0.3",
     "eslint-plugin-react": "^7.1.0",
+    "keypair": "^1.0.1",
     "mocha": "^3.4.2",
     "node-sass": "^4.5.3",
-    "nyc": "^11.0.2",
-    "rsa-json": "^0.2.1"
+    "nyc": "^11.0.2"
   },
   "dependencies": {
     "bcrypt": "^1.0.2",
