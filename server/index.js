@@ -22,3 +22,4 @@ if (env === 'development') {
   });
 }
 
+export default app;
