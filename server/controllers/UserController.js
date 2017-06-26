@@ -62,21 +62,21 @@ class UserController {
   static authenticateUser() {
     return (req, res) => {
       const username = req.body.username;
-      ModelService.getModelInstance(userModel, { username })
+      return ModelService.getModelInstance(userModel, { username })
       .then((user) => {
-        user.verifyPassword(req.body.password)
+        return user.verifyPassword(req.body.password)
         .then((passwordIsValid) => {
           if (passwordIsValid) {
             const rsaKey = process.env.PRIVATE_KEY;
             return AuthService.generateToken(user, rsaKey);
           }
-          return res.status(401).send('Invalid Password');
+          throw new Error('Invalid Password');
         })
         .then((token) => {
           return res.status(200).json(token);
         })
         .catch((err) => {
-          return res.status(401).send(err.message);
+          throw err;
         });
       })
       .catch((err) => {

@@ -23,7 +23,8 @@ class AuthService {
         subject: user.email,
         expiresIn: '30d'
       };
-      jwt.sign(privateClaim, rsaKey, options, (err, token) => {
+      return jwt.sign(privateClaim, rsaKey, options,
+      (err, token) => {
         return (err) ? reject(err) : resolve(token);
       });
     });
