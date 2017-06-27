@@ -1,0 +1,108 @@
+{
+  "Groups": {
+    "twitter": {
+      "name": "Twitter",
+      "description": "When shall I be big?"
+    },
+    "invalidId": {
+      "id": "334",
+      "name": "Pletora",
+      "description": "of sacrifices"
+    },
+    "emptyName": {
+      "id": "6c8b1858-604a-44f6-a37c-0cbd678b2800",
+      "name": "",
+      "description": "of sacrifices"
+    },
+    "invalidName": {
+      "id": "6c8b1858-604a-44f6-a37c-0cbd678b2800",
+      "name": "Nations pledge",
+      "description": "of sacrifices"
+    },
+    "invalidIdName": {
+      "id": "adrf",
+      "name": "",
+      "description": "of sacrifices"
+    },
+    "validGroup": {
+      "id": "6c8b1858-604a-44f6-a37c-0cbd678b2800",
+      "name": "Nations_pledge",
+      "description": "Our heroes past"
+    },
+    "anotherValidGroup": {
+      "id": "83b6f91f-b8af-48e9-8305-a7757f6f862e",
+      "name": "Nations_anthem",
+      "description": "Her honour and glory"
+    }
+  },
+  "Messages": {
+    "validMessage": {
+      "id": "1501cb03-26e0-4462-9bf1-5175fb3124f9",
+      "text": "This is the first message",
+      "priority": "urgent"
+    },
+    "anotherValidMessage": {
+      "id": "6c8b1858-604a-44f6-a37c-0cbd678b2800",
+      "text": "Hello to Trello, we are fellows"
+    },
+    "thirdValidMessage": {
+      "id": "83b6f91f-b8af-48e9-8305-a7757f6f862e",
+      "text": "The devil is in the details",
+      "priority": "critical"
+    }
+  },
+  "Users": {
+    "validUser": {
+      "username": "tomipaul",
+      "email": "tomipaul@aol.com",
+      "password": "12345678abc",
+      "phoneNo": "23456789012"
+    },
+    "anotherValidUser": {
+      "username": "Katie01",
+      "email": "katie01@aol.com",
+      "password": "12345678abc",
+      "phoneNo": "23456789012"
+    },
+    "thirdValidUser": {
+      "username": "YayaMark",
+      "email": "yayamark@gmail.com",
+      "password": "12345678abc",
+      "phoneNo": "2348107976597"
+    },
+    "fourthValidUser": {
+      "username": "paultomi2",
+      "email":"paultomi@aol.com",
+      "password": "12345678abc",
+      "phoneNo": "2348091123444"
+    },
+    "incompleteUser": {
+      "username": "PhilBone",
+      "email": "philbone@gmail.com"
+    },
+    "emptyUsername": {
+      "username": "",
+      "email": "epicot@aol.com",
+      "password": "12345678abc",
+      "phoneNo": "2348107976597"
+    },
+    "emptyEmail": {
+      "username": "PhilBone",
+      "email": "",
+      "password": "12345678abc",
+      "phoneNo": "2348107976597"
+    },
+    "emptyPassword": {
+      "username": "PhilBone",
+      "email": "epicot@aol.com",
+      "password": "",
+      "phoneNo": "2348107976597"
+    },
+    "emptyPhoneNo": {
+      "username": "PhilBone",
+      "email": "epicot@aol.com",
+      "password": "123456",
+      "phoneNo": ""
+    }
+  }
+}

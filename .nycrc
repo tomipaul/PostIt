@@ -1,0 +1,20 @@
+{
+  "exclude": [
+    "server/tests",
+    "server/migrations",
+    "server/seeders"
+  ],
+  "include": [
+    "server"
+  ],
+  "require": [
+    "babel-register"
+  ],
+  "reporter": [
+    "lcov",
+    "text"
+  ],
+  "sourceMap": false,
+  "instrument": false,
+  "all": true
+}

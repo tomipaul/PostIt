@@ -33,6 +33,9 @@
       "requireParamDescription": false,
       "requireReturnDescription": true
     }],
+    "import/no-extraneous-dependencies": ["error", {
+      "devDependencies": ["**/tests/**"]
+    }],
     "class-methods-use-this": ["error", {"exceptMethods": ["searchIndex"]}],
     "require-jsdoc": ["error", {
         "require": {
