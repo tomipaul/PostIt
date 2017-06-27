@@ -11,6 +11,7 @@ userRouter.use('/api', [
   UserController.getClientAuthToken(),
   UserController.authorizeUser()
 ]);
+userRouter.get('/api/user/:id', UserController.getUser());
 userRouter.put('/api/user', UserController.updateUser());
 userRouter.delete('/api/user', UserController.deleteUser());
 userRouter.get('/api/user/groups', UserController.getUserGroups());
