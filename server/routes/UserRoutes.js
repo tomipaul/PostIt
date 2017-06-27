@@ -12,8 +12,8 @@ userRouter.use('/api', [
   UserController.authorizeUser()
 ]);
 userRouter.route('/api/user')
-.put('/api/user', UserController.updateUser())
-.delete('/api/user', UserController.deleteUser());
+.put(UserController.updateUser())
+.delete(UserController.deleteUser());
 userRouter.get('/api/user/groups', UserController.getUserGroups());
 userRouter.get('/api/user/:username', UserController.getUser());
 
