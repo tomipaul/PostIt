@@ -2,6 +2,8 @@ language: node_js
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
   - npm run migrations
+after_script:
+  - npm run coverage
 services:
   - postgresql
 node_js:
