@@ -8,7 +8,8 @@
     "start:dev": "babel-watch server/index.js",
     "migrations": "sequelize db:migrate",
     "transpile": "babel **/*.js --ignore node_modules --out-dir dist --copy-files",
-    "test": "nyc mocha server/tests/**/*.js --timeout 10000"
+    "test": "nyc mocha server/tests/**/*.js --timeout 10000",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,7 @@
     "chai": "^4.0.2",
     "chai-http": "^3.0.0",
     "chai-uuid": "^1.0.6",
+    "coveralls": "^2.13.1",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-plugin-import": "^2.3.0",
