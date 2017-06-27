@@ -11,9 +11,10 @@ userRouter.use('/api', [
   UserController.getClientAuthToken(),
   UserController.authorizeUser()
 ]);
-userRouter.get('/api/user/:username', UserController.getUser());
-userRouter.put('/api/user', UserController.updateUser());
-userRouter.delete('/api/user', UserController.deleteUser());
+userRouter.route('/api/user')
+.put('/api/user', UserController.updateUser())
+.delete('/api/user', UserController.deleteUser());
 userRouter.get('/api/user/groups', UserController.getUserGroups());
+userRouter.get('/api/user/:username', UserController.getUser());
 
 export default userRouter;
