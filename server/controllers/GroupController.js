@@ -62,13 +62,13 @@ class GroupController {
   static addMessageToGroup() {
     return (req, res) => {
       const groupId = req.params.groupId;
-      const message = (req.username) ?
-      { ...req.body, AuthorUsername: req.username } : req.body;
+      const message = { ...req.body, AuthorUsername: req.username };
       AdhocModelService.addMessageToGroup(message, groupId)
       .then(() => {
         res.sendStatus(200);
       })
       .catch((err) => {
+        res = (err.code) ? res.status(err.code) : res;
         res.send(err.message);
       });
     };

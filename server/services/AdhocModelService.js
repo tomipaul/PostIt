@@ -71,7 +71,16 @@ class AdhocModelService {
     const groupModel = models.Group;
     return ModelService.getModelInstance(groupModel, { id: groupId })
     .then((group) => {
-      return group.createMessage(message);
+      return group.hasUser(message.AuthorUsername)
+      .then((hasUser) => {
+        if (hasUser) {
+          return group.createMessage(message);
+        }
+        const msg = 'Access denied! You need group membership';
+        const err = new Error(msg);
+        err.code = 403;
+        throw err;
+      });
     });
   }
 
