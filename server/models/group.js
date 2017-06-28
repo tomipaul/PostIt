@@ -34,6 +34,10 @@ export default (sequelize, DataTypes) => {
   });
   Group.associate = function associate(models) {
     Group.hasMany(models.Message);
+    Group.belongsTo(models.User, {
+      as: 'Creator',
+      onDelete: 'SET NULL'
+    });
     Group.belongsToMany(models.User, { through: 'GroupUsers' });
   };
   return Group;
