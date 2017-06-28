@@ -35,7 +35,16 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }
+      },
+      CreatorUsername: {
+        type: Sequelize.STRING,
+        references: {
+          model: 'Users',
+          key: 'username'
+        },
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE'
+      },
     });
   },
   down(queryInterface) {
