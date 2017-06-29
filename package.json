@@ -4,7 +4,7 @@
   "description": "A simple application that allows friends and colleagues create groups for notifications",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/server/index.js",
+    "start": "npm run transpile && node dist/server/index.js",
     "start:dev": "babel-watch server/index.js",
     "migrations": "sequelize db:migrate",
     "transpile": "babel server --out-dir dist --copy-files",
