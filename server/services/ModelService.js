@@ -20,7 +20,7 @@ class ModelService {
       if (modelInstance) {
         return modelInstance;
       }
-      const err = new Error(`${model.name} does not exist`);
+      const err = new Error(`Error! ${model.name} does not exist`);
       err.code = 404;
       throw err;
     })
@@ -46,7 +46,7 @@ class ModelService {
       if (instanceArray.length !== 0) {
         return instanceArray;
       }
-      const err = new Error(`No matching ${model.name} found`);
+      const err = new Error(`Error! No matching ${model.name} found`);
       err.code = 404;
       throw err;
     })
@@ -70,7 +70,11 @@ class ModelService {
       if (modelInstance) {
         return modelInstance;
       }
-      throw new Error(`Error creating ${model.name}`);
+      const err = new Error(
+        `Exception! operation create ${model.name} failed`
+      );
+      err.code = 500;
+      throw err;
     })
     .catch((err) => {
       throw err;
@@ -95,7 +99,10 @@ class ModelService {
         if (updatedInstance) {
           return updatedInstance;
         }
-        throw new Error(`Error updating ${model.name}`);
+        const err = new Error(
+          `Exception! operation update ${model.name} failed`);
+        err.code = 500;
+        throw err;
       });
     })
     .catch((err) => {
