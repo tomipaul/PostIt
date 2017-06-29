@@ -3,9 +3,11 @@ import GroupController from '../controllers/GroupController';
 
 const router = express.Router();
 router.post('/api/group', GroupController.createGroup());
-router.post('/api/group/:groupId/user',
- GroupController.permitOnlyGroupMembers(),
- GroupController.addUserToGroup());
+router.route('/api/group/:groupId/user')
+.post(GroupController.permitOnlyGroupMembers(),
+ GroupController.addUserToGroup())
+.delete(GroupController.permitOnlyGroupOwner(),
+GroupController.removeUserFromGroup());
 router.post('/api/group/:groupId/message',
  GroupController.permitOnlyGroupMembers(),
  GroupController.addMessageToGroup());
