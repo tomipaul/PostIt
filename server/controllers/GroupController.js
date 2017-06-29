@@ -7,6 +7,64 @@ const groupModel = models.Group;
  * @class GroupController
  */
 class GroupController {
+
+  /**
+   * Restrict access to group owner only
+   * @method permitOnlyGroupOwner
+   * @memberof GroupController
+   * @static
+   * @return {function} Express middleware function which
+   * permits only a group owner to utilize an endpoint
+   */
+  static permitOnlyGroupOwner() {
+    return (req, res, next) => {
+      const groupId = req.params.groupId;
+      return ModelService.getModelInstance(groupModel, {
+        id: groupId
+      })
+      .then((group) => {
+        if (group.CreatorUsername === req.username) {
+          req.group = group;
+          return next();
+        }
+        const msg = 'Access denied! You need group Ownership';
+        const err = new Error(msg);
+        err.code = 403;
+        throw err;
+      });
+    };
+  }
+
+  /**
+   * Restrict access to group members only
+   * @method permitOnlyGroupMembers
+   * @memberof GroupController
+   * @static
+   * @return {function} Express middleware function which
+   * permits only group members to utilize an endpoint
+   */
+  static permitOnlyGroupMembers() {
+    return (req, res, next) => {
+      const groupId = req.params.groupId;
+      return ModelService.getModelInstance(groupModel, {
+        id: groupId
+      })
+      .then((group) => {
+        return group.hasUser(req.username)
+        .then((hasUser) => {
+          if (hasUser) {
+            req.group = group;
+            return next();
+          }
+          const msg = 'Access denied! You need group membership';
+          const err = new Error(msg);
+          err.code = 403;
+          throw err;
+        });
+      });
+    };
+  }
+
   /**
    * Create a broadcast group
    * @method
@@ -17,11 +75,13 @@ class GroupController {
    */
   static createGroup() {
     return (req, res) => {
+      req.body.CreatorUsername = req.username;
       ModelService.createModelInstance(groupModel, req.body)
       .then((group) => {
-        if (group) {
+        return group.addUser(req.username)
+        .then(() => {
           res.status(201).send(group);
-        }
+        });
       })
       .catch((err) => {
         res.status(400).send(err.message);
@@ -39,14 +99,14 @@ class GroupController {
    */
   static addUserToGroup() {
     return (req, res) => {
-      const groupId = req.params.groupId;
       const username = req.body.username;
-      AdhocModelService.addUserToGroup(username, groupId)
+      return AdhocModelService.addUserToGroup(username, req.group)
       .then(() => {
-        res.sendStatus(200);
+        return res.sendStatus(200);
       })
       .catch((err) => {
-        res.status(400).send(err.message);
+        res = (err.code) ? res.status(err.code) : res;
+        return res.send(err.message);
       });
     };
   }
@@ -61,11 +121,14 @@ class GroupController {
    */
   static addMessageToGroup() {
     return (req, res) => {
-      const groupId = req.params.groupId;
-      const message = { ...req.body, AuthorUsername: req.username };
-      AdhocModelService.addMessageToGroup(message, groupId)
+      const message = {
+        ...req.body,
+        AuthorUsername: req.username
+      };
+      return AdhocModelService
+      .addMessageToGroup(message, req.group)
       .then(() => {
-        res.sendStatus(200);
+        return res.sendStatus(200);
       })
       .catch((err) => {
         res = (err.code) ? res.status(err.code) : res;
@@ -84,15 +147,39 @@ class GroupController {
    */
   static getGroupMessages() {
     return (req, res) => {
-      const groupId = req.params.groupId;
-      AdhocModelService.getGroupMessages(groupId)
+      return AdhocModelService.getGroupMessages(req.group)
       .then((messages) => {
-        res.status(200).json(messages);
+        return res.status(200).json(messages);
       })
       .catch((err) => {
+        res = (err.code) ? res.status(err.code) : res;
         res.send(err.message);
       });
     };
   }
+
+  /**
+   * Remove a user from a group
+   * @method
+   * @memberof GroupController
+   * @static
+   * @return {function} Express middleware function which removes a
+   * user from a group and sends response to client
+   */
+  static removeUserFromGroup() {
+    return (req, res) => {
+      const username = req.body.username;
+      return AdhocModelService
+      .removeUserFromGroup(username, req.group)
+      .then(() => {
+        return res.sendStatus(200);
+      })
+      .catch((err) => {
+        res = (err.code) ? res.status(err.code) : res;
+        return res.send(err.message);
+      });
+    };
+  }
 }
+
 export default GroupController;
