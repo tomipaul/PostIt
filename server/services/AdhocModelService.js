@@ -25,6 +25,10 @@ class AdhocModelService {
       : groupInstance.addUser(username);
     })
     .catch((err) => {
+      if (!err.code) {
+        err.message = 'Operation failed! Check provided username';
+        err.code = 400;
+      }
       throw err;
     });
   }
@@ -49,6 +53,10 @@ class AdhocModelService {
       : groupInstance.removeUser(username);
     })
     .catch((err) => {
+      if (!err.code) {
+        err.message = 'Operation failed! Check provided username';
+        err.code = 400;
+      }
       throw err;
     });
   }
@@ -117,6 +125,10 @@ class AdhocModelService {
       : groupInstance.removeMessage(messageId);
     })
     .catch((err) => {
+      if (!err.code) {
+        err.message = 'Operation failed! Check provided message id';
+        err.code = 400;
+      }
       throw err;
     });
   }
