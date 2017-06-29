@@ -7,7 +7,7 @@
     "start": "node dist/server/index.js",
     "start:dev": "babel-watch server/index.js",
     "migrations": "sequelize db:migrate",
-    "transpile": "babel **/*.js --ignore node_modules --out-dir dist --copy-files",
+    "transpile": "babel server --out-dir dist --copy-files",
     "test": "nyc mocha server/tests/**/*.js --timeout 10000",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
