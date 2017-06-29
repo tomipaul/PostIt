@@ -20,7 +20,12 @@ class ModelService {
       if (modelInstance) {
         return modelInstance;
       }
-      throw new Error(`${model.name} does not exist`);
+      const err = new Error(`${model.name} does not exist`);
+      err.code = 404;
+      throw err;
+    })
+    .catch((err) => {
+      throw err;
     });
   }
 
@@ -36,7 +41,18 @@ class ModelService {
    * an array of matching model instances
    */
   static getModelInstances(model, attributes) {
-    return model.findAll({ where: attributes });
+    return model.findAll({ where: attributes })
+    .then((instanceArray) => {
+      if (instanceArray.length !== 0) {
+        return instanceArray;
+      }
+      const err = new Error(`No matching ${model.name} found`);
+      err.code = 404;
+      throw err;
+    })
+    .catch((err) => {
+      throw err;
+    });
   }
 
   /**
@@ -55,6 +71,9 @@ class ModelService {
         return modelInstance;
       }
       throw new Error(`Error creating ${model.name}`);
+    })
+    .catch((err) => {
+      throw err;
     });
   }
 
@@ -71,7 +90,16 @@ class ModelService {
   static updateModelInstance(model, attributes, newAttributes) {
     return ModelService.getModelInstance(model, attributes)
     .then((modelInstance) => {
-      return modelInstance.update(newAttributes);
+      return modelInstance.update(newAttributes)
+      .then((updatedInstance) => {
+        if (updatedInstance) {
+          return updatedInstance;
+        }
+        throw new Error(`Error updating ${model.name}`);
+      });
+    })
+    .catch((err) => {
+      throw err;
     });
   }
 
@@ -88,6 +116,9 @@ class ModelService {
     return ModelService.getModelInstance(model, attributes)
     .then((modelInstance) => {
       return modelInstance.destroy();
+    })
+    .catch((err) => {
+      throw err;
     });
   }
 }

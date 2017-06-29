@@ -23,6 +23,9 @@ class AdhocModelService {
       return (Array.isArray(username)) ?
       groupInstance.addUsers(username)
       : groupInstance.addUser(username);
+    })
+    .catch((err) => {
+      throw err;
     });
   }
 
@@ -44,6 +47,9 @@ class AdhocModelService {
       return (Array.isArray(username)) ?
       groupInstance.removeUsers(username)
       : groupInstance.removeUser(username);
+    })
+    .catch((err) => {
+      throw err;
     });
   }
 
@@ -62,6 +68,9 @@ class AdhocModelService {
     : Promise.resolve(group);
     return promise.then((groupInstance) => {
       return groupInstance.getUsers();
+    })
+    .catch((err) => {
+      throw err;
     });
   }
 
@@ -82,6 +91,9 @@ class AdhocModelService {
     : Promise.resolve(group);
     return promise.then((groupInstance) => {
       return groupInstance.createMessage(message);
+    })
+    .catch((err) => {
+      throw err;
     });
   }
 
@@ -103,6 +115,9 @@ class AdhocModelService {
       return (Array.isArray(messageId)) ?
       groupInstance.removeMessages(messageId)
       : groupInstance.removeMessage(messageId);
+    })
+    .catch((err) => {
+      throw err;
     });
   }
 
@@ -120,6 +135,9 @@ class AdhocModelService {
     : Promise.resolve(group);
     return promise.then((groupInstance) => {
       return groupInstance.getMessages();
+    })
+    .catch((err) => {
+      throw err;
     });
   }
 
@@ -135,6 +153,9 @@ class AdhocModelService {
     return ModelService.getModelInstance(userModel, { username })
     .then((user) => {
       return user.getGroups();
+    })
+    .catch((err) => {
+      throw err;
     });
   }
 }
