@@ -6,12 +6,12 @@
 ## Introduction
 *  **`PostIt`** is a simple application that implements a distributed messaging sysytem. It allows friends and colleagues create groups for messages and notifications.
 *  It has the following features;
-  * Allow users to signup
-  * Allow users to signin
-  * Allow users to create a group
-  * Allow users to add other users to a group
-  * Allow users to post a message to a group
-  * Allow users to read messages posted to groups to which they belong
+  - Allow users to signup
+  - Allow users to signin
+  - Allow users to create a group
+  - Allow users to add other users to a group
+  - Allow users to post a message to a group
+  - Allow users to read messages posted to groups to which they belong
 
 ## How it works
 You can check out the online version at https://app-postit.herokuapp.com/
@@ -144,7 +144,7 @@ Installation
 3.  Change your directory `cd PostIt`
 4.  Install all dependencies `npm install`
 5.  Start the app `npm run start:dev` for development Or
-6.  Run `npm run transpile` and then `npm start`
+6.  Run `npm start` to use transpiled code
 7.  Use [postman](https://www.getpostman.com/) to consume the API
 
 Tests
