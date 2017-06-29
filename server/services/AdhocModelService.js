@@ -11,15 +11,18 @@ class AdhocModelService {
    * @memberof ModelService
    * @static
    * @param {String|Array.<string>} username
-   * @param {String} groupId
+   * @param {String|Object} group primary key or instance of group
    * @returns {Promise} A promise that resolves with null on success
    */
-  static addUserToGroup(username, groupId) {
+  static addUserToGroup(username, group) {
     const groupModel = models.Group;
-    return ModelService.getModelInstance(groupModel, { id: groupId })
-    .then((group) => {
+    const promise = (typeof group === 'string') ?
+    ModelService.getModelInstance(groupModel, { id: group })
+    : Promise.resolve(group);
+    return promise.then((groupInstance) => {
       return (Array.isArray(username)) ?
-      group.addUsers(username) : group.addUser(username);
+      groupInstance.addUsers(username)
+      : groupInstance.addUser(username);
     });
   }
 
@@ -29,15 +32,18 @@ class AdhocModelService {
    * @memberof ModelService
    * @static
    * @param {String|Array.<string>} username
-   * @param {String} groupId
+   * @param {String} group primary key or instance of group
    * @returns {Promise} A promise that resolves with null on success
    */
-  static removeUserFromGroup(username, groupId) {
+  static removeUserFromGroup(username, group) {
     const groupModel = models.Group;
-    return ModelService.getModelInstance(groupModel, { id: groupId })
-    .then((group) => {
+    const promise = (typeof group === 'string') ?
+    ModelService.getModelInstance(groupModel, { id: group })
+    : Promise.resolve(group);
+    return promise.then((groupInstance) => {
       return (Array.isArray(username)) ?
-      group.removeUsers(username) : group.removeUser(username);
+      groupInstance.removeUsers(username)
+      : groupInstance.removeUser(username);
     });
   }
 
@@ -46,14 +52,16 @@ class AdhocModelService {
    * @method getAllGroupUsers
    * @memberof ModelService
    * @static
-   * @param {String} groupId
+   * @param {String|Object} group primary key or instance of group
    * @returns {Promise.array} resolves with an array of user instances
    */
-  static getAllGroupUsers(groupId) {
+  static getAllGroupUsers(group) {
     const groupModel = models.Group;
-    return ModelService.getModelInstance(groupModel, { id: groupId })
-    .then((group) => {
-      return group.getUsers();
+    const promise = (typeof group === 'string') ?
+    ModelService.getModelInstance(groupModel, { id: group })
+    : Promise.resolve(group);
+    return promise.then((groupInstance) => {
+      return groupInstance.getUsers();
     });
   }
 
@@ -64,23 +72,16 @@ class AdhocModelService {
    * @param {Object} message
    * @param {Object.string} message.text
    * @param {Object.string} message.priority
-   * @param {*} groupId
+   * @param {String|Object} group primary key or instance of group
    * @returns {Promise} A promise that resolves with null on success
    */
-  static addMessageToGroup(message, groupId) {
+  static addMessageToGroup(message, group) {
     const groupModel = models.Group;
-    return ModelService.getModelInstance(groupModel, { id: groupId })
-    .then((group) => {
-      return group.hasUser(message.AuthorUsername)
-      .then((hasUser) => {
-        if (hasUser) {
-          return group.createMessage(message);
-        }
-        const msg = 'Access denied! You need group membership';
-        const err = new Error(msg);
-        err.code = 403;
-        throw err;
-      });
+    const promise = (typeof group === 'string') ?
+    ModelService.getModelInstance(groupModel, { id: group })
+    : Promise.resolve(group);
+    return promise.then((groupInstance) => {
+      return groupInstance.createMessage(message);
     });
   }
 
@@ -90,14 +91,18 @@ class AdhocModelService {
    * @memberof ModelService
    * @static
    * @param {String} messageId
-   * @param {String} groupId
+   * @param {String} group primary key or instance of group
    * @returns {Promise} resolves with void on success
    */
-  static removeMessageFromGroup(messageId, groupId) {
+  static removeMessageFromGroup(messageId, group) {
     const groupModel = models.Group;
-    return ModelService.getModelInstance(groupModel, { id: groupId })
-    .then((group) => {
-      return group.removeMessage(messageId);
+    const promise = (typeof group === 'string') ?
+    ModelService.getModelInstance(groupModel, { id: group })
+    : Promise.resolve(group);
+    return promise.then((groupInstance) => {
+      return (Array.isArray(messageId)) ?
+      groupInstance.removeMessages(messageId)
+      : groupInstance.removeMessage(messageId);
     });
   }
 
@@ -105,14 +110,16 @@ class AdhocModelService {
    * @method
    * @memberof ModelService
    * @static
-   * @param {String} groupId
+   * @param {String} group primary key or instance of group
    * @returns {Promise} resolves with an array of message instances
    */
-  static getGroupMessages(groupId) {
+  static getGroupMessages(group) {
     const groupModel = models.Group;
-    return ModelService.getModelInstance(groupModel, { id: groupId })
-    .then((group) => {
-      return group.getMessages();
+    const promise = (typeof group === 'string') ?
+    ModelService.getModelInstance(groupModel, { id: group })
+    : Promise.resolve(group);
+    return promise.then((groupInstance) => {
+      return groupInstance.getMessages();
     });
   }
 
