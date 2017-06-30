@@ -25,7 +25,8 @@ class ModelService {
       throw err;
     })
     .catch((err) => {
-      throw err;
+      const msg = `Exception! operation get ${model.name} failed`;
+      throw ModelService.processError(msg, model, err);
     });
   }
 
@@ -43,15 +44,11 @@ class ModelService {
   static getModelInstances(model, attributes) {
     return model.findAll({ where: attributes })
     .then((instanceArray) => {
-      if (instanceArray.length !== 0) {
-        return instanceArray;
-      }
-      const err = new Error(`Error! No matching ${model.name} found`);
-      err.code = 404;
-      throw err;
+      return instanceArray;
     })
     .catch((err) => {
-      throw err;
+      const msg = `Exception! operation get ${model.name}s failed`;
+      throw ModelService.processError(msg, model, err);
     });
   }
 
@@ -70,14 +67,11 @@ class ModelService {
       if (modelInstance) {
         return modelInstance;
       }
-      const err = new Error(
-        `Exception! operation create ${model.name} failed`
-      );
-      err.code = 500;
-      throw err;
+      throw new Error();
     })
     .catch((err) => {
-      throw err;
+      const msg = `Exception! operation create ${model.name} failed`;
+      throw ModelService.processError(msg, model, err);
     });
   }
 
@@ -99,14 +93,12 @@ class ModelService {
         if (updatedInstance) {
           return updatedInstance;
         }
-        const err = new Error(
-          `Exception! operation update ${model.name} failed`);
-        err.code = 500;
-        throw err;
+        throw new Error();
       });
     })
     .catch((err) => {
-      throw err;
+      const msg = `Exception! operation update ${model.name} failed`;
+      throw ModelService.processError(msg, model, err);
     });
   }
 
@@ -125,8 +117,31 @@ class ModelService {
       return modelInstance.destroy();
     })
     .catch((err) => {
-      throw err;
+      const msg = `Exception! operation delete ${model.name} failed`;
+      throw ModelService.processError(msg, model, err);
     });
+  }
+
+  /**
+   * Refine the error object to be sent to client
+   * @method
+   * @static
+   * @memberof ModelService
+   * @param {String} message error message to client
+   * @param {Object} model the operational model
+   * @param {Object} err the error object
+   * @returns {Object} the refined error object which is thrown
+   */
+  static processError(message, model, err) {
+    if (!err.code) {
+      if (err instanceof model.sequelize.ValidationError) {
+        err.code = 400;
+      } else {
+        err.code = 500;
+        err.message = message;
+      }
+    }
+    return err;
   }
 }
 export default ModelService;

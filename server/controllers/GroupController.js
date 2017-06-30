@@ -31,6 +31,13 @@ class GroupController {
         const err = new Error(msg);
         err.code = 403;
         throw err;
+      })
+      .catch((err) => {
+        if (!err.code || err.code > 499) {
+          err.code = 500;
+          err.message = 'Exception 500! Operation failed.';
+        }
+        return res.status(err.code).send(err.message);
       });
     };
   }
@@ -61,6 +68,13 @@ class GroupController {
           err.code = 403;
           throw err;
         });
+      })
+      .catch((err) => {
+        if (!err.code || err.code > 499) {
+          err.code = 500;
+          err.message = 'Exception 500! Operation failed.';
+        }
+        return res.status(err.code).send(err.message);
       });
     };
   }
@@ -84,7 +98,11 @@ class GroupController {
         });
       })
       .catch((err) => {
-        res.status(400).send(err.message);
+        if (!err.code || err.code > 499) {
+          err.code = 500;
+          err.message = 'Exception 500! Operation failed.';
+        }
+        return res.status(err.code).send(err.message);
       });
     };
   }
@@ -105,8 +123,11 @@ class GroupController {
         return res.sendStatus(200);
       })
       .catch((err) => {
-        res = (err.code) ? res.status(err.code) : res;
-        return res.send(err.message);
+        if (!err.code || err.code > 499) {
+          err.code = 500;
+          err.message = 'Exception 500! Operation failed.';
+        }
+        return res.status(err.code).send(err.message);
       });
     };
   }
@@ -131,8 +152,11 @@ class GroupController {
         return res.sendStatus(200);
       })
       .catch((err) => {
-        res = (err.code) ? res.status(err.code) : res;
-        res.send(err.message);
+        if (!err.code || err.code > 499) {
+          err.code = 500;
+          err.message = 'Exception 500! Operation failed.';
+        }
+        return res.status(err.code).send(err.message);
       });
     };
   }
@@ -152,8 +176,11 @@ class GroupController {
         return res.status(200).json(messages);
       })
       .catch((err) => {
-        res = (err.code) ? res.status(err.code) : res;
-        res.send(err.message);
+        if (!err.code || err.code > 499) {
+          err.code = 500;
+          err.message = 'Exception 500! Operation failed.';
+        }
+        return res.status(err.code).send(err.message);
       });
     };
   }
@@ -175,8 +202,11 @@ class GroupController {
         return res.sendStatus(200);
       })
       .catch((err) => {
-        res = (err.code) ? res.status(err.code) : res;
-        return res.send(err.message);
+        if (!err.code || err.code > 499) {
+          err.code = 500;
+          err.message = 'Exception 500! Operation failed.';
+        }
+        return res.status(err.code).send(err.message);
       });
     };
   }
