@@ -1,4 +1,5 @@
 import chai from 'chai';
+import sinon from 'sinon';
 import models from '../../models';
 import AdhocModelService from '../../services/AdhocModelService';
 import dummyData from '../dummy.json';
@@ -8,6 +9,7 @@ const { Groups, Messages, Users } = dummyData;
 const expect = chai.expect;
 
 describe('AdhocModelService.addUserToGroup', () => {
+  const groupId = Groups.validGroup.id;
   before(() => {
     return models.sequelize.truncate({ cascade: true })
     .then(() => {
@@ -25,10 +27,7 @@ describe('AdhocModelService.addUserToGroup', () => {
     });
   });
   it('should add a user to a group', () => {
-    const [username, groupId] = [
-      Users.validUser.username,
-      Groups.validGroup.id
-    ];
+    const username = Users.validUser.username;
     return AdhocModelService.addUserToGroup(username, groupId)
     .then(() => {
       return Group.findById(groupId);
@@ -41,7 +40,6 @@ describe('AdhocModelService.addUserToGroup', () => {
     });
   });
   it('should add multiple users to a group', () => {
-    const groupId = Groups.validGroup.id;
     const usernames = [
       Users.anotherValidUser.username,
       Users.thirdValidUser.username
@@ -57,6 +55,30 @@ describe('AdhocModelService.addUserToGroup', () => {
       expect(hasUsers).to.be.equal(true);
     });
   });
+  it('should throw error if group does not exist',
+  () => {
+    const username = Users.validUser.username;
+    return AdhocModelService
+    .addUserToGroup(username, Groups.anotherValidGroup.id)
+    .catch((err) => {
+      expect(err.code).to.equal(404);
+      expect(err.message).to
+      .equal('Error! Group does not exist');
+    });
+  });
+
+  it('should throw appropriate error for failure', () => {
+    const stub = sinon.stub(models.Group.prototype, 'addUser');
+    stub.rejects();
+    return AdhocModelService
+    .addUserToGroup('fronesy01', groupId)
+    .catch((err) => {
+      expect(err.code).to.equal(400);
+      expect(err.message).to
+      .equal('Operation failed! Check provided username');
+      stub.restore();
+    });
+  });
 });
 
 describe('AdhocModelService.getAllGroupUsers', () => {
@@ -68,6 +90,16 @@ describe('AdhocModelService.getAllGroupUsers', () => {
       usersArray.forEach((user) => {
         expect(user).to.be.an.instanceof(User);
       });
+    });
+  });
+  it('should throw error if group does not exist',
+  () => {
+    return AdhocModelService
+    .getAllGroupUsers(Groups.anotherValidGroup.id)
+    .catch((err) => {
+      expect(err.code).to.equal(404);
+      expect(err.message).to
+      .equal('Error! Group does not exist');
     });
   });
 });
@@ -90,6 +122,16 @@ describe('AdhocModelService.getUsergroups', () => {
       groups.forEach((group) => {
         expect(group).to.be.an.instanceof(Group);
       });
+    });
+  });
+  it('should throw error if user does not exist',
+  () => {
+    return AdhocModelService
+    .getUserGroups('fronesy01')
+    .catch((err) => {
+      expect(err.code).to.equal(404);
+      expect(err.message).to
+      .equal('Error! User does not exist');
     });
   });
 });
@@ -125,6 +167,31 @@ describe('AdhocModelService.removeUserFromGroup', () => {
     })
     .then((hasUsers) => {
       expect(hasUsers).to.be.equal(false);
+    });
+  });
+
+  it('should throw error if group does not exist',
+  () => {
+    const username = Users.validUser.username;
+    return AdhocModelService
+    .removeUserFromGroup(username, Groups.emptyName.id)
+    .catch((err) => {
+      expect(err.code).to.equal(404);
+      expect(err.message).to
+      .equal('Error! Group does not exist');
+    });
+  });
+
+  it('should throw appropriate error for failure',
+  () => {
+    const stub = sinon.stub(models.Group.prototype, 'removeUser');
+    stub.rejects();
+    return AdhocModelService
+    .removeUserFromGroup('fronesy01', groupId)
+    .catch((err) => {
+      expect(err.code).to.equal(400);
+      expect(err.message).to
+      .equal('Operation failed! Check provided username');
     });
   });
 });
@@ -173,6 +240,17 @@ describe('AdhocModelService.addMessageToGroup', () => {
       expect(hasMessages).to.equal(true);
     });
   });
+  it('should throw error if group does not exist',
+  () => {
+    const message = Messages.thirdValidMessage;
+    return AdhocModelService
+    .addMessageToGroup(message, Groups.emptyName.id)
+    .catch((err) => {
+      expect(err.code).to.equal(404);
+      expect(err.message).to
+      .equal('Error! Group does not exist');
+    });
+  });
 });
 
 describe('AdhocModelService.getGroupMessages', () => {
@@ -183,6 +261,16 @@ describe('AdhocModelService.getGroupMessages', () => {
       messageArray.forEach((message) => {
         expect(message).to.be.an.instanceof(Message);
       });
+    });
+  });
+  it('should throw error if group does not exist',
+  () => {
+    return AdhocModelService
+    .getGroupMessages(Groups.emptyName.id)
+    .catch((err) => {
+      expect(err.code).to.equal(404);
+      expect(err.message).to
+      .equal('Error! Group does not exist');
     });
   });
 });
@@ -218,6 +306,31 @@ describe('AdhocModelService.removeMessageFromGroup', () => {
     })
     .then((hasMessages) => {
       expect(hasMessages).to.be.equal(false);
+    });
+  });
+  it('should throw error if group does not exist',
+  () => {
+    const messageId = Messages.validMessage.id;
+    return AdhocModelService
+    .removeMessageFromGroup(messageId, Groups.emptyName.id)
+    .catch((err) => {
+      expect(err.code).to.equal(404);
+      expect(err.message).to
+      .equal('Error! Group does not exist');
+    });
+  });
+  it('should throw appropriate error for failure',
+  () => {
+    const stub = sinon.stub(models.Group.prototype, 'removeMessage');
+    stub.rejects();
+    const messageId = Messages.fourthValidMessage.id;
+    return AdhocModelService
+    .removeMessageFromGroup(messageId, groupId)
+    .catch((err) => {
+      expect(err.code).to.equal(400);
+      expect(err.message).to
+      .equal('Operation failed! Check provided message id');
+      stub.restore();
     });
   });
 });
