@@ -14,6 +14,5 @@ router.post('/api/group/:groupId/message',
 router.get('/api/group/:groupId/messages',
  GroupController.permitOnlyGroupMembers(),
  GroupController.getGroupMessages());
-router.use('/api/group', GroupController.errorHandler());
 
 export default router;
