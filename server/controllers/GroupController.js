@@ -33,11 +33,7 @@ class GroupController {
         throw err;
       })
       .catch((err) => {
-        if (!err.code || err.code > 499) {
-          err.code = 500;
-          err.message = 'Exception 500! Operation failed.';
-        }
-        return res.status(err.code).send(err.message);
+        next(err);
       });
     };
   }
@@ -70,11 +66,7 @@ class GroupController {
         });
       })
       .catch((err) => {
-        if (!err.code || err.code > 499) {
-          err.code = 500;
-          err.message = 'Exception 500! Operation failed.';
-        }
-        return res.status(err.code).send(err.message);
+        next(err);
       });
     };
   }
@@ -88,7 +80,7 @@ class GroupController {
    * a group and sends response to client
    */
   static createGroup() {
-    return (req, res) => {
+    return (req, res, next) => {
       req.body.CreatorUsername = req.username;
       ModelService.createModelInstance(groupModel, req.body)
       .then((group) => {
@@ -98,11 +90,7 @@ class GroupController {
         });
       })
       .catch((err) => {
-        if (!err.code || err.code > 499) {
-          err.code = 500;
-          err.message = 'Exception 500! Operation failed.';
-        }
-        return res.status(err.code).send(err.message);
+        next(err);
       });
     };
   }
@@ -116,18 +104,14 @@ class GroupController {
    * user to a group and sends response to client
    */
   static addUserToGroup() {
-    return (req, res) => {
+    return (req, res, next) => {
       const username = req.body.username;
       return AdhocModelService.addUserToGroup(username, req.group)
       .then(() => {
         return res.sendStatus(200);
       })
       .catch((err) => {
-        if (!err.code || err.code > 499) {
-          err.code = 500;
-          err.message = 'Exception 500! Operation failed.';
-        }
-        return res.status(err.code).send(err.message);
+        next(err);
       });
     };
   }
@@ -141,7 +125,7 @@ class GroupController {
    * message to a group and sends response to client
    */
   static addMessageToGroup() {
-    return (req, res) => {
+    return (req, res, next) => {
       const message = {
         ...req.body,
         AuthorUsername: req.username
@@ -152,11 +136,7 @@ class GroupController {
         return res.sendStatus(200);
       })
       .catch((err) => {
-        if (!err.code || err.code > 499) {
-          err.code = 500;
-          err.message = 'Exception 500! Operation failed.';
-        }
-        return res.status(err.code).send(err.message);
+        next(err);
       });
     };
   }
@@ -170,17 +150,13 @@ class GroupController {
    * group messages and sends response to client
    */
   static getGroupMessages() {
-    return (req, res) => {
+    return (req, res, next) => {
       return AdhocModelService.getGroupMessages(req.group)
       .then((messages) => {
         return res.status(200).json(messages);
       })
       .catch((err) => {
-        if (!err.code || err.code > 499) {
-          err.code = 500;
-          err.message = 'Exception 500! Operation failed.';
-        }
-        return res.status(err.code).send(err.message);
+        next(err);
       });
     };
   }
@@ -194,7 +170,7 @@ class GroupController {
    * user from a group and sends response to client
    */
   static removeUserFromGroup() {
-    return (req, res) => {
+    return (req, res, next) => {
       const username = req.body.username;
       return AdhocModelService
       .removeUserFromGroup(username, req.group)
@@ -202,12 +178,33 @@ class GroupController {
         return res.sendStatus(200);
       })
       .catch((err) => {
-        if (!err.code || err.code > 499) {
+        next(err);
+      });
+    };
+  }
+
+  /**
+   * Handle errors for group endpoints
+   * @method
+   * @memberof GroupController
+   * @static
+   * @return {function} Express error-handling middleware which
+   * handles all errors from the group endpoints.
+   */
+  static errorHandler() {
+    // error handlers must always take four arguments
+    // eslint-disable-next-line
+    return (err, req, res, next) => {
+      const sequelize = models.sequelize;
+      if (!err.code || err.code > 499) {
+        if (err instanceof sequelize.ValidationError) {
+          err.code = 400;
+        } else {
           err.code = 500;
           err.message = 'Exception 500! Operation failed.';
         }
-        return res.status(err.code).send(err.message);
-      });
+      }
+      return res.status(err.code).send(err.message);
     };
   }
 }
