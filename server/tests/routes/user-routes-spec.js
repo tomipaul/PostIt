@@ -1,6 +1,7 @@
 /* eslint no-unused-expressions: 0 */
 import chaiHTTP from 'chai-http';
 import chai from 'chai';
+import sinon from 'sinon';
 import models from '../../models';
 import server from '../../index';
 import dummyData from '../dummy.json';
@@ -232,6 +233,56 @@ describe('/api/user/signin', () => {
   });
 });
 
+describe('/api/user/:username', () => {
+  it('should get an existing user', (done) => {
+    chai.request(server)
+    .get(`/api/user/${validUser.username}`)
+    .set('Authorization', `Bearer ${userToken}`)
+    .end((err, res) => {
+      expect(res).to.have.status(200);
+      expect(res).to.be.json;
+      expect(res.body).to.include({
+        username: validUser.username,
+        email: validUser.email,
+        phoneNo: validUser.phoneNo
+      });
+      return done();
+    });
+  });
+  it('should return error if no matching username', (done) => {
+    chai.request(server)
+    .get('/api/user/dende05')
+    .set('Authorization', `Bearer ${userToken}`)
+    .end((err, res) => {
+      expect(res).to.have.status(404);
+      expect(res).to.be.html;
+      expect(res.text).to.equal('Error! User does not exist');
+      return done();
+    });
+  });
+  it('should return error if no token', (done) => {
+    chai.request(server)
+    .get(`/api/user/${validUser.username}`)
+    .end((err, res) => {
+      expect(res).to.have.status(400);
+      expect(res).to.be.html;
+      expect(res.text).to.equal('No Access token provided!');
+      return done();
+    });
+  });
+  it('should return error message if invalid token', (done) => {
+    chai.request(server)
+    .get(`/api/user/${validUser.username}`)
+    .set('Authorization', 'Bearer abcdefeighhth12332444200999')
+    .end((err, res) => {
+      expect(res).to.have.status(401);
+      expect(res).to.be.html;
+      expect(res.text).to.equal('jwt malformed');
+      return done();
+    });
+  });
+});
+
 describe('/api/user/groups', () => {
   before(() => {
     return models.Group.bulkCreate([
@@ -272,43 +323,23 @@ describe('/api/user/groups', () => {
       return done();
     });
   });
-});
-
-describe('/api/user/:username', () => {
-  it('should get an existing user', (done) => {
+  it('should return error message on exceptions', (done) => {
+    const stub = sinon.stub(models.User.prototype, 'getGroups');
+    stub.rejects();
     chai.request(server)
-    .get(`/api/user/${validUser.username}`)
+    .get('/api/user/groups')
     .set('Authorization', `Bearer ${userToken}`)
     .end((err, res) => {
-      expect(res).to.have.status(200);
-      expect(res).to.be.json;
-      expect(res.body).to.include({
-        username: validUser.username,
-        email: validUser.email,
-        phoneNo: validUser.phoneNo
-      });
+      stub.restore();
+      expect(res).to.have.status(500);
+      expect(res).to.be.html;
+      expect(res.text).to.equal('Exception 500! Operation failed.');
       return done();
     });
   });
 });
 
 describe('/api/user', () => {
-  it('should update an existing authenticated user',
-  (done) => {
-    chai.request(server)
-    .put('/api/user')
-    .set('Authorization', `Bearer ${userToken}`)
-    .send({
-      email: 'updatedmail@tomipaul.com'
-    })
-    .end((err, res) => {
-      expect(res).to.have.status(200);
-      expect(res).to.be.json;
-      expect(res.body.email).to
-      .equal('updatedmail@tomipaul.com');
-      return done();
-    });
-  });
   it('should return error message if request has no token',
   (done) => {
     chai.request(server)
@@ -323,16 +354,6 @@ describe('/api/user', () => {
       return done();
     });
   });
-  it('should delete an existing authenticated user',
-  (done) => {
-    chai.request(server)
-    .delete('/api/user')
-    .set('Authorization', `Bearer ${userToken}`)
-    .end((err, res) => {
-      expect(res).to.have.status(204);
-      return done();
-    });
-  });
   it('should return error message if request has no token',
   (done) => {
     chai.request(server)
@@ -344,6 +365,68 @@ describe('/api/user', () => {
       expect(res).to.have.status(400);
       expect(res).to.be.html;
       expect(res.text).to.equal('No Access token provided!');
+      return done();
+    });
+  });
+  it('should return error message on exceptions', (done) => {
+    const stub = sinon.stub(models.User.prototype, 'update');
+    stub.rejects();
+    chai.request(server)
+    .put('/api/user/')
+    .set('Authorization', `Bearer ${userToken}`)
+    .send({
+      email: 'updatedmail@tomipaul.com'
+    })
+    .end((err, res) => {
+      stub.restore();
+      expect(res).to.have.status(500);
+      expect(res).to.be.html;
+      expect(res.text).to.equal('Exception 500! Operation failed.');
+      return done();
+    });
+  });
+  it('should return error message on exceptions', (done) => {
+    const stub = sinon.stub(models.User.prototype, 'destroy');
+    stub.rejects();
+    chai.request(server)
+    .delete('/api/user/')
+    .set('Authorization', `Bearer ${userToken}`)
+    .send({
+      email: 'updatedmail@tomipaul.com'
+    })
+    .end((err, res) => {
+      stub.restore();
+      expect(res).to.have.status(500);
+      expect(res).to.be.html;
+      expect(res.text).to.equal('Exception 500! Operation failed.');
+      return done();
+    });
+  });
+  it('should update an existing authenticated user',
+  (done) => {
+    chai.request(server)
+    .put('/api/user')
+    .send({
+      token: userToken,
+      email: 'updatedmail@tomipaul.com'
+    })
+    .end((err, res) => {
+      expect(res).to.have.status(200);
+      expect(res).to.be.json;
+      expect(res.body.email).to
+      .equal('updatedmail@tomipaul.com');
+      return done();
+    });
+  });
+  it('should delete an existing authenticated user',
+  (done) => {
+    chai.request(server)
+    .delete('/api/user')
+    .send({
+      token: userToken,
+    })
+    .end((err, res) => {
+      expect(res).to.have.status(204);
       return done();
     });
   });
