@@ -182,31 +182,6 @@ class GroupController {
       });
     };
   }
-
-  /**
-   * Handle errors for group endpoints
-   * @method
-   * @memberof GroupController
-   * @static
-   * @return {function} Express error-handling middleware which
-   * handles all errors from the group endpoints.
-   */
-  static errorHandler() {
-    // error handlers must always take four arguments
-    // eslint-disable-next-line
-    return (err, req, res, next) => {
-      const sequelize = models.sequelize;
-      if (!err.code || err.code > 499) {
-        if (err instanceof sequelize.ValidationError) {
-          err.code = 400;
-        } else {
-          err.code = 500;
-          err.message = 'Exception 500! Operation failed.';
-        }
-      }
-      return res.status(err.code).send(err.message);
-    };
-  }
 }
 
 export default GroupController;
