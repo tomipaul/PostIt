@@ -74,9 +74,6 @@ class UserController {
         })
         .then((token) => {
           return res.status(200).json(token);
-        })
-        .catch((err) => {
-          throw err;
         });
       })
       .catch((err) => {
@@ -116,15 +113,13 @@ class UserController {
    * new user and sends response to client
    */
   static createUser() {
-    return (req, res) => {
+    return (req, res, next) => {
       ModelService.createModelInstance(userModel, req.body)
       .then((user) => {
-        if (user) {
-          res.status(201).send(user);
-        }
+        return res.status(201).send(user);
       })
       .catch((err) => {
-        res.status(400).send(err.message);
+        next(err);
       });
     };
   }
@@ -138,7 +133,7 @@ class UserController {
    * user and sends response to client
    */
   static deleteUser() {
-    return (req, res) => {
+    return (req, res, next) => {
       ModelService.deleteModelInstance(userModel, {
         username: req.username
       })
@@ -146,7 +141,7 @@ class UserController {
         res.sendStatus(204);
       })
       .catch((err) => {
-        res.status(400).send(err.message);
+        next(err);
       });
     };
   }
@@ -160,7 +155,7 @@ class UserController {
    * user details and sends response to client
    */
   static updateUser() {
-    return (req, res) => {
+    return (req, res, next) => {
       ModelService.updateModelInstance(userModel, {
         username: req.username
       }, req.body)
@@ -168,7 +163,7 @@ class UserController {
         res.status(200).send(user);
       })
       .catch((err) => {
-        res.status(400).send(err.message);
+        next(err);
       });
     };
   }
@@ -182,7 +177,7 @@ class UserController {
    * a user and sends response to client
    */
   static getUser() {
-    return (req, res) => {
+    return (req, res, next) => {
       ModelService.getModelInstance(userModel, {
         username: req.params.username
       })
@@ -190,7 +185,7 @@ class UserController {
         res.status(200).send(user);
       })
       .catch((err) => {
-        res.status(400).send(err.message);
+        next(err);
       });
     };
   }
@@ -204,13 +199,13 @@ class UserController {
    * user's groups and sends response to client
    */
   static getUserGroups() {
-    return (req, res) => {
+    return (req, res, next) => {
       AdhocModelService.getUserGroups(req.username)
       .then((groups) => {
         res.status(200).send(groups);
       })
       .catch((err) => {
-        res.status(400).send(err.message);
+        next(err);
       });
     };
   }
