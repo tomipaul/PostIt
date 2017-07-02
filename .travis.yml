@@ -20,15 +20,4 @@ addons:
     - ubuntu-toolchain-r-test
     packages:
     - g++-4.8
-before_deploy:
-- npm run transpile
-deploy:
-  provider: heroku
-  api_key:
-    secure: cnf5rxNJFQynq1QZ9+XPCXyq1kr/2HoO2TKkbb2FAvLjZ+9bkRb23VwJMwAa8ySB3jJYTohu1HbeuyNrQVwzs1y5kQsrn9EL+anqjsL7DCs64b+xfmk92RAS+SnezIjL34obAQmm7SJvKeJ2xDPfy+q7kmNG3QlSqEdlF3xyFvS72p6F+0WlSbxadIOP2Hg00sR9rMk+yRsKFJU9vMm8QD6annFzny6vlFb834m36Ta5HDjsojkQ+9v6t1TPsM5D9VSIgIsiXGQZKqn6mMLJNIHvtS2nTxeDzJBve6GlFW22Li/UHG8Vi61TvlwL4wpxNJcdgi5fLFUvkZgNwuO8g8aMgC2okkf7OTwbOw5TAotz9Ju6Ur4pZkeUyuPlkWDh0cjmUXKaieKov3TRQmSEUcyIfjeJMN44ICYdrb6K72tiKi8Q6uQ92ic685xZZI3Qz1kKLcSifeG1Zw5W3xAB/O+BDu9AjsxlLxQPHfyYhweRvm6Ra8YGE1jOwWu2tc/Z5DIwtOqDJZignkoVA4SI2mLMFhFmHgyb65osdmasVxbXN1ubcKqB3pSvbL50T26+W0juliEEtQBt0JCC5RvzcNfQzFgUccDCoj7OOtm6TPc9T5vnLrRAG7aGbxlPZubE2BxpIwPAHTMWwadJU2A6MrMsFcnqhBjcdi9nLEIpfrI=
-  app: app-postit
-  on: develop
-  run:
-  - npm install
-  - npm run migrations
-  - npm start
+
