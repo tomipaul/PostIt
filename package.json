@@ -4,12 +4,13 @@
   "description": "A simple application that allows friends and colleagues create groups for notifications",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "npm run prod:setup && node dist/index.js",
     "start:dev": "babel-watch server/index.js",
     "migrations": "sequelize db:migrate",
     "transpile": "babel server --out-dir dist --copy-files",
     "test": "nyc mocha server/tests/**/*.js --timeout 10000",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "prod:setup": "npm run transpile && npm run migrations"
   },
   "repository": {
     "type": "git",
