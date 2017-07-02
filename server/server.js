@@ -5,6 +5,7 @@ import express from 'express';
 import groupRouter from './routes/GroupRoutes';
 import authRouter from './routes/AuthRoutes';
 import userRouter from './routes/UserRoutes';
+import errorHandler from './controllers/ErrorHandler';
 
 const app = express();
 app.use(cookieParser());
@@ -13,6 +14,7 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use(authRouter);
 app.use(userRouter);
 app.use(groupRouter);
+app.use(errorHandler());
 
 const server = http.createServer(app);
 export default server;

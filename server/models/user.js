@@ -65,16 +65,11 @@ export default (sequelize, DataTypes) => {
   }, {
     hooks: {
       beforeCreate(user) {
-        if (user.isNewRecord) {
-          return bcrypt.hash(user.password, 10)
-          .then((hash) => {
-            user.password = hash;
-            return user.password;
-          })
-          .catch((err) => {
-            return err;
-          });
-        }
+        return bcrypt.hash(user.password, 10)
+        .then((hash) => {
+          user.password = hash;
+          return user.password;
+        });
       },
       beforeUpdate(user) {
         if (user.changed('password')) {
@@ -82,9 +77,6 @@ export default (sequelize, DataTypes) => {
           .then((hash) => {
             user.password = hash;
             return user.password;
-          })
-          .catch((err) => {
-            return err;
           });
         }
       }
@@ -102,9 +94,6 @@ export default (sequelize, DataTypes) => {
     return bcrypt.compare(password, this.password)
     .then((res) => {
       return res;
-    })
-    .catch((err) => {
-      throw err;
     });
   };
   return User;
