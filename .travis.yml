@@ -1,22 +1,32 @@
 language: node_js
 before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
-  - npm run migrations
+- psql -c 'create database travis_ci_test;' -U postgres
+- npm run migrations
 after_script:
-  - npm run coverage
+- npm run coverage
 services:
-  - postgresql
+- postgresql
 node_js:
-  - "node"
-  - "6"
+- node
+- '6'
 env:
   global:
-    - CXX=g++-4.8
-    - NODE_ENV=test
-    - URL_TEST=postgres://postgres@localhost/travis_ci_test
+  - CXX=g++-4.8
+  - NODE_ENV=test
+  - URL_TEST=postgres://postgres@localhost/travis_ci_test
 addons:
   apt:
     sources:
-      - ubuntu-toolchain-r-test
+    - ubuntu-toolchain-r-test
     packages:
-      - g++-4.8
+    - g++-4.8
+before_deploy:
+- npm run transpile
+deploy:
+  provider: heroku
+  api_key:
+    secure: QK0jVJENT+55JKHWhbu+N13b6kHIcyPzyLF7rv+uLT37nfciQm9kLwNy74RrWVzzcpPJaem0A2UGj15B192assInD8UjzaipAGrXLmU350hNAhwOTp+vKwezACdINZ+moxXQO8unMmZf8eCZL0TyeIbc7UKSvqnrMZKKT/sE3uMMiipWCSsA5GDYnzY0SgAe0tuN6beseRo8o9sG90kpqTC3iWOItr6SJoWGIwPqx4PhEHymTk0lgdll1EO7s0zG3dSEBqTTRopl/H4Nq0GhI2usdbgbHnIehfUampD3bdlD8mihPrCeWW3rm/6R7+DZk/3es0KQv38QjMCIx8IWv3zJpsckP1uhkjTcsSqOqA+D5ZlkhRYpT73NAd+rkCojiRLDezowCtezJq9+71YAifpo/t1DyKIATHsb/SbxPIACVuc/AXgcJMdd8ERGIQ/2+aFMve7+SnODLU2abGwCO/F68tKww77WJUPr1oAjNGQ91ozKyhi5Eq4OZXABRAd0IXNgXstUNFsuDnN+cGON5utnd+OdvkqwD1nXoX2hvJ50tU8BRLEpIMOtAqrJ6j9XntI7jF4cGISyqTEcu+vBZ3mmKIeTJhDCe/qjPpOdRpO+87saYurIGUN15VEhdO3qpCWRP0NAXkdivDzeK48lUChc3lSl87wvhxc24+WLULQ=
+  app: app-postit
+  on: develop
+  run:
+  - npm run migrations
