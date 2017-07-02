@@ -1,10 +1,10 @@
 # PostIt
 [![Build Status](https://travis-ci.org/tomipaul/PostIt.svg?branch=develop)](https://travis-ci.org/tomipaul/PostIt)
-[![Coverage Status](https://coveralls.io/repos/github/tomipaul/PostIt/badge.svg?branch=backend-tests)](https://coveralls.io/github/tomipaul/PostIt?branch=backend-tests)
+[![Coverage Status](https://coveralls.io/repos/github/tomipaul/PostIt/badge.svg?branch=develop)](https://coveralls.io/github/tomipaul/PostIt?branch=develop)
 [![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg)](https://codeclimate.com/github/codeclimate/codeclimate)
 
 ## Introduction
-*  **`PostIt`** is a simple application that implements a distributed messaging sysytem. It allows friends and colleagues create groups for messages and notifications.
+*  **`PostIt`** is a simple application that implements a distributed messaging system. It allows friends and colleagues create groups for messages and notifications.
 *  It has the following features;
   - Allow users to signup
   - Allow users to signin
@@ -95,7 +95,14 @@ You can check out the online version at https://app-postit.herokuapp.com/
         "username": "tomipaul89"
       }
     ```
-  * `POST` /api/group/:groupId/message - Post message to group; takes a message and post it to group specified by groupId
+  * `DELETE` /api/group/:groupId/user - Delete user from a group.
+    An example of a valid JSON payload to the endpoint will be:
+    ```
+      {
+        "username": "tomipaul89"
+      }
+    ```
+  * `POST` /api/group/:groupId/message - Post message to group; takes a message and post it to group specified by groupId.
     groupId is part of the response returned when a group is created
     A message has a text and priority
     * text: the message string
