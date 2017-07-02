@@ -29,4 +29,6 @@ deploy:
   app: app-postit
   on: develop
   run:
+  - npm install
   - npm run migrations
+  - npm start
