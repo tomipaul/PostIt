@@ -1,21 +1,21 @@
+.container {
+  width: 100% !important;
+}
 header {
   position: fixed;
   top: 0;
-  left: 10%;
-  width: 80%;
+  left: 0;
+  width: 100%;
   background-color: #4fb8c2;
-  height: 15%;
   z-index:1;
 }
 header > img {
   margin-left: 0;
-  width: 17%;
-  height: 100%;
+  width: 3cm;
+  height: 1cm;
 }
-.fa-2x {
-  margin-left: -1.5%;
+i.fa {
   vertical-align: middle;
-  margin-bottom: -1%;
 }
 .list-groups {
   width: 25%;

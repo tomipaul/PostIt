@@ -2,16 +2,16 @@
 <html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/message-board.css">
     <link rel="stylesheet" href="../css/create-group.css">
   </head>
   <body>
-    <div class="container-fluid">
+    <div class="container">
       <header>
-        <img src="../images/post-it-icon.png"></img>
-        <i class="fa fa-envelope fa-2x"></i>
+        <i class="fa fa-bars"></i>
+        <img class = "responsive-img" src="../images/post-it-icon.png"></img>
+        <i class="fa fa-envelope"></i>
       </header>
       <div class="group-msg-div">
         <div class="list-groups">
@@ -20,10 +20,10 @@
               <a href=# id="friends">Friends</a>
               <i class="glyphicon glyphicon-option-horizontal" id="toggle-grp-options"></i>
               <div class="hidden grp-options">
-                <button type="button" class="btn btn-link">Add User</button>
-                <button type="button" class="btn btn-link">Message Board</button>
-                <button type="button" class="btn btn-link">Delete Group</button>
-                <button type="button" class="btn btn-link">Post Message</button>
+                <button type="button">Add User</button>
+                <button type="button">Message Board</button>
+                <button type="button">Delete Group</button>
+                <button type="button">Post Message</button>
               </div>
             </li>
             <li class="list-group-item">Family</li>
@@ -71,7 +71,7 @@
       </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
     <script src="../js/create-group.js"></script>
   </body>
 </html>
