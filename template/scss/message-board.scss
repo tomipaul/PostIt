@@ -1,0 +1,111 @@
+$primary-color: #4fb8c2;
+$normal: purple;
+$urgent: teal;
+$critical: red;
+
+.group-msg-div {
+  position: absolute;
+  top: 20%;
+  width: 80%;
+  left:10%;
+}
+.list-groups {
+  width: 25%;
+  float: left;
+  border-style: solid;
+  border-width: 2px;
+  border-color: $primary-color;
+  border-bottom-width: 0;
+}
+.nav-pills {
+  > li {
+    > a {
+      color: $primary-color;
+    }
+    &.active {
+      > a, > a:focus, > a:hover {
+        color: $primary-color;
+      }
+    }
+  }
+}
+.grp-messages {
+  width: 70%;
+  float: right;
+  margin-left: 5%;
+  > span {
+    display: inline-block;
+    margin: auto;
+    margin-bottom: 2%;
+    &.paginate-buttons {
+      display: flex;
+      justify-content: space-between;
+      width: 60%;
+      margin: auto;
+      margin-top: 3%;
+    }
+  }
+}
+.label-primary{
+  background-color: $normal;
+}
+.label-success{
+  background-color: $urgent;
+}
+.label-default{
+  background-color: $critical;
+}
+.grp-unread-message {
+  margin:auto;
+  width: 80%;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 16px;
+  border-style: solid;
+  border-width: 2px;
+  padding: 2%;
+  margin-top: 5%;
+  border-radius: 5px;
+  background-color: #e3e8e4;
+  &[priority=normal] {
+    color: $normal;
+  }
+  &[priority=urgent] {
+    color: $urgent;
+  }
+  &[priority=critical] {
+    color: $critical;
+  }
+}
+.post-detail[priority=normal] {
+  color: $normal;
+}
+.post-detail[priority=critical] {
+  color: $critical;
+}
+.post-detail[priority=urgent] {
+  color: $urgent;
+}
+tr[priority=normal] {
+  color: $normal;
+  td {
+    i.glyphicon {
+      color: $normal;
+    }
+  }
+}
+tr[priority=urgent] {
+  color: $urgent;
+  td {
+    i.glyphicon {
+      color: $urgent;
+    }
+  }
+}
+tr[priority=critical] {
+  color: $critical;
+  td {
+    i.glyphicon {
+      color: $critical;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+$primary-color: #4fb8c2;
+
+header {
+  position: fixed;
+  top: 0;
+  left: 10%;
+  width: 80%;
+  background-color: $primary-color;
+  height: 15%;
+  z-index: 1;
+  img {
+    margin-left: 0;
+    width: 17%;
+    height: 100%;
+    i {
+      margin-left: -1.5%;
+      vertical-align: middle;
+      margin-bottom: -1%;
+    }
+  }
+}
