@@ -2,6 +2,7 @@
 [![Build Status](https://travis-ci.org/tomipaul/PostIt.svg?branch=develop)](https://travis-ci.org/tomipaul/PostIt)
 [![Coverage Status](https://coveralls.io/repos/github/tomipaul/PostIt/badge.svg?branch=develop)](https://coveralls.io/github/tomipaul/PostIt?branch=develop)
 [![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg)](https://codeclimate.com/github/codeclimate/codeclimate)
+[![Code Climate](https://codeclimate.com/github/tomipaul/PostIt/badges/gpa.svg)](https://codeclimate.com/github/tomipaul/PostIt)
 
 ## Introduction
 *  **`PostIt`** is a simple application that implements a distributed messaging system. It allows friends and colleagues create groups for messages and notifications.
