@@ -20,9 +20,13 @@ class UserController {
   static validateRequest() {
     return (req, res, next) => {
       if (req.method !== 'POST') {
-        res.status(400).send('POST request method expected');
+        res.status(400).json({
+          message: 'POST request method expected'
+        });
       } else if (!req.body.username || !req.body.password) {
-        res.status(400).send('non-empty username and password expected');
+        res.status(400).json({
+          message: 'non-empty username and password expected',
+        });
       } else {
         next();
       }
@@ -43,7 +47,9 @@ class UserController {
       const token = req.get('Authorization') || req.body.token
       || req.cookies.token || req.query.token;
       if (!token) {
-        return res.status(400).send('No Access token provided!');
+        return res.status(400).json({
+          message: 'No Access token provided!'
+        });
       }
       const matched = /^Bearer (\S+)$/.exec(token);
       req.token = (matched) ? matched[1] : token;
@@ -73,11 +79,16 @@ class UserController {
           throw new Error('Invalid Password');
         })
         .then((token) => {
-          return res.status(200).json(token);
+          return res.status(200).json({
+            token,
+            message: 'Authentication Successful'
+          });
         });
       })
       .catch((err) => {
-        return res.status(401).send(err.message);
+        return res.status(401).json({
+          message: err.message
+        });
       });
     };
   }
@@ -99,7 +110,9 @@ class UserController {
         next();
       })
       .catch((err) => {
-        return res.status(401).send(err.message);
+        return res.status(401).json({
+          message: err.message
+        });
       });
     };
   }
@@ -116,7 +129,10 @@ class UserController {
     return (req, res, next) => {
       ModelService.createModelInstance(userModel, req.body)
       .then((user) => {
-        return res.status(201).send(user);
+        return res.status(201).json({
+          user,
+          message: 'User created'
+        });
       })
       .catch((err) => {
         next(err);
@@ -138,7 +154,9 @@ class UserController {
         username: req.username
       })
       .then(() => {
-        res.sendStatus(204);
+        res.status(204).json({
+          message: 'User deleted'
+        });
       })
       .catch((err) => {
         next(err);
@@ -160,7 +178,10 @@ class UserController {
         username: req.username
       }, req.body)
       .then((user) => {
-        res.status(200).send(user);
+        res.status(200).json({
+          user,
+          message: 'User updated'
+        });
       })
       .catch((err) => {
         next(err);
@@ -182,7 +203,7 @@ class UserController {
         username: req.params.username
       })
       .then((user) => {
-        res.status(200).send(user);
+        res.status(200).json({ user });
       })
       .catch((err) => {
         next(err);
@@ -202,7 +223,7 @@ class UserController {
     return (req, res, next) => {
       AdhocModelService.getUserGroups(req.username)
       .then((groups) => {
-        res.status(200).send(groups);
+        res.status(200).json({ groups });
       })
       .catch((err) => {
         next(err);

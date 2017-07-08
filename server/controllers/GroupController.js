@@ -86,7 +86,10 @@ class GroupController {
       .then((group) => {
         return group.addUser(req.username)
         .then(() => {
-          res.status(201).send(group);
+          res.status(201).json({
+            group,
+            message: 'Group created'
+          });
         });
       })
       .catch((err) => {
@@ -108,7 +111,9 @@ class GroupController {
       const username = req.body.username;
       return AdhocModelService.addUserToGroup(username, req.group)
       .then(() => {
-        return res.sendStatus(200);
+        return res.status(200).json({
+          message: `User ${username} added to group`
+        });
       })
       .catch((err) => {
         next(err);
@@ -133,7 +138,9 @@ class GroupController {
       return AdhocModelService
       .addMessageToGroup(message, req.group)
       .then(() => {
-        return res.sendStatus(200);
+        return res.status(200).json({
+          message: 'Message posted to group'
+        });
       })
       .catch((err) => {
         next(err);
@@ -153,7 +160,7 @@ class GroupController {
     return (req, res, next) => {
       return AdhocModelService.getGroupMessages(req.group)
       .then((messages) => {
-        return res.status(200).json(messages);
+        return res.status(200).json({ messages });
       })
       .catch((err) => {
         next(err);
@@ -175,7 +182,9 @@ class GroupController {
       return AdhocModelService
       .removeUserFromGroup(username, req.group)
       .then(() => {
-        return res.sendStatus(200);
+        return res.status(200).json({
+          message: 'User removed from group'
+        });
       })
       .catch((err) => {
         next(err);
