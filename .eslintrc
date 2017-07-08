@@ -36,6 +36,7 @@
     "import/no-extraneous-dependencies": ["error", {
       "devDependencies": ["**/tests/**"]
     }],
+    "import/extensions": 0,
     "class-methods-use-this": ["error", {"exceptMethods": ["searchIndex"]}],
     "require-jsdoc": ["error", {
         "require": {
