@@ -28,3 +28,6 @@ exclude_paths:
 - "tests/"
 - "spec/"
 - "**/vendor/"
+- "server/tests"
+- "server/migrations"
+- "server/seeders"
