@@ -20,9 +20,13 @@ class UserController {
   static validateRequest() {
     return (req, res, next) => {
       if (req.method !== 'POST') {
-        res.status(400).send('POST request method expected');
+        res.status(400).json({
+          message: 'POST request method expected'
+        });
       } else if (!req.body.username || !req.body.password) {
-        res.status(400).send('non-empty username and password expected');
+        res.status(400).json({
+          message: 'non-empty username and password expected',
+        });
       } else {
         next();
       }
@@ -43,7 +47,9 @@ class UserController {
       const token = req.get('Authorization') || req.body.token
       || req.cookies.token || req.query.token;
       if (!token) {
-        return res.status(400).send('No Access token provided!');
+        return res.status(400).json({
+          message: 'No Access token provided!'
+        });
       }
       const matched = /^Bearer (\S+)$/.exec(token);
       req.token = (matched) ? matched[1] : token;
@@ -73,11 +79,16 @@ class UserController {
           throw new Error('Invalid Password');
         })
         .then((token) => {
-          return res.status(200).json(token);
+          return res.status(200).json({
+            token,
+            message: 'Authentication Successful'
+          });
         });
       })
       .catch((err) => {
-        return res.status(401).send(err.message);
+        return res.status(401).json({
+          message: err.message
+        });
       });
     };
   }
@@ -95,12 +106,57 @@ class UserController {
       const rsaKey = process.env.PUBLIC_KEY;
       return AuthService.verifyTokenGetPayload(req.token, rsaKey)
       .then((decodedPayload) => {
-        req.username = decodedPayload.key;
+        req.username = decodedPayload.username;
+        req.userStatus = decodedPayload.status;
         next();
       })
       .catch((err) => {
-        return res.status(401).send(err.message);
+        return res.status(401).json({
+          message: err.message
+        });
       });
+    };
+  }
+
+  /**
+   * Restrict access to profile owner and admin only
+   * @method permitUserorAdmin
+   * @memberof GroupController
+   * @static
+   * @return {function} Express middleware function which
+   * permits only the authenticated user or
+   * admin to utilize an endpoint
+   */
+  static permitOwnerAndAdmin() {
+    return (req, res, next) => {
+      if (req.userStatus === 'admin' ||
+      req.params.username === req.username) {
+        return next();
+      }
+      const msg = "Access denied! You don't have appropriate privileges";
+      const err = new Error(msg);
+      err.code = 403;
+      throw err;
+    };
+  }
+
+  /**
+   * Restrict access to admin only
+   * @method permitAdmin
+   * @memberof GroupController
+   * @static
+   * @return {function} Express middleware function which
+   * permits only the admin to utilize an endpoint
+   */
+  static permitAdmin() {
+    return (req, res, next) => {
+      if (req.userStatus === 'admin') {
+        return next();
+      }
+      const msg = "Access denied! You don't have appropriate privileges";
+      const err = new Error(msg);
+      err.code = 403;
+      throw err;
     };
   }
 
@@ -114,9 +170,13 @@ class UserController {
    */
   static createUser() {
     return (req, res, next) => {
-      ModelService.createModelInstance(userModel, req.body)
+      const { status, ...credentials } = req.body;
+      ModelService.createModelInstance(userModel, credentials)
       .then((user) => {
-        return res.status(201).send(user);
+        return res.status(201).json({
+          user,
+          message: 'User created'
+        });
       })
       .catch((err) => {
         next(err);
@@ -135,10 +195,10 @@ class UserController {
   static deleteUser() {
     return (req, res, next) => {
       ModelService.deleteModelInstance(userModel, {
-        username: req.username
+        username: req.params.username
       })
       .then(() => {
-        res.sendStatus(204);
+        return res.sendStatus(204);
       })
       .catch((err) => {
         next(err);
@@ -157,10 +217,13 @@ class UserController {
   static updateUser() {
     return (req, res, next) => {
       ModelService.updateModelInstance(userModel, {
-        username: req.username
+        username: req.params.username
       }, req.body)
       .then((user) => {
-        res.status(200).send(user);
+        res.status(200).json({
+          user,
+          message: 'User updated'
+        });
       })
       .catch((err) => {
         next(err);
@@ -182,7 +245,7 @@ class UserController {
         username: req.params.username
       })
       .then((user) => {
-        res.status(200).send(user);
+        res.status(200).json({ user });
       })
       .catch((err) => {
         next(err);
@@ -202,7 +265,7 @@ class UserController {
     return (req, res, next) => {
       AdhocModelService.getUserGroups(req.username)
       .then((groups) => {
-        res.status(200).send(groups);
+        res.status(200).json({ groups });
       })
       .catch((err) => {
         next(err);

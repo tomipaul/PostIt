@@ -16,14 +16,14 @@ class AuthService {
    */
   static generateToken(user, rsaKey) {
     return new Promise((resolve, reject) => {
-      const privateClaim = { key: user.username };
       const options = {
         algorithm: 'RS256',
         issuer: 'PostItAPI',
         subject: user.email,
         expiresIn: '30d'
       };
-      return jwt.sign(privateClaim, rsaKey, options,
+      const { username, status } = user;
+      return jwt.sign({ username, status }, rsaKey, options,
       (err, token) => {
         return (err) ? reject(err) : resolve(token);
       });

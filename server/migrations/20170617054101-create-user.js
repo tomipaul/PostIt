@@ -58,6 +58,10 @@ module.exports = {
           }
         }
       },
+      status: {
+        type: Sequelize.STRING,
+        defaultValue: 'user'
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

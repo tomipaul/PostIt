@@ -23,7 +23,8 @@ class GroupController {
         id: groupId
       })
       .then((group) => {
-        if (group.CreatorUsername === req.username) {
+        if (group.CreatorUsername === req.username ||
+        req.userStatus === 'admin') {
           req.group = group;
           return next();
         }
@@ -55,7 +56,7 @@ class GroupController {
       .then((group) => {
         return group.hasUser(req.username)
         .then((hasUser) => {
-          if (hasUser) {
+          if (hasUser || req.userStatus === 'admin') {
             req.group = group;
             return next();
           }
@@ -81,12 +82,31 @@ class GroupController {
    */
   static createGroup() {
     return (req, res, next) => {
-      req.body.CreatorUsername = req.username;
-      ModelService.createModelInstance(groupModel, req.body)
+      return groupModel.findOne({
+        where: {
+          name: req.body.name,
+          CreatorUsername: req.username
+        }
+      })
       .then((group) => {
-        return group.addUser(req.username)
-        .then(() => {
-          res.status(201).send(group);
+        if (group) {
+          const err = new Error();
+          err.message = `You have an existing group ${req.body.name}`;
+          err.code = 400;
+          throw err;
+        }
+      })
+      .then(() => {
+        req.body.CreatorUsername = req.username;
+        return ModelService.createModelInstance(groupModel, req.body)
+        .then((group) => {
+          return group.addUser(req.username)
+          .then(() => {
+            return res.status(201).json({
+              group,
+              message: 'Group created'
+            });
+          });
         });
       })
       .catch((err) => {
@@ -108,7 +128,9 @@ class GroupController {
       const username = req.body.username;
       return AdhocModelService.addUserToGroup(username, req.group)
       .then(() => {
-        return res.sendStatus(200);
+        return res.status(200).json({
+          message: `User ${username} added to group`
+        });
       })
       .catch((err) => {
         next(err);
@@ -133,7 +155,9 @@ class GroupController {
       return AdhocModelService
       .addMessageToGroup(message, req.group)
       .then(() => {
-        return res.sendStatus(200);
+        return res.status(200).json({
+          message: 'Message posted to group'
+        });
       })
       .catch((err) => {
         next(err);
@@ -153,7 +177,7 @@ class GroupController {
     return (req, res, next) => {
       return AdhocModelService.getGroupMessages(req.group)
       .then((messages) => {
-        return res.status(200).json(messages);
+        return res.status(200).json({ messages });
       })
       .catch((err) => {
         next(err);
@@ -175,7 +199,9 @@ class GroupController {
       return AdhocModelService
       .removeUserFromGroup(username, req.group)
       .then(() => {
-        return res.sendStatus(200);
+        return res.status(200).json({
+          message: 'User removed from group'
+        });
       })
       .catch((err) => {
         next(err);

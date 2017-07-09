@@ -61,6 +61,10 @@ export default (sequelize, DataTypes) => {
           msg: 'mobile number is invalid'
         }
       }
+    },
+    status: {
+      type: DataTypes.STRING,
+      defaultValue: 'user'
     }
   }, {
     hooks: {

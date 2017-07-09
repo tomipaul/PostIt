@@ -19,6 +19,8 @@ export default function errorHandler() {
         err.message = 'Exception 500! Operation failed.';
       }
     }
-    return res.status(err.code).send(err.message);
+    return res.status(err.code).json({
+      message: err.message
+    });
   };
 }

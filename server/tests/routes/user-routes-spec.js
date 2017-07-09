@@ -11,6 +11,8 @@ chai.use(chaiHTTP);
 const expect = chai.expect;
 const {
   validUser,
+  anotherValidUser,
+  adminUser,
   incompleteUser,
   emptyUsername,
   emptyEmail,
@@ -30,10 +32,10 @@ describe('/api/user/signup', () => {
     .end((err, res) => {
       expect(res).to.have.status(201);
       expect(res).to.be.json;
-      expect(res.body.username).to.equal(validUser.username);
-      expect(res.body.phoneNo).to.equal(validUser.phoneNo);
-      expect(res.body.email).to.equal(validUser.email);
-      expect(res.body).to.have.own.property('updatedAt');
+      expect(res.body.user.username).to.equal(validUser.username);
+      expect(res.body.user.phoneNo).to.equal(validUser.phoneNo);
+      expect(res.body.user.email).to.equal(validUser.email);
+      expect(res.body.user).to.have.own.property('updatedAt');
       return done();
     });
   });
@@ -43,8 +45,8 @@ describe('/api/user/signup', () => {
     .send(incompleteUser)
     .end((err, res) => {
       expect(res).to.have.status(400);
-      expect(res).to.be.html;
-      expect(res.text).to.equal('Validation Error');
+      expect(res).to.be.json;
+      expect(res.body.message).to.equal('Validation Error');
       return done();
     });
   });
@@ -54,8 +56,8 @@ describe('/api/user/signup', () => {
     .send(validUser)
     .end((err, res) => {
       expect(res).to.have.status(400);
-      expect(res).to.be.html;
-      expect(res.text).to.equal('username is not available!');
+      expect(res).to.be.json;
+      expect(res.body.message).to.equal('username is not available!');
       return done();
     });
   });
@@ -65,8 +67,8 @@ describe('/api/user/signup', () => {
     .send({ ...validUser, username: 'emailexists' })
     .end((err, res) => {
       expect(res).to.have.status(400);
-      expect(res).to.be.html;
-      expect(res.text).to.equal('email already exists!');
+      expect(res).to.be.json;
+      expect(res.body.message).to.equal('email already exists!');
       return done();
     });
   });
@@ -77,12 +79,12 @@ describe('/api/user/signup', () => {
     .send(emptyUsername)
     .end((err, res) => {
       expect(res).to.have.status(400);
-      expect(res).to.be.html;
-      expect(res.text).to.have
+      expect(res).to.be.json;
+      expect(res.body.message).to.have
       .string('username cannot be an empty string');
-      expect(res.text).to.have
+      expect(res.body.message).to.have
       .string('username can only contain letters and numbers');
-      expect(res.text).to.have
+      expect(res.body.message).to.have
       .string('username cannot be longer than 25 characters');
       return done();
     });
@@ -94,10 +96,10 @@ describe('/api/user/signup', () => {
     .send(emptyEmail)
     .end((err, res) => {
       expect(res).to.have.status(400);
-      expect(res).to.be.html;
-      expect(res.text).to.have
+      expect(res).to.be.json;
+      expect(res.body.message).to.have
       .string('email is invalid');
-      expect(res.text).to.have
+      expect(res.body.message).to.have
       .string('email has invalid length');
       return done();
     });
@@ -109,8 +111,8 @@ describe('/api/user/signup', () => {
     .send(emptyPassword)
     .end((err, res) => {
       expect(res).to.have.status(400);
-      expect(res).to.be.html;
-      expect(res.text).to.have
+      expect(res).to.be.json;
+      expect(res.body.message).to.have
       .string('password must be at least six characters long');
       return done();
     });
@@ -122,10 +124,10 @@ describe('/api/user/signup', () => {
     .send(emptyPhoneNo)
     .end((err, res) => {
       expect(res).to.have.status(400);
-      expect(res).to.be.html;
-      expect(res.text).to.have
+      expect(res).to.be.json;
+      expect(res.body.message).to.have
       .string('mobile number cannot be an empty string');
-      expect(res.text).to.have
+      expect(res.body.message).to.have
       .string('mobile number is invalid');
       return done();
     });
@@ -144,9 +146,9 @@ describe('/api/user/signin', () => {
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
-      expect(res.body).to.be.a('string');
-      expect(res.body).to.match(/^\S+.\S+.\S$/);
-      userToken = res.body;
+      expect(res.body.token).to.be.a('string');
+      expect(res.body.token).to.match(/^\S+.\S+.\S$/);
+      userToken = res.body.token;
       if (err) { return done(err); }
       return done();
     });
@@ -161,8 +163,8 @@ describe('/api/user/signin', () => {
     })
     .end((err, res) => {
       expect(res).to.have.status(400);
-      expect(res).to.be.html;
-      expect(res.text).to.be
+      expect(res).to.be.json;
+      expect(res.body.message).to.be
       .equal('POST request method expected');
       return done();
     });
@@ -177,8 +179,8 @@ describe('/api/user/signin', () => {
     })
     .end((err, res) => {
       expect(res).to.have.status(400);
-      expect(res).to.be.html;
-      expect(res.text).to.be
+      expect(res).to.be.json;
+      expect(res.body.message).to.be
       .equal('non-empty username and password expected');
       return done();
     });
@@ -193,8 +195,8 @@ describe('/api/user/signin', () => {
     })
     .end((err, res) => {
       expect(res).to.have.status(400);
-      expect(res).to.be.html;
-      expect(res.text).to.be
+      expect(res).to.be.json;
+      expect(res.body.message).to.be
       .equal('non-empty username and password expected');
       return done();
     });
@@ -209,8 +211,8 @@ describe('/api/user/signin', () => {
     })
     .end((err, res) => {
       expect(res).to.have.status(401);
-      expect(res).to.be.html;
-      expect(res.text).to.have
+      expect(res).to.be.json;
+      expect(res.body.message).to.have
       .string('User does not exist');
       return done();
     });
@@ -225,8 +227,8 @@ describe('/api/user/signin', () => {
     })
     .end((err, res) => {
       expect(res).to.have.status(401);
-      expect(res).to.be.html;
-      expect(res.text).to.have
+      expect(res).to.be.json;
+      expect(res.body.message).to.have
       .string('Invalid Password');
       return done();
     });
@@ -241,7 +243,7 @@ describe('/api/user/:username', () => {
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
-      expect(res.body).to.include({
+      expect(res.body.user).to.include({
         username: validUser.username,
         email: validUser.email,
         phoneNo: validUser.phoneNo
@@ -255,8 +257,8 @@ describe('/api/user/:username', () => {
     .set('Authorization', `Bearer ${userToken}`)
     .end((err, res) => {
       expect(res).to.have.status(404);
-      expect(res).to.be.html;
-      expect(res.text).to.equal('Error! User does not exist');
+      expect(res).to.be.json;
+      expect(res.body.message).to.equal('Error! User does not exist');
       return done();
     });
   });
@@ -265,8 +267,8 @@ describe('/api/user/:username', () => {
     .get(`/api/user/${validUser.username}`)
     .end((err, res) => {
       expect(res).to.have.status(400);
-      expect(res).to.be.html;
-      expect(res.text).to.equal('No Access token provided!');
+      expect(res).to.be.json;
+      expect(res.body.message).to.equal('No Access token provided!');
       return done();
     });
   });
@@ -276,8 +278,8 @@ describe('/api/user/:username', () => {
     .set('Authorization', 'Bearer abcdefeighhth12332444200999')
     .end((err, res) => {
       expect(res).to.have.status(401);
-      expect(res).to.be.html;
-      expect(res.text).to.equal('jwt malformed');
+      expect(res).to.be.json;
+      expect(res.body.message).to.equal('jwt malformed');
       return done();
     });
   });
@@ -307,8 +309,8 @@ describe('/api/user/groups', () => {
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
-      expect(res.body).to.be.an('array');
-      expect(res.body).to.have.a.lengthOf(2);
+      expect(res.body.groups).to.be.an('array');
+      expect(res.body.groups).to.have.a.lengthOf(2);
       return done();
     });
   });
@@ -318,8 +320,8 @@ describe('/api/user/groups', () => {
     .get('/api/user/groups')
     .end((err, res) => {
       expect(res).to.have.status(400);
-      expect(res).to.be.html;
-      expect(res.text).to.equal('No Access token provided!');
+      expect(res).to.be.json;
+      expect(res.body.message).to.equal('No Access token provided!');
       return done();
     });
   });
@@ -332,39 +334,141 @@ describe('/api/user/groups', () => {
     .end((err, res) => {
       stub.restore();
       expect(res).to.have.status(500);
-      expect(res).to.be.html;
-      expect(res.text).to.equal('Exception 500! Operation failed.');
+      expect(res).to.be.json;
+      expect(res.body.message).to.equal('Exception 500! Operation failed.');
       return done();
     });
   });
 });
 
-describe('/api/user', () => {
+describe('/api/user/:username', () => {
+  let adminToken;
+  before(() => {
+    return models.User.bulkCreate([
+      adminUser,
+      anotherValidUser
+    ], {
+      validate: true,
+      individualHooks: true
+    })
+    .then(() => {
+      return chai.request(server)
+      .post('/api/user/signin')
+      .send({
+        username: adminUser.username,
+        password: adminUser.password
+      })
+      .then((res) => {
+        expect(res.body.message).to.equal('Authentication Successful');
+        expect(res).to.have.status(200);
+        expect(res.body.token).to.be.a('string');
+        adminToken = res.body.token;
+      });
+    });
+  });
   it('should return error message if request has no token',
   (done) => {
     chai.request(server)
-    .put('/api/user/')
+    .put(`/api/user/${anotherValidUser.username}`)
     .send({
-      email: 'updatedmail@tomipaul.com'
+      email: 'updateduser@andela.com'
     })
     .end((err, res) => {
       expect(res).to.have.status(400);
-      expect(res).to.be.html;
-      expect(res.text).to.equal('No Access token provided!');
+      expect(res).to.be.json;
+      expect(res.body.message).to.equal('No Access token provided!');
       return done();
     });
   });
   it('should return error message if request has no token',
   (done) => {
     chai.request(server)
-    .delete('/api/user/')
+    .delete(`/api/user/${anotherValidUser.username}`)
     .send({
-      email: 'updatedmail@tomipaul.com'
+      email: 'updateduser@andela.com'
     })
     .end((err, res) => {
       expect(res).to.have.status(400);
-      expect(res).to.be.html;
-      expect(res.text).to.equal('No Access token provided!');
+      expect(res).to.be.json;
+      expect(res.body.message).to.equal('No Access token provided!');
+      return done();
+    });
+  });
+  it('should update user if request is by owner',
+  (done) => {
+    chai.request(server)
+    .put(`/api/user/${validUser.username}`)
+    .send({
+      token: userToken,
+      email: 'updateduser@andela.com'
+    })
+    .end((err, res) => {
+      expect(res).to.have.status(200);
+      expect(res).to.be.json;
+      expect(res.body.message).to.equal('User updated');
+      expect(res.body.user.email).to
+      .equal('updateduser@andela.com');
+      return done();
+    });
+  });
+  it('should update user if request is by admin',
+  (done) => {
+    chai.request(server)
+    .put(`/api/user/${validUser.username}`)
+    .send({
+      token: adminToken,
+      email: 'updatedByAdmin@andela.com'
+    })
+    .end((err, res) => {
+      expect(res).to.have.status(200);
+      expect(res).to.be.json;
+      expect(res.body.message).to.equal('User updated');
+      expect(res.body.user.email).to
+      .equal('updatedByAdmin@andela.com');
+      return done();
+    });
+  });
+  it('should return error if update request is not by owner or admin',
+  (done) => {
+    chai.request(server)
+    .put(`/api/user/${anotherValidUser.username}`)
+    .send({
+      token: userToken,
+      email: 'updatedByAnother@andela.com'
+    })
+    .end((err, res) => {
+      expect(res).to.have.status(403);
+      expect(res).to.be.json;
+      expect(res.body.message).to
+      .equal("Access denied! You don't have appropriate privileges");
+      return done();
+    });
+  });
+  it('should return error if delete request is not by admin',
+  (done) => {
+    chai.request(server)
+    .delete(`/api/user/${anotherValidUser.username}`)
+    .send({
+      token: userToken,
+      email: 'updatedByAnother@andela.com'
+    })
+    .end((err, res) => {
+      expect(res).to.have.status(403);
+      expect(res).to.be.json;
+      expect(res.body.message).to
+      .equal("Access denied! You don't have appropriate privileges");
+      return done();
+    });
+  });
+  it('should delete user if request is by admin',
+  (done) => {
+    chai.request(server)
+    .delete(`/api/user/${anotherValidUser.username}`)
+    .send({
+      token: adminToken
+    })
+    .end((err, res) => {
+      expect(res).to.have.status(204);
       return done();
     });
   });
@@ -372,16 +476,16 @@ describe('/api/user', () => {
     const stub = sinon.stub(models.User.prototype, 'update');
     stub.rejects();
     chai.request(server)
-    .put('/api/user/')
+    .put(`/api/user/${validUser.username}`)
     .set('Authorization', `Bearer ${userToken}`)
     .send({
-      email: 'updatedmail@tomipaul.com'
+      email: 'updateduser@andela.com'
     })
     .end((err, res) => {
       stub.restore();
       expect(res).to.have.status(500);
-      expect(res).to.be.html;
-      expect(res.text).to.equal('Exception 500! Operation failed.');
+      expect(res).to.be.json;
+      expect(res.body.message).to.equal('Exception 500! Operation failed.');
       return done();
     });
   });
@@ -389,46 +493,17 @@ describe('/api/user', () => {
     const stub = sinon.stub(models.User.prototype, 'destroy');
     stub.rejects();
     chai.request(server)
-    .delete('/api/user/')
-    .set('Authorization', `Bearer ${userToken}`)
+    .delete(`/api/user/${validUser.username}`)
+    .set('Authorization', `Bearer ${adminToken}`)
     .send({
-      email: 'updatedmail@tomipaul.com'
+      email: 'updateduser@andela.com'
     })
     .end((err, res) => {
       stub.restore();
       expect(res).to.have.status(500);
-      expect(res).to.be.html;
-      expect(res.text).to.equal('Exception 500! Operation failed.');
-      return done();
-    });
-  });
-  it('should update an existing authenticated user',
-  (done) => {
-    chai.request(server)
-    .put('/api/user')
-    .send({
-      token: userToken,
-      email: 'updatedmail@tomipaul.com'
-    })
-    .end((err, res) => {
-      expect(res).to.have.status(200);
       expect(res).to.be.json;
-      expect(res.body.email).to
-      .equal('updatedmail@tomipaul.com');
-      return done();
-    });
-  });
-  it('should delete an existing authenticated user',
-  (done) => {
-    chai.request(server)
-    .delete('/api/user')
-    .send({
-      token: userToken,
-    })
-    .end((err, res) => {
-      expect(res).to.have.status(204);
+      expect(res.body.message).to.equal('Exception 500! Operation failed.');
       return done();
     });
   });
 });
-
