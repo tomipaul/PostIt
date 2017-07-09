@@ -11,6 +11,8 @@ chai.use(chaiHTTP);
 const expect = chai.expect;
 const {
   validUser,
+  anotherValidUser,
+  adminUser,
   incompleteUser,
   emptyUsername,
   emptyEmail,
@@ -339,13 +341,37 @@ describe('/api/user/groups', () => {
   });
 });
 
-describe('/api/user', () => {
+describe('/api/user/:username', () => {
+  let adminToken;
+  before(() => {
+    return models.User.bulkCreate([
+      adminUser,
+      anotherValidUser
+    ], {
+      validate: true,
+      individualHooks: true
+    })
+    .then(() => {
+      return chai.request(server)
+      .post('/api/user/signin')
+      .send({
+        username: adminUser.username,
+        password: adminUser.password
+      })
+      .then((res) => {
+        expect(res.body.message).to.equal('Authentication Successful');
+        expect(res).to.have.status(200);
+        expect(res.body.token).to.be.a('string');
+        adminToken = res.body.token;
+      });
+    });
+  });
   it('should return error message if request has no token',
   (done) => {
     chai.request(server)
-    .put('/api/user/')
+    .put(`/api/user/${anotherValidUser.username}`)
     .send({
-      email: 'updatedmail@tomipaul.com'
+      email: 'updateduser@andela.com'
     })
     .end((err, res) => {
       expect(res).to.have.status(400);
@@ -357,14 +383,92 @@ describe('/api/user', () => {
   it('should return error message if request has no token',
   (done) => {
     chai.request(server)
-    .delete('/api/user/')
+    .delete(`/api/user/${anotherValidUser.username}`)
     .send({
-      email: 'updatedmail@tomipaul.com'
+      email: 'updateduser@andela.com'
     })
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
       expect(res.body.message).to.equal('No Access token provided!');
+      return done();
+    });
+  });
+  it('should update user if request is by owner',
+  (done) => {
+    chai.request(server)
+    .put(`/api/user/${validUser.username}`)
+    .send({
+      token: userToken,
+      email: 'updateduser@andela.com'
+    })
+    .end((err, res) => {
+      expect(res).to.have.status(200);
+      expect(res).to.be.json;
+      expect(res.body.message).to.equal('User updated');
+      expect(res.body.user.email).to
+      .equal('updateduser@andela.com');
+      return done();
+    });
+  });
+  it('should update user if request is by admin',
+  (done) => {
+    chai.request(server)
+    .put(`/api/user/${validUser.username}`)
+    .send({
+      token: adminToken,
+      email: 'updatedByAdmin@andela.com'
+    })
+    .end((err, res) => {
+      expect(res).to.have.status(200);
+      expect(res).to.be.json;
+      expect(res.body.message).to.equal('User updated');
+      expect(res.body.user.email).to
+      .equal('updatedByAdmin@andela.com');
+      return done();
+    });
+  });
+  it('should return error if update request is not by owner or admin',
+  (done) => {
+    chai.request(server)
+    .put(`/api/user/${anotherValidUser.username}`)
+    .send({
+      token: userToken,
+      email: 'updatedByAnother@andela.com'
+    })
+    .end((err, res) => {
+      expect(res).to.have.status(403);
+      expect(res).to.be.json;
+      expect(res.body.message).to
+      .equal("Access denied! You don't have appropriate privileges");
+      return done();
+    });
+  });
+  it('should return error if delete request is not by admin',
+  (done) => {
+    chai.request(server)
+    .delete(`/api/user/${anotherValidUser.username}`)
+    .send({
+      token: userToken,
+      email: 'updatedByAnother@andela.com'
+    })
+    .end((err, res) => {
+      expect(res).to.have.status(403);
+      expect(res).to.be.json;
+      expect(res.body.message).to
+      .equal("Access denied! You don't have appropriate privileges");
+      return done();
+    });
+  });
+  it('should delete user if request is by admin',
+  (done) => {
+    chai.request(server)
+    .delete(`/api/user/${anotherValidUser.username}`)
+    .send({
+      token: adminToken
+    })
+    .end((err, res) => {
+      expect(res).to.have.status(204);
       return done();
     });
   });
@@ -372,10 +476,10 @@ describe('/api/user', () => {
     const stub = sinon.stub(models.User.prototype, 'update');
     stub.rejects();
     chai.request(server)
-    .put('/api/user/')
+    .put(`/api/user/${validUser.username}`)
     .set('Authorization', `Bearer ${userToken}`)
     .send({
-      email: 'updatedmail@tomipaul.com'
+      email: 'updateduser@andela.com'
     })
     .end((err, res) => {
       stub.restore();
@@ -389,10 +493,10 @@ describe('/api/user', () => {
     const stub = sinon.stub(models.User.prototype, 'destroy');
     stub.rejects();
     chai.request(server)
-    .delete('/api/user/')
-    .set('Authorization', `Bearer ${userToken}`)
+    .delete(`/api/user/${validUser.username}`)
+    .set('Authorization', `Bearer ${adminToken}`)
     .send({
-      email: 'updatedmail@tomipaul.com'
+      email: 'updateduser@andela.com'
     })
     .end((err, res) => {
       stub.restore();
@@ -402,34 +506,4 @@ describe('/api/user', () => {
       return done();
     });
   });
-  it('should update an existing authenticated user',
-  (done) => {
-    chai.request(server)
-    .put('/api/user')
-    .send({
-      token: userToken,
-      email: 'updatedmail@tomipaul.com'
-    })
-    .end((err, res) => {
-      expect(res).to.have.status(200);
-      expect(res).to.be.json;
-      expect(res.body.message).to.equal('User updated');
-      expect(res.body.user.email).to
-      .equal('updatedmail@tomipaul.com');
-      return done();
-    });
-  });
-  it('should delete an existing authenticated user',
-  (done) => {
-    chai.request(server)
-    .delete('/api/user')
-    .send({
-      token: userToken
-    })
-    .end((err, res) => {
-      expect(res).to.have.status(204);
-      return done();
-    });
-  });
 });
-

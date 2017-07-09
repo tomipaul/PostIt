@@ -68,6 +68,13 @@
       "password": "12345678abc",
       "phoneNo": "23456789012"
     },
+    "adminUser": {
+      "username": "adminUser",
+      "email": "adminUser@app.com",
+      "password": "abcdefgh",
+      "phoneNo": "2345678901",
+      "status": "admin"
+    },
     "thirdValidUser": {
       "username": "YayaMark",
       "email": "yayamark@gmail.com",

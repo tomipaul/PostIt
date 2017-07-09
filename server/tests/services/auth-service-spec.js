@@ -6,7 +6,8 @@ const expect = chai.expect;
 const keyPair = createkeyPair({ bits: 512 });
 const user = {
   email: 'testtoken@aol.com',
-  username: 'postIt'
+  username: 'postIt',
+  status: 'admin'
 };
 
 describe('AuthService.generateToken', () => {
@@ -27,10 +28,11 @@ describe('AuthService.verifyTokenGetPayload', () => {
       return AuthService.verifyTokenGetPayload(token, keyPair.public)
       .then((decoded) => {
         expect(decoded).to.be.an('object');
-        expect(decoded).to.have.property('key');
+        expect(decoded).to.have.property('username');
+        expect(decoded).to.have.property('status');
         expect(decoded).to.have.property('sub');
         expect(decoded.iss).to.equal('PostItAPI');
-        expect(decoded.key).to.equal(user.username);
+        expect(decoded.username).to.equal(user.username);
         expect(decoded.sub).to.equal(user.email);
       });
     });
