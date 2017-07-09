@@ -22,7 +22,8 @@ class AuthService {
         subject: user.email,
         expiresIn: '30d'
       };
-      return jwt.sign(user, rsaKey, options,
+      const { username, status } = user;
+      return jwt.sign({ username, status }, rsaKey, options,
       (err, token) => {
         return (err) ? reject(err) : resolve(token);
       });

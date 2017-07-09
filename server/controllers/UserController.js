@@ -153,7 +153,7 @@ class UserController {
       if (req.userStatus === 'admin') {
         return next();
       }
-      const msg = "Access denied! You don't have appropriate privileges ";
+      const msg = "Access denied! You don't have appropriate privileges";
       const err = new Error(msg);
       err.code = 403;
       throw err;
