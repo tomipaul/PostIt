@@ -81,14 +81,30 @@ class GroupController {
    */
   static createGroup() {
     return (req, res, next) => {
-      req.body.CreatorUsername = req.username;
-      ModelService.createModelInstance(groupModel, req.body)
+      return groupModel.findOne({
+        where: {
+          name: req.body.name,
+          CreatorUsername: req.username
+        }
+      })
       .then((group) => {
-        return group.addUser(req.username)
-        .then(() => {
-          res.status(201).json({
-            group,
-            message: 'Group created'
+        if (group) {
+          const err = new Error();
+          err.message = `You have an existing group ${req.body.name}`;
+          err.code = 400;
+          throw err;
+        }
+      })
+      .then(() => {
+        req.body.CreatorUsername = req.username;
+        return ModelService.createModelInstance(groupModel, req.body)
+        .then((group) => {
+          return group.addUser(req.username)
+          .then(() => {
+            return res.status(201).json({
+              group,
+              message: 'Group created'
+            });
           });
         });
       })
