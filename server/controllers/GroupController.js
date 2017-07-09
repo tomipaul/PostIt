@@ -23,7 +23,8 @@ class GroupController {
         id: groupId
       })
       .then((group) => {
-        if (group.CreatorUsername === req.username) {
+        if (group.CreatorUsername === req.username ||
+        req.userStatus === 'admin') {
           req.group = group;
           return next();
         }
@@ -55,7 +56,7 @@ class GroupController {
       .then((group) => {
         return group.hasUser(req.username)
         .then((hasUser) => {
-          if (hasUser) {
+          if (hasUser || req.userStatus === 'admin') {
             req.group = group;
             return next();
           }

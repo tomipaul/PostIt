@@ -106,7 +106,8 @@ class UserController {
       const rsaKey = process.env.PUBLIC_KEY;
       return AuthService.verifyTokenGetPayload(req.token, rsaKey)
       .then((decodedPayload) => {
-        req.username = decodedPayload.key;
+        req.username = decodedPayload.username;
+        req.userStatus = decodedPayload.status;
         next();
       })
       .catch((err) => {
@@ -114,6 +115,48 @@ class UserController {
           message: err.message
         });
       });
+    };
+  }
+
+  /**
+   * Restrict access to profile owner and admin only
+   * @method permitUserorAdmin
+   * @memberof GroupController
+   * @static
+   * @return {function} Express middleware function which
+   * permits only the authenticated user or
+   * admin to utilize an endpoint
+   */
+  static permitOwnerAndAdmin() {
+    return (req, res, next) => {
+      if (req.userStatus === 'admin' ||
+      req.params.username === req.username) {
+        return next();
+      }
+      const msg = "Access denied! You don't have appropriate privileges";
+      const err = new Error(msg);
+      err.code = 403;
+      throw err;
+    };
+  }
+
+  /**
+   * Restrict access to admin only
+   * @method permitAdmin
+   * @memberof GroupController
+   * @static
+   * @return {function} Express middleware function which
+   * permits only the admin to utilize an endpoint
+   */
+  static permitAdmin() {
+    return (req, res, next) => {
+      if (req.userStatus === 'admin') {
+        return next();
+      }
+      const msg = "Access denied! You don't have appropriate privileges ";
+      const err = new Error(msg);
+      err.code = 403;
+      throw err;
     };
   }
 
@@ -127,7 +170,8 @@ class UserController {
    */
   static createUser() {
     return (req, res, next) => {
-      ModelService.createModelInstance(userModel, req.body)
+      const { status, ...credentials } = req.body;
+      ModelService.createModelInstance(userModel, credentials)
       .then((user) => {
         return res.status(201).json({
           user,
@@ -151,12 +195,10 @@ class UserController {
   static deleteUser() {
     return (req, res, next) => {
       ModelService.deleteModelInstance(userModel, {
-        username: req.username
+        username: req.params.username
       })
       .then(() => {
-        res.status(204).json({
-          message: 'User deleted'
-        });
+        return res.sendStatus(204);
       })
       .catch((err) => {
         next(err);
@@ -175,7 +217,7 @@ class UserController {
   static updateUser() {
     return (req, res, next) => {
       ModelService.updateModelInstance(userModel, {
-        username: req.username
+        username: req.params.username
       }, req.body)
       .then((user) => {
         res.status(200).json({
