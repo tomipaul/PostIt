@@ -36,7 +36,6 @@ jspm_packages
 # Optional npm cache directory
 .npm
 
-
 # Optional REPL history
 .node_repl_history```
 
@@ -45,3 +44,5 @@ jspm_packages
 
 # transpiled code
 dist
+
+.DS_Store
