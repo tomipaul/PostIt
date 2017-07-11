@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../css/MessageBoard.css">
+  </head>
+  <body>
+    <header>
+      <div class = 'header-flex'>
+        <i class = "fa fa-bars button-collapse" data-activates="slide-out"></i>
+        <img class = "responsive-img" src="../images/post_it_icon.png"></img>
+      </div>
+    </header>
+    <div class='board-body'>
+      <ul id="slide-out" class="side-nav fixed">
+        <li><div class="user-view">
+          <a href="#!user"><img class="circle" src="../images/male-avatar.jpeg"></a>
+          <a href="#!name"><span class="white-text name">@elementDeveloper</span></a>
+        </div></li>
+        <li><a class="subheader">GROUPS</a></li>
+        <li><a class='waves-effect' href="#!">Friends<span class="new badge">10</span></a></li>
+        <li><a class='waves-effect' href="#!">Family<span class="new badge">1</span></a></li>
+        <li><a class='waves-effect' href="#!">Colleagues<span class="new badge">1</span></a></li>
+        <li>
+          <ul class="collapsible" data-collapsible="accordion">
+            <li>
+              <div class="collapsible-header"><i class="material-icons">library_add</i>Add Group</div>
+              <div class="collapsible-body">
+                <form>
+                  <div class="input-field">
+                    <input id="last_name" type="text" placeholder='Give a cool name' class="validate">
+                    <textarea id="textarea1" class="materialize-textarea" placeholder='Describe your group'></textarea>
+                    <button class="btn waves-effect waves-light" type="submit" name="action">Submit<i class="material-icons right">send</i></button>
+                  </div>
+                </form>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <li><div class="divider"></div></li>
+      </ul>
+      <div class='message-board'>
+        <div class='group-board-header'>
+          <div class="group-name">
+            <span contenteditable="true">Friends</span> 
+            <a class='dropdown-button' href='#' data-activates='dropdown1'><i class='fa fa-sort-desc'></i></a>
+            <ul id='dropdown1' class='dropdown-content'>
+              <li><a href="#modal1">Add User</a></li>
+              <li><a href="#modal1">Post Message</a></li>
+              <li><a href="#!">Delete Group</a></li>
+              <li class="divider"></li>
+            </ul>
+          </div>
+          <div contenteditable="true">We wine and dine</div><hr>
+        </div>
+        <div class='priorities'>
+          <span class='label' priority='normal'>normal</span>
+          <span class='label' priority='urgent'>urgent</span>
+          <span class='label' priority='critical'>critical</span>
+        </div>
+        <div class='message-box' priority='normal'>
+          <div class='author-image'>
+            <img src="../images/female-avatar.png"></img>
+          </div>
+          <div class='message-text col s9 m11'>
+            <a href=''><span class='author-name'>Tomipaul</span></a>
+            <div class = "priority-tag">
+              <span>normal</span>
+              <i class="fa fa-tags" aria-hidden="true"></i>
+            </div>
+            <div class='message' contenteditable="true">Where were you when old Roger died?</div>  
+          </div>
+        </div>
+        <div class='message-box' priority='urgent'>
+          <div class='author-image'>
+            <img src="../images/female-avatar.png"></img>
+          </div>
+          <div class='message-text'>
+            <a href=''><span class='author-name'>Karashaki</span></a>
+            <div class='message' contenteditable="true">Old Roger died because you were not there!</div>
+            <div class = "priority-tag">
+              <span>urgent</span>
+              <i class="fa fa-tags" aria-hidden="true"></i>
+            </div>
+          </div>
+        </div>
+        <div class='message-box' priority='critical'>
+          <i class="fa fa-tags" aria-hidden="true"></i>
+          <div class='author-image'>
+            <img src="../images/female-avatar.png"></img>
+          </div>
+          <div class='message-text'>
+            <a href=''><span class='author-name'>Ghost mode</span></a>
+            <div class='message' contenteditable="true">Old Roger has left his grave!!</div>
+          </div>
+        </div>
+      </div>
+      <div class='input-field message-input row'>
+        <textarea class='write-message materialize-textarea col s6' placeholder="Write a message. You can use markdown"></textarea>
+        <select class = 'col s3'>
+          <option value="" disabled selected>Choose priority</option>
+          <option value="1">Normal</option>
+          <option value="2">Urgent</option>
+          <option value="2">Critical</option>
+        </select>
+      </div>
+    </div>
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal modal-fixed-footer">
+      <div class="modal-content">
+        <h4>Modal Header</h4>
+        <p>A bunch of text</p>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.7.1/showdown.min.js"></script>
+    <script src="../js/MessageBoard.js"></script>
+  </body>
+</html>
