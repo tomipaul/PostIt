@@ -144,6 +144,23 @@ class AdhocModelService {
    * @method
    * @memberof ModelService
    * @static
+   * @param {String} group primary key or instance of group
+   * @returns {Promise} resolves with an array of user instances
+   */
+  static getGroupUsers(group) {
+    return AdhocModelService.returnModelInstance('Group', group)
+    .then((groupInstance) => {
+      return groupInstance.getUsers();
+    })
+    .catch((err) => {
+      throw err;
+    });
+  }
+
+  /**
+   * @method
+   * @memberof ModelService
+   * @static
    * @param {String} username
    * @returns {Promise} resolve with an array of group instances
    */

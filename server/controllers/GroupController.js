@@ -186,6 +186,26 @@ class GroupController {
   }
 
   /**
+   * Retrieve all users in a group
+   * @method
+   * @memberof GroupController
+   * @static
+   * @return {function} Express middleware function which gets
+   * group users and sends response to client
+   */
+  static getGroupUsers() {
+    return (req, res, next) => {
+      return AdhocModelService.getGroupUsers(req.group)
+      .then((users) => {
+        return res.status(200).json({ users });
+      })
+      .catch((err) => {
+        next(err);
+      });
+    };
+  }
+
+  /**
    * Remove a user from a group
    * @method
    * @memberof GroupController
