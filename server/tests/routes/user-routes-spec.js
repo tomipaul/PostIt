@@ -30,12 +30,14 @@ describe('/api/user/signup', () => {
     .post('/api/user/signup')
     .send(validUser)
     .end((err, res) => {
-      expect(res).to.have.status(201);
+      expect(res).to.have.status(200);
       expect(res).to.be.json;
       expect(res.body.user.username).to.equal(validUser.username);
       expect(res.body.user.phoneNo).to.equal(validUser.phoneNo);
       expect(res.body.user.email).to.equal(validUser.email);
-      expect(res.body.user).to.have.own.property('updatedAt');
+      expect(res.body.user).to.have.own.property('createdAt');
+      expect(res.body).to.have.own.property('token');
+      expect(res.body.message).to.be.equal('Authentication Successful');
       return done();
     });
   });
