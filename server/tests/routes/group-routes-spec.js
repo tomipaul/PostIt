@@ -426,3 +426,46 @@ describe('/api/group/:groupId/messages', () => {
     });
   });
 });
+
+describe('/api/group/:groupId/users', () => {
+  it('should get all users in a group', (done) => {
+    chai.request(server)
+    .get(`/api/group/${validGroup.id}/users`)
+    .set('Authorization', `Bearer ${token}`)
+    .end((err, res) => {
+      expect(res).to.have.status(200);
+      expect(res).to.be.json;
+      expect(res.body.users).to.have.lengthOf(1);
+      res.body.users.forEach((user) => {
+        expect(user).to.have.own.property('username');
+        expect(user).to.have.own.property('email');
+      });
+      return done();
+    });
+  });
+  it('should return error if group does not exist',
+  (done) => {
+    chai.request(server)
+    .get(`/api/group/${emptyName.id}/users`)
+    .set('Authorization', `Bearer ${token}`)
+    .end((err, res) => {
+      expect(res.body.message).to.equal('Error! Group does not exist');
+      expect(res).to.have.status(404);
+      return done();
+    });
+  });
+  it('should return error if `get users` fail', (done) => {
+    const stub = sinon.stub(models.Group.prototype, 'getUsers');
+    stub.rejects();
+    chai.request(server)
+    .get(`/api/group/${validGroup.id}/users`)
+    .set('Authorization', `Bearer ${token}`)
+    .end((err, res) => {
+      stub.restore();
+      expect(res).to.have.status(500);
+      expect(res).to.be.json;
+      expect(res.body.message).to.equal('Exception 500! Operation failed.');
+      return done();
+    });
+  });
+});
