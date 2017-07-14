@@ -196,7 +196,7 @@ class GroupController {
    */
   static getGroupUsers() {
     return (req, res, next) => {
-      return AdhocModelService.getGroupUsers(req.group)
+      return AdhocModelService.getAllGroupUsers(req.group)
       .then((users) => {
         return res.status(200).json({ users });
       })
