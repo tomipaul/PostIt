@@ -32,6 +32,11 @@ class AdhocModelService {
    * @returns {Promise} A promise that resolves with null on success
    */
   static addUserToGroup(username, group) {
+    if (!username) {
+      const err = new Error('Username is invalid or not defined');
+      err.code = 400;
+      throw err;
+    }
     return AdhocModelService.returnModelInstance('Group', group)
     .then((groupInstance) => {
       return (Array.isArray(username)) ?
