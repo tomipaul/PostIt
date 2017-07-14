@@ -172,11 +172,8 @@ class UserController {
     return (req, res, next) => {
       const { status, ...credentials } = req.body;
       ModelService.createModelInstance(userModel, credentials)
-      .then((user) => {
-        return res.status(201).json({
-          user,
-          message: 'User created'
-        });
+      .then(() => {
+        return next();
       })
       .catch((err) => {
         next(err);

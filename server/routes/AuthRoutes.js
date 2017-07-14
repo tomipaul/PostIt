@@ -2,7 +2,10 @@ import express from 'express';
 import UserController from '../controllers/UserController';
 
 const authRouter = express.Router();
-authRouter.post('/api/user/signup', UserController.createUser());
+authRouter.post('/api/user/signup', [
+  UserController.createUser(),
+  UserController.authenticateUser()
+]);
 authRouter.route('/api/user/signin')
 .all(UserController.validateRequest())
 .post(UserController.authenticateUser());
