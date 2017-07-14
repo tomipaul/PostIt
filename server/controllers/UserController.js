@@ -80,6 +80,7 @@ class UserController {
         })
         .then((token) => {
           return res.status(200).json({
+            user: req.user,
             token,
             message: 'Authentication Successful'
           });
@@ -172,7 +173,13 @@ class UserController {
     return (req, res, next) => {
       const { status, ...credentials } = req.body;
       ModelService.createModelInstance(userModel, credentials)
-      .then(() => {
+      .then((user) => {
+        req.user = {
+          username: user.username,
+          email: user.email,
+          phoneNo: user.phoneNo,
+          createdAt: user.createdAt,
+        };
         return next();
       })
       .catch((err) => {
