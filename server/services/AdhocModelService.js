@@ -90,12 +90,21 @@ class AdhocModelService {
    * @param {Object.string} message.text
    * @param {Object.string} message.priority
    * @param {String|Object} group primary key or instance of group
-   * @returns {Promise} A promise that resolves with null on success
+   * @returns {Promise} A promise that resolves on success
    */
   static addMessageToGroup(message, group) {
     return AdhocModelService.returnModelInstance('Group', group)
     .then((groupInstance) => {
-      return groupInstance.createMessage(message);
+      return Promise.all([
+        groupInstance.createMessage(message),
+        groupInstance.getUsers()
+      ])
+      .then((resolved) => {
+        return resolved[0].addUsers(resolved[1])
+        .then(() => {
+          return resolved[0];
+        });
+      });
     })
     .catch((err) => {
       throw err;
