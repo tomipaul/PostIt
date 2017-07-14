@@ -154,8 +154,9 @@ class GroupController {
       };
       return AdhocModelService
       .addMessageToGroup(message, req.group)
-      .then(() => {
+      .then((createdMessage) => {
         return res.status(200).json({
+          createdMessage,
           message: 'Message posted to group'
         });
       })
