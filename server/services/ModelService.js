@@ -17,12 +17,12 @@ class ModelService {
     error.code = 400;
     if (model.name === 'Group') {
       const { name } = fields;
-      if (!name) {
+      if (name === undefined) {
         error.message = 'Incomplete field; name is required';
       }
     } else if (model.name === 'User') {
       const { username, password, email, phoneNo } = fields;
-      if (!username || !password || !email || !phoneNo) {
+      if ([username, password, email, phoneNo].includes(undefined)) {
         error.message = 'Username, password, email and phoneNo required';
       }
     }
