@@ -21,11 +21,11 @@ class UserController {
     return (req, res, next) => {
       if (req.method !== 'POST') {
         res.status(400).json({
-          message: 'POST request method expected'
+          error: 'POST request method expected'
         });
       } else if (!req.body.username || !req.body.password) {
         res.status(400).json({
-          message: 'non-empty username and password expected',
+          error: 'non-empty username and password expected',
         });
       } else {
         next();
@@ -48,7 +48,7 @@ class UserController {
       || req.cookies.token || req.query.token;
       if (!token) {
         return res.status(400).json({
-          message: 'No Access token provided!'
+          error: 'No Access token provided!'
         });
       }
       const matched = /^Bearer (\S+)$/.exec(token);
@@ -88,7 +88,7 @@ class UserController {
       })
       .catch((err) => {
         return res.status(401).json({
-          message: err.message
+          error: err.message
         });
       });
     };
@@ -111,9 +111,9 @@ class UserController {
         req.userStatus = decodedPayload.status;
         next();
       })
-      .catch((err) => {
+      .catch(() => {
         return res.status(401).json({
-          message: err.message
+          error: 'Invalid token sent in request'
         });
       });
     };

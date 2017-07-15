@@ -20,7 +20,7 @@ export default function errorHandler() {
       }
     }
     return res.status(err.code).json({
-      message: err.message
+      error: err.message
     });
   };
 }
