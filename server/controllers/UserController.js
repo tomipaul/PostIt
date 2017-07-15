@@ -170,7 +170,10 @@ class UserController {
   static createUser() {
     return (req, res, next) => {
       const { status, ...credentials } = req.body;
-      ModelService.createModelInstance(userModel, credentials)
+      AdhocModelService.validateInputs(userModel, credentials)
+      .then(() => {
+        return ModelService.createModelInstance(userModel, credentials);
+      })
       .then((user) => {
         req.user = {
           username: user.username,

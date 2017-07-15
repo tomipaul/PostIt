@@ -82,11 +82,14 @@ class GroupController {
    */
   static createGroup() {
     return (req, res, next) => {
-      return groupModel.findOne({
-        where: {
-          name: req.body.name,
-          CreatorUsername: req.username
-        }
+      return AdhocModelService.validateInputs(req.body)
+      .then(() => {
+        return groupModel.findOne({
+          where: {
+            name: req.body.name,
+            CreatorUsername: req.username
+          }
+        });
       })
       .then((group) => {
         if (group) {
@@ -127,8 +130,9 @@ class GroupController {
     return (req, res, next) => {
       const username = req.body.username;
       return AdhocModelService.addUserToGroup(username, req.group)
-      .then(() => {
+      .then((user) => {
         return res.status(200).json({
+          user,
           message: `User ${username} added to group`
         });
       })
