@@ -66,6 +66,16 @@ describe('AdhocModelService.addUserToGroup', () => {
       .equal('Error! Group does not exist');
     });
   });
+  it('should throw error if username is undefined',
+  () => {
+    return AdhocModelService
+    .addUserToGroup(undefined, groupId)
+    .catch((err) => {
+      expect(err.code).to.equal(400);
+      expect(err.message).to
+      .equal('Username is invalid or not defined');
+    });
+  });
 
   it('should throw error for failure', () => {
     const stub = sinon.stub(models.Group.prototype, 'addUser');
