@@ -48,7 +48,8 @@ describe('/api/user/signup', () => {
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
-      expect(res.body.message).to.equal('Validation Error');
+      expect(res.body.error).to
+      .equal('Username, password, email and phoneNo required');
       return done();
     });
   });
@@ -59,7 +60,7 @@ describe('/api/user/signup', () => {
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
-      expect(res.body.message).to.equal('username is not available!');
+      expect(res.body.error).to.equal('username is not available!');
       return done();
     });
   });
@@ -70,7 +71,7 @@ describe('/api/user/signup', () => {
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
-      expect(res.body.message).to.equal('email already exists!');
+      expect(res.body.error).to.equal('email already exists!');
       return done();
     });
   });
@@ -82,11 +83,11 @@ describe('/api/user/signup', () => {
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
-      expect(res.body.message).to.have
+      expect(res.body.error).to.have
       .string('username cannot be an empty string');
-      expect(res.body.message).to.have
+      expect(res.body.error).to.have
       .string('username can only contain letters and numbers');
-      expect(res.body.message).to.have
+      expect(res.body.error).to.have
       .string('username cannot be longer than 25 characters');
       return done();
     });
@@ -99,9 +100,9 @@ describe('/api/user/signup', () => {
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
-      expect(res.body.message).to.have
+      expect(res.body.error).to.have
       .string('email is invalid');
-      expect(res.body.message).to.have
+      expect(res.body.error).to.have
       .string('email has invalid length');
       return done();
     });
@@ -114,7 +115,7 @@ describe('/api/user/signup', () => {
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
-      expect(res.body.message).to.have
+      expect(res.body.error).to.have
       .string('password must be at least six characters long');
       return done();
     });
@@ -127,9 +128,9 @@ describe('/api/user/signup', () => {
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
-      expect(res.body.message).to.have
+      expect(res.body.error).to.have
       .string('mobile number cannot be an empty string');
-      expect(res.body.message).to.have
+      expect(res.body.error).to.have
       .string('mobile number is invalid');
       return done();
     });
@@ -166,7 +167,7 @@ describe('/api/user/signin', () => {
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
-      expect(res.body.message).to.be
+      expect(res.body.error).to.be
       .equal('POST request method expected');
       return done();
     });
@@ -182,7 +183,7 @@ describe('/api/user/signin', () => {
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
-      expect(res.body.message).to.be
+      expect(res.body.error).to.be
       .equal('non-empty username and password expected');
       return done();
     });
@@ -198,7 +199,7 @@ describe('/api/user/signin', () => {
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
-      expect(res.body.message).to.be
+      expect(res.body.error).to.be
       .equal('non-empty username and password expected');
       return done();
     });
@@ -212,9 +213,9 @@ describe('/api/user/signin', () => {
       password: '123456'
     })
     .end((err, res) => {
-      expect(res).to.have.status(401);
+      expect(res).to.have.status(404);
       expect(res).to.be.json;
-      expect(res.body.message).to.have
+      expect(res.body.error).to.have
       .string('User does not exist');
       return done();
     });
@@ -230,7 +231,7 @@ describe('/api/user/signin', () => {
     .end((err, res) => {
       expect(res).to.have.status(401);
       expect(res).to.be.json;
-      expect(res.body.message).to.have
+      expect(res.body.error).to.have
       .string('Invalid Password');
       return done();
     });
@@ -260,7 +261,7 @@ describe('/api/user/:username', () => {
     .end((err, res) => {
       expect(res).to.have.status(404);
       expect(res).to.be.json;
-      expect(res.body.message).to.equal('Error! User does not exist');
+      expect(res.body.error).to.equal('Error! User does not exist');
       return done();
     });
   });
@@ -270,7 +271,7 @@ describe('/api/user/:username', () => {
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
-      expect(res.body.message).to.equal('No Access token provided!');
+      expect(res.body.error).to.equal('No Access token provided!');
       return done();
     });
   });
@@ -281,7 +282,7 @@ describe('/api/user/:username', () => {
     .end((err, res) => {
       expect(res).to.have.status(401);
       expect(res).to.be.json;
-      expect(res.body.message).to.equal('jwt malformed');
+      expect(res.body.error).to.equal('Invalid token sent in request');
       return done();
     });
   });
@@ -323,7 +324,7 @@ describe('/api/user/groups', () => {
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
-      expect(res.body.message).to.equal('No Access token provided!');
+      expect(res.body.error).to.equal('No Access token provided!');
       return done();
     });
   });
@@ -337,7 +338,7 @@ describe('/api/user/groups', () => {
       stub.restore();
       expect(res).to.have.status(500);
       expect(res).to.be.json;
-      expect(res.body.message).to.equal('Exception 500! Operation failed.');
+      expect(res.body.error).to.equal('Exception 500! Operation failed.');
       return done();
     });
   });
@@ -378,7 +379,7 @@ describe('/api/user/:username', () => {
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
-      expect(res.body.message).to.equal('No Access token provided!');
+      expect(res.body.error).to.equal('No Access token provided!');
       return done();
     });
   });
@@ -392,7 +393,7 @@ describe('/api/user/:username', () => {
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
-      expect(res.body.message).to.equal('No Access token provided!');
+      expect(res.body.error).to.equal('No Access token provided!');
       return done();
     });
   });
@@ -441,7 +442,7 @@ describe('/api/user/:username', () => {
     .end((err, res) => {
       expect(res).to.have.status(403);
       expect(res).to.be.json;
-      expect(res.body.message).to
+      expect(res.body.error).to
       .equal("Access denied! You don't have appropriate privileges");
       return done();
     });
@@ -457,7 +458,7 @@ describe('/api/user/:username', () => {
     .end((err, res) => {
       expect(res).to.have.status(403);
       expect(res).to.be.json;
-      expect(res.body.message).to
+      expect(res.body.error).to
       .equal("Access denied! You don't have appropriate privileges");
       return done();
     });
@@ -487,7 +488,7 @@ describe('/api/user/:username', () => {
       stub.restore();
       expect(res).to.have.status(500);
       expect(res).to.be.json;
-      expect(res.body.message).to.equal('Exception 500! Operation failed.');
+      expect(res.body.error).to.equal('Exception 500! Operation failed.');
       return done();
     });
   });
@@ -504,7 +505,7 @@ describe('/api/user/:username', () => {
       stub.restore();
       expect(res).to.have.status(500);
       expect(res).to.be.json;
-      expect(res.body.message).to.equal('Exception 500! Operation failed.');
+      expect(res.body.error).to.equal('Exception 500! Operation failed.');
       return done();
     });
   });

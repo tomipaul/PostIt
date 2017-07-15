@@ -82,7 +82,7 @@ describe('/api/group', () => {
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
-      expect(res.body.message).to.equal('id already exists!');
+      expect(res.body.error).to.equal('id already exists!');
       return done();
     });
   });
@@ -97,7 +97,7 @@ describe('/api/group', () => {
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
-      expect(res.body.message).to
+      expect(res.body.error).to
       .equal('You have an existing group Nations_pledge');
       return done();
     });
@@ -110,9 +110,9 @@ describe('/api/group', () => {
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
-      expect(res.body.message).to.have
+      expect(res.body.error).to.have
       .string('Group name cannot be an empty string');
-      expect(res.body.message).to.have
+      expect(res.body.error).to.have
       .string('Name can contain only letters, numbers and underscores');
       return done();
     });
@@ -126,7 +126,7 @@ describe('/api/group', () => {
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
-      expect(res.body.message).to.have
+      expect(res.body.error).to.have
       .string('Name can contain only letters, numbers and underscores');
       return done();
     });
@@ -145,7 +145,7 @@ describe('/api/group', () => {
       stub.restore();
       expect(res).to.have.status(500);
       expect(res).to.be.json;
-      expect(res.body.message).to.equal('Exception 500! Operation failed.');
+      expect(res.body.error).to.equal('Exception 500! Operation failed.');
       return done();
     });
   });
@@ -204,7 +204,7 @@ describe('/api/group/:groupId/user', () => {
       stub.restore();
       expect(res).to.have.status(500);
       expect(res).to.be.json;
-      expect(res.body.message).to.equal('Exception 500! Operation failed.');
+      expect(res.body.error).to.equal('Exception 500! Operation failed.');
       return done();
     });
   });
@@ -233,7 +233,7 @@ describe('/api/group/:groupId/user', () => {
       stub.restore();
       expect(res).to.have.status(500);
       expect(res).to.be.json;
-      expect(res.body.message).to.equal('Exception 500! Operation failed.');
+      expect(res.body.error).to.equal('Exception 500! Operation failed.');
       return done();
     });
   });
@@ -246,7 +246,7 @@ describe('/api/group/:groupId/user', () => {
     })
     .end((err, res) => {
       expect(res).to.have.status(403);
-      expect(res.body.message).to
+      expect(res.body.error).to
       .equal('Access denied! You need group membership');
       return done();
     });
@@ -265,7 +265,7 @@ describe('/api/group/:groupId/user', () => {
       stub.restore();
       expect(res).to.have.status(500);
       expect(res).to.be.json;
-      expect(res.body.message).to.equal('Exception 500! Operation failed.');
+      expect(res.body.error).to.equal('Exception 500! Operation failed.');
       return done();
     });
   });
@@ -278,7 +278,7 @@ describe('/api/group/:groupId/user', () => {
     })
     .end((err, res) => {
       expect(res).to.have.status(403);
-      expect(res.body.message).to
+      expect(res.body.error).to
       .equal('Access denied! You need group Ownership');
       return done();
     });
@@ -297,7 +297,7 @@ describe('/api/group/:groupId/user', () => {
       stub.restore();
       expect(res).to.have.status(500);
       expect(res).to.be.json;
-      expect(res.body.message).to.equal('Exception 500! Operation failed.');
+      expect(res.body.error).to.equal('Exception 500! Operation failed.');
       return done();
     });
   });
@@ -310,7 +310,7 @@ describe('/api/group/:groupId/user', () => {
       username: userToBeAdded.username
     })
     .end((err, res) => {
-      expect(res.body.message).to.equal('Error! Group does not exist');
+      expect(res.body.error).to.equal('Error! Group does not exist');
       expect(res).to.have.status(404);
       return done();
     });
@@ -348,7 +348,7 @@ describe('/api/group/:groupId/message', () => {
     .set('Authorization', `Bearer ${token}`)
     .send(message)
     .end((err, res) => {
-      expect(res.body.message).to.equal('Error! Group does not exist');
+      expect(res.body.error).to.equal('Error! Group does not exist');
       expect(res).to.have.status(404);
       return done();
     });
@@ -362,7 +362,7 @@ describe('/api/group/:groupId/message', () => {
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
-      expect(res.body.message).to.equal('id already exists!');
+      expect(res.body.error).to.equal('id already exists!');
       return done();
     });
   });
@@ -378,7 +378,7 @@ describe('/api/group/:groupId/message', () => {
       stub.restore();
       expect(res).to.have.status(500);
       expect(res).to.be.json;
-      expect(res.body.message).to.equal('Exception 500! Operation failed.');
+      expect(res.body.error).to.equal('Exception 500! Operation failed.');
       return done();
     });
   });
@@ -406,7 +406,7 @@ describe('/api/group/:groupId/messages', () => {
     .get(`/api/group/${emptyName.id}/messages`)
     .set('Authorization', `Bearer ${token}`)
     .end((err, res) => {
-      expect(res.body.message).to.equal('Error! Group does not exist');
+      expect(res.body.error).to.equal('Error! Group does not exist');
       expect(res).to.have.status(404);
       return done();
     });
@@ -421,7 +421,7 @@ describe('/api/group/:groupId/messages', () => {
       stub.restore();
       expect(res).to.have.status(500);
       expect(res).to.be.json;
-      expect(res.body.message).to.equal('Exception 500! Operation failed.');
+      expect(res.body.error).to.equal('Exception 500! Operation failed.');
       return done();
     });
   });
@@ -449,7 +449,7 @@ describe('/api/group/:groupId/users', () => {
     .get(`/api/group/${emptyName.id}/users`)
     .set('Authorization', `Bearer ${token}`)
     .end((err, res) => {
-      expect(res.body.message).to.equal('Error! Group does not exist');
+      expect(res.body.error).to.equal('Error! Group does not exist');
       expect(res).to.have.status(404);
       return done();
     });
@@ -464,7 +464,7 @@ describe('/api/group/:groupId/users', () => {
       stub.restore();
       expect(res).to.have.status(500);
       expect(res).to.be.json;
-      expect(res.body.message).to.equal('Exception 500! Operation failed.');
+      expect(res.body.error).to.equal('Exception 500! Operation failed.');
       return done();
     });
   });
