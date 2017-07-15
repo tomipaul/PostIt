@@ -31,10 +31,10 @@ class GroupController {
         const msg = 'Access denied! You need group Ownership';
         const err = new Error(msg);
         err.code = 403;
-        throw err;
+        return next(err);
       })
       .catch((err) => {
-        next(err);
+        return next(err);
       });
     };
   }
@@ -63,11 +63,11 @@ class GroupController {
           const msg = 'Access denied! You need group membership';
           const err = new Error(msg);
           err.code = 403;
-          throw err;
+          return next(err);
         });
       })
       .catch((err) => {
-        next(err);
+        return next(err);
       });
     };
   }
@@ -93,7 +93,7 @@ class GroupController {
           const err = new Error();
           err.message = `You have an existing group ${req.body.name}`;
           err.code = 400;
-          throw err;
+          return next(err);
         }
       })
       .then(() => {
@@ -110,7 +110,7 @@ class GroupController {
         });
       })
       .catch((err) => {
-        next(err);
+        return next(err);
       });
     };
   }
@@ -133,7 +133,7 @@ class GroupController {
         });
       })
       .catch((err) => {
-        next(err);
+        return next(err);
       });
     };
   }
@@ -161,7 +161,7 @@ class GroupController {
         });
       })
       .catch((err) => {
-        next(err);
+        return next(err);
       });
     };
   }
@@ -181,7 +181,7 @@ class GroupController {
         return res.status(200).json({ messages });
       })
       .catch((err) => {
-        next(err);
+        return next(err);
       });
     };
   }
@@ -201,7 +201,7 @@ class GroupController {
         return res.status(200).json({ users });
       })
       .catch((err) => {
-        next(err);
+        return next(err);
       });
     };
   }
@@ -225,7 +225,7 @@ class GroupController {
         });
       })
       .catch((err) => {
-        next(err);
+        return next(err);
       });
     };
   }

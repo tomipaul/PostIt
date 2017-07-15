@@ -20,16 +20,15 @@ class UserController {
   static validateRequest() {
     return (req, res, next) => {
       if (req.method !== 'POST') {
-        res.status(400).json({
-          error: 'POST request method expected'
-        });
+        const err = new Error('POST request method expected');
+        err.code = 400;
+        return next(err);
       } else if (!req.body.username || !req.body.password) {
-        res.status(400).json({
-          error: 'non-empty username and password expected',
-        });
-      } else {
-        next();
+        const err = new Error('non-empty username and password expected');
+        err.code = 400;
+        return next(err);
       }
+      return next();
     };
   }
 
@@ -47,13 +46,13 @@ class UserController {
       const token = req.get('Authorization') || req.body.token
       || req.cookies.token || req.query.token;
       if (!token) {
-        return res.status(400).json({
-          error: 'No Access token provided!'
-        });
+        const err = new Error('No Access token provided!');
+        err.code = 400;
+        return next(err);
       }
       const matched = /^Bearer (\S+)$/.exec(token);
       req.token = (matched) ? matched[1] : token;
-      next();
+      return next();
     };
   }
 
@@ -66,7 +65,7 @@ class UserController {
    * validates username and password  and sends token to client
    */
   static authenticateUser() {
-    return (req, res) => {
+    return (req, res, next) => {
       const username = req.body.username;
       return ModelService.getModelInstance(userModel, { username })
       .then((user) => {
@@ -87,9 +86,8 @@ class UserController {
         });
       })
       .catch((err) => {
-        return res.status(401).json({
-          error: err.message
-        });
+        if (!err.code) { err.code = 401; }
+        return next(err);
       });
     };
   }
@@ -109,12 +107,12 @@ class UserController {
       .then((decodedPayload) => {
         req.username = decodedPayload.username;
         req.userStatus = decodedPayload.status;
-        next();
+        return next();
       })
       .catch(() => {
-        return res.status(401).json({
-          error: 'Invalid token sent in request'
-        });
+        const err = new Error('Invalid token sent in request');
+        err.code = 401;
+        return next(err);
       });
     };
   }
@@ -137,7 +135,7 @@ class UserController {
       const msg = "Access denied! You don't have appropriate privileges";
       const err = new Error(msg);
       err.code = 403;
-      throw err;
+      return next(err);
     };
   }
 
@@ -157,7 +155,7 @@ class UserController {
       const msg = "Access denied! You don't have appropriate privileges";
       const err = new Error(msg);
       err.code = 403;
-      throw err;
+      return next(err);
     };
   }
 
@@ -183,7 +181,7 @@ class UserController {
         return next();
       })
       .catch((err) => {
-        next(err);
+        return next(err);
       });
     };
   }
@@ -205,7 +203,7 @@ class UserController {
         return res.sendStatus(204);
       })
       .catch((err) => {
-        next(err);
+        return next(err);
       });
     };
   }
@@ -224,13 +222,13 @@ class UserController {
         username: req.params.username
       }, req.body)
       .then((user) => {
-        res.status(200).json({
+        return res.status(200).json({
           user,
           message: 'User updated'
         });
       })
       .catch((err) => {
-        next(err);
+        return next(err);
       });
     };
   }
@@ -249,10 +247,10 @@ class UserController {
         username: req.params.username
       })
       .then((user) => {
-        res.status(200).json({ user });
+        return res.status(200).json({ user });
       })
       .catch((err) => {
-        next(err);
+        return next(err);
       });
     };
   }
@@ -269,10 +267,10 @@ class UserController {
     return (req, res, next) => {
       AdhocModelService.getUserGroups(req.username)
       .then((groups) => {
-        res.status(200).json({ groups });
+        return res.status(200).json({ groups });
       })
       .catch((err) => {
-        next(err);
+        return next(err);
       });
     };
   }
