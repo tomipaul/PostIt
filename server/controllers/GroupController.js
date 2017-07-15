@@ -31,7 +31,7 @@ class GroupController {
         const msg = 'Access denied! You need group Ownership';
         const err = new Error(msg);
         err.code = 403;
-        return next(err);
+        throw err;
       })
       .catch((err) => {
         return next(err);
@@ -63,7 +63,7 @@ class GroupController {
           const msg = 'Access denied! You need group membership';
           const err = new Error(msg);
           err.code = 403;
-          return next(err);
+          throw err;
         });
       })
       .catch((err) => {
@@ -93,7 +93,7 @@ class GroupController {
           const err = new Error();
           err.message = `You have an existing group ${req.body.name}`;
           err.code = 400;
-          return next(err);
+          throw err;
         }
       })
       .then(() => {
