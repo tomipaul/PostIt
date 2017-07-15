@@ -65,14 +65,24 @@ class AdhocModelService {
         const err = new Error('Username is invalid or not defined');
         err.code = 400;
         throw err;
-      } else if (groupInstance.hasUser(username)) {
-        const err = new Error('User already belong to group');
-        err.code = 400;
-        throw err;
+      } else {
+        return Promise.all([
+          groupInstance.hasUser(username),
+          models.User.findById(username)
+        ])
+        .then((isValid) => {
+          if (isValid[0] || !isValid[1]) {
+            const err = (isValid[0]) ?
+            new Error('User already belong to group')
+            : new Error('User does not exist');
+            err.code = 400;
+            throw err;
+          }
+          return (Array.isArray(username)) ?
+          groupInstance.addUsers(username)
+          : groupInstance.addUser(username);
+        });
       }
-      return (Array.isArray(username)) ?
-      groupInstance.addUsers(username)
-      : groupInstance.addUser(username);
     })
     .catch((err) => {
       throw err;
@@ -93,7 +103,15 @@ class AdhocModelService {
     .then((groupInstance) => {
       return (Array.isArray(username)) ?
       groupInstance.removeUsers(username)
-      : groupInstance.removeUser(username);
+      : groupInstance.removeUser(username)
+      .then((user) => {
+        if (user) {
+          return user;
+        }
+        const err = new Error('User does not exist in group');
+        err.code = 400;
+        throw err;
+      });
     })
     .catch((err) => {
       throw err;
