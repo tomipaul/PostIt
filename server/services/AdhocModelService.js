@@ -38,6 +38,10 @@ class AdhocModelService {
         const err = new Error('Username is invalid or not defined');
         err.code = 400;
         throw err;
+      } else if (groupInstance.hasUser(username)) {
+        const err = new Error('User already belong to group');
+        err.code = 400;
+        throw err;
       }
       return (Array.isArray(username)) ?
       groupInstance.addUsers(username)
@@ -100,6 +104,12 @@ class AdhocModelService {
   static addMessageToGroup(message, group) {
     return AdhocModelService.returnModelInstance('Group', group)
     .then((groupInstance) => {
+      if (message.text === undefined) {
+        const err = new Error();
+        err.code = 400;
+        err.message = 'Message text is required';
+        throw err;
+      }
       return Promise.all([
         groupInstance.createMessage(message),
         groupInstance.getUsers()
