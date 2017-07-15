@@ -6,6 +6,33 @@ import models from '../models';
  */
 class AdhocModelService {
   /**
+   * Validate inputs when creating new model instances
+   * @method
+   * @static
+   * @memberof AdhocModelService
+   * @param {object} model
+   * @param {object} fields
+   * @returns {(Promise|undefined)} A promise that rejects with error
+   * if a field is missing/undefined Or undefined if no missing field
+   */
+  static validateInputs(model, fields) {
+    const error = new Error();
+    error.code = 400;
+    if (model.name === 'Group') {
+      const { name } = fields;
+      if (name === undefined) {
+        error.message = 'Incomplete field; name is required';
+      }
+    } else if (model.name === 'User') {
+      const { username, password, email, phoneNo } = fields;
+      if ([username, password, email, phoneNo].includes(undefined)) {
+        error.message = 'Username, password, email and phoneNo required';
+      }
+    }
+    return (error.message) ? Promise.reject(error) :
+    Promise.resolve(true);
+  }
+  /**
    * @method returnModelInstance
    * @memberof AdhocModelService
    * @static
