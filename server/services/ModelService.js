@@ -3,6 +3,33 @@
  */
 class ModelService {
   /**
+   * Validate inputs when creating new model instances
+   * @method
+   * @static
+   * @memberof ModelService
+   * @param {object} model
+   * @param {object} fields
+   * @returns {(Promise|undefined)} A promise that rejects with error
+   * if a field is missing/undefined Or undefined if no missing field
+   */
+  static validateInputs(model, fields) {
+    const error = new Error();
+    error.code = 400;
+    if (model.name === 'Group') {
+      const { name } = fields;
+      if (!name) {
+        error.message = 'Incomplete field; name is required';
+      }
+    } else if (model.name === 'User') {
+      const { username, password, email, phoneNo } = fields;
+      if (!username || !password || !email || !phoneNo) {
+        error.message = 'Username, password, email and phoneNo required';
+      }
+    }
+    return (error.message) ? Promise.reject(error) :
+    Promise.resolve(true);
+  }
+  /**
    * Get a single instance of a model - equivalent of a database table row
    * @method
    * @static
@@ -62,16 +89,19 @@ class ModelService {
    * @returns {Promise.object} resolves wth created model instance
    */
   static createModelInstance(model, newAttributes) {
-    return model.create(newAttributes)
-    .then((modelInstance) => {
-      if (modelInstance) {
-        return modelInstance;
-      }
-      throw new Error();
-    })
-    .catch((err) => {
-      const msg = `Exception! operation create ${model.name} failed`;
-      throw ModelService.processError(msg, model, err);
+    return ModelService.validateInputs(model, newAttributes)
+    .then(() => {
+      return model.create(newAttributes)
+      .then((modelInstance) => {
+        if (modelInstance) {
+          return modelInstance;
+        }
+        throw new Error();
+      })
+      .catch((err) => {
+        const msg = `Exception! operation create ${model.name} failed`;
+        throw ModelService.processError(msg, model, err);
+      });
     });
   }
 
