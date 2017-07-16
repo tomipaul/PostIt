@@ -5,6 +5,7 @@ import chai from 'chai';
 import models from '../../models';
 import server from '../../index';
 import dummyData from '../dummy.json';
+import AdhocModelService from '../../services/AdhocModelService';
 
 chai.use(chaiHTTP);
 let token, token2;
@@ -192,7 +193,7 @@ describe('/api/group/:groupId/user', () => {
     });
   });
   it('should return error if `add user` fails', (done) => {
-    const stub = sinon.stub(models.Group.prototype, 'addUser');
+    const stub = sinon.stub(AdhocModelService, 'returnModelInstance');
     stub.rejects();
     chai.request(server)
     .post(`/api/group/${validGroup.id}/user`)
