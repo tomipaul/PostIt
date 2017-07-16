@@ -8,6 +8,42 @@ const { Group, Message, User } = models;
 const { Groups, Messages, Users } = dummyData;
 const expect = chai.expect;
 
+describe('AdhocModelService.validateInputs', () => {
+  it('validates inputs when creating group', () => {
+    return AdhocModelService.validateInputs(Group, {
+      name: undefined
+    })
+    .catch((err) => {
+      expect(err.message).to
+      .equal('Incomplete field; name is required');
+    });
+  });
+  it('validates inputs when creating group', () => {
+    return AdhocModelService.validateInputs(Group, {
+      name: Groups.twitter.name
+    })
+    .then((isValid) => {
+      expect(isValid).to.equal(true);
+    });
+  });
+  it('validates inputs when creating user', () => {
+    return AdhocModelService.validateInputs(User, {
+      username: Users.validUser.username,
+      phoneNo: Users.validUser.phoneNo
+    })
+    .catch((err) => {
+      expect(err.message).to
+      .equal('Username, password, email and phoneNo required');
+    });
+  });
+  it('validates inputs when creating user', () => {
+    return AdhocModelService.validateInputs(User, Users.validUser)
+    .then((isValid) => {
+      expect(isValid).to.equal(true);
+    });
+  });
+});
+
 describe('AdhocModelService.addUserToGroup', () => {
   const groupId = Groups.validGroup.id;
   before(() => {
@@ -44,12 +80,15 @@ describe('AdhocModelService.addUserToGroup', () => {
       Users.anotherValidUser.username,
       Users.thirdValidUser.username
     ];
-    return AdhocModelService.addUserToGroup(usernames, groupId)
+    return Promise.all([
+      AdhocModelService.addUserToGroup(usernames[0], groupId),
+      AdhocModelService.addUserToGroup(usernames[1], groupId)
+    ])
     .then(() => {
-      return Group.findById(groupId);
-    })
-    .then((group) => {
-      return group.hasUsers(usernames);
+      return Group.findById(groupId)
+      .then((group) => {
+        return group.hasUsers(usernames);
+      });
     })
     .then((hasUsers) => {
       expect(hasUsers).to.be.equal(true);
@@ -76,7 +115,17 @@ describe('AdhocModelService.addUserToGroup', () => {
       .equal('Username is invalid or not defined');
     });
   });
-
+  it('should throw error if username is already in group',
+  () => {
+    const username = Users.validUser.username;
+    return AdhocModelService
+    .addUserToGroup(username, groupId)
+    .catch((err) => {
+      expect(err.code).to.equal(400);
+      expect(err.message).to
+      .equal('User already belong to group');
+    });
+  });
   it('should throw error for failure', () => {
     const stub = sinon.stub(models.Group.prototype, 'addUser');
     stub.rejects();
@@ -191,6 +240,18 @@ describe('AdhocModelService.removeUserFromGroup', () => {
     });
   });
 
+  it('should throw error if user does not exist in group',
+  () => {
+    const username = Users.validUser.username;
+    return AdhocModelService
+    .removeUserFromGroup(username, groupId)
+    .catch((err) => {
+      expect(err.code).to.equal(400);
+      expect(err.message).to
+      .equal('User does not exist in group');
+    });
+  });
+
   it('should throw error for failure',
   () => {
     const stub = sinon.stub(models.Group.prototype, 'removeUser');
@@ -258,6 +319,17 @@ describe('AdhocModelService.addMessageToGroup', () => {
       expect(err.code).to.equal(404);
       expect(err.message).to
       .equal('Error! Group does not exist');
+    });
+  });
+  it('should throw error if message does not have text',
+  () => {
+    const message = { text: undefined };
+    return AdhocModelService
+    .addMessageToGroup(message, groupId)
+    .catch((err) => {
+      expect(err.code).to.equal(400);
+      expect(err.message).to
+      .equal('Incomplete field; text is required');
     });
   });
 });
