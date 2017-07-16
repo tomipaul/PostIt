@@ -28,6 +28,11 @@ class AdhocModelService {
       if ([username, password, email, phoneNo].includes(undefined)) {
         error.message = 'Username, password, email and phoneNo required';
       }
+    } else if (model.name === 'Message') {
+      const { text } = fields;
+      if (text === undefined) {
+        error.message = 'Incomplete field; text is required';
+      }
     }
     return (error.message) ? Promise.reject(error) :
     Promise.resolve(true);
@@ -149,16 +154,13 @@ class AdhocModelService {
   static addMessageToGroup(message, group) {
     return AdhocModelService.returnModelInstance('Group', group)
     .then((groupInstance) => {
-      if (message.text === undefined) {
-        const err = new Error();
-        err.code = 400;
-        err.message = 'Message text is required';
-        throw err;
-      }
-      return Promise.all([
-        groupInstance.createMessage(message),
-        groupInstance.getUsers()
-      ])
+      return AdhocModelService.validateInputs(models.Message, message)
+      .then(() => {
+        return Promise.all([
+          groupInstance.createMessage(message),
+          groupInstance.getUsers()
+        ]);
+      })
       .then((resolved) => {
         return resolved[0].addUsers(resolved[1])
         .then(() => {
