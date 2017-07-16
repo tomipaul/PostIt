@@ -83,9 +83,7 @@ class AdhocModelService {
             err.code = 400;
             throw err;
           }
-          return (Array.isArray(username)) ?
-          groupInstance.addUsers(username)
-          : groupInstance.addUser(username);
+          return groupInstance.addUser(username);
         });
       }
     })
@@ -106,9 +104,7 @@ class AdhocModelService {
   static removeUserFromGroup(username, group) {
     return AdhocModelService.returnModelInstance('Group', group)
     .then((groupInstance) => {
-      return (Array.isArray(username)) ?
-      groupInstance.removeUsers(username)
-      : groupInstance.removeUser(username)
+      return groupInstance.removeUser(username)
       .then((user) => {
         if (user) {
           return user;
