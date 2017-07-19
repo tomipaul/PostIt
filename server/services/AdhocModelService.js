@@ -130,7 +130,9 @@ class AdhocModelService {
   static getAllGroupUsers(group) {
     return AdhocModelService.returnModelInstance('Group', group)
     .then((groupInstance) => {
-      return groupInstance.getUsers();
+      return groupInstance.getUsers({
+        attributes: ['username', 'email', 'phoneNo', 'status']
+      });
     })
     .catch((err) => {
       throw err;

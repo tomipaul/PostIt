@@ -66,8 +66,10 @@ class UserController {
    */
   static authenticateUser() {
     return (req, res, next) => {
-      const username = req.body.username;
-      return ModelService.getModelInstance(userModel, { username })
+      const userName = req.body.username || req.user.username;
+      return ModelService.getModelInstance(userModel, {
+        username: userName
+      })
       .then((user) => {
         return user.verifyPassword(req.body.password)
         .then((passwordIsValid) => {
@@ -78,8 +80,9 @@ class UserController {
           throw new Error('Invalid Password');
         })
         .then((token) => {
+          const { username, email, phoneNo } = user;
           return res.status(200).json({
-            user: req.user,
+            user: { username, email, phoneNo },
             token,
             message: 'Authentication Successful'
           });

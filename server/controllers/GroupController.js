@@ -105,8 +105,9 @@ class GroupController {
         .then((group) => {
           return group.addUser(req.username)
           .then(() => {
+            const { id, name, description } = group;
             return res.status(201).json({
-              group,
+              group: { id, name, description },
               message: 'Group created'
             });
           });
