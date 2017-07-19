@@ -35,7 +35,6 @@ describe('/api/user/signup', () => {
       expect(res.body.user.username).to.equal(validUser.username);
       expect(res.body.user.phoneNo).to.equal(validUser.phoneNo);
       expect(res.body.user.email).to.equal(validUser.email);
-      expect(res.body.user).to.have.own.property('createdAt');
       expect(res.body).to.have.own.property('token');
       expect(res.body.message).to.be.equal('Authentication Successful');
       return done();

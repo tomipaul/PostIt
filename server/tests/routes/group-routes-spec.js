@@ -54,7 +54,6 @@ describe('/api/group', () => {
       expect(res.body.group.id).to.equal(validGroup.id);
       expect(res.body.group.name).to.equal(validGroup.name);
       expect(res.body.group.description).to.equal(validGroup.description);
-      expect(res.body.group).to.have.own.property('createdAt');
       return done();
     });
   });
