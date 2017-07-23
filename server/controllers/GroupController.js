@@ -242,16 +242,16 @@ class GroupController {
    * @memberof GroupController
    * @static
    * @return {function} Express middleware function
-   * whuch adds a user to a message
+   * which adds a user to a message
    */
   static readGroupMessage() {
     return (req, res, next) => {
       const { messageId } = req.body;
-      ModelService.getModelInstance(models.User, {
-        username: req.username
+      ModelService.getModelInstance(models.Message, {
+        id: messageId
       })
-      .then((user) => {
-        return user.addMessage(messageId, {
+      .then((message) => {
+        return message.addUser(req.username, {
           through: { GroupId: req.group.id }
         });
       })
@@ -259,6 +259,33 @@ class GroupController {
         return res.status(200).json({
           message: `Hi ${req.username}, you just read a message`
         });
+      })
+      .catch((err) => {
+        return next(err);
+      });
+    };
+  }
+
+  /**
+   * Get all users that have read a group message
+   * @method
+   * @memberof GroupController
+   * @static
+   * @return {function} Express middleware function
+   * which gets all users that have read a group message
+   * and send response to client
+   */
+  static getUsersThatReadMessage() {
+    return (req, res, next) => {
+      const { messageId } = req.body;
+      ModelService.getModelInstance(models.Message, {
+        id: messageId
+      })
+      .then((message) => {
+        return message.getUsers();
+      })
+      .then((users) => {
+        return res.status(200).json({ users });
       })
       .catch((err) => {
         return next(err);
