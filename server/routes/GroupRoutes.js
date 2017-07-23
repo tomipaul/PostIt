@@ -17,6 +17,9 @@ router.get('/api/group/:groupId/messages',
 router.post('/api/group/:groupId/message/read',
  GroupController.permitOnlyGroupMembers(),
  GroupController.readGroupMessage());
+router.get('/api/group/:groupId/message/users',
+ GroupController.permitOnlyGroupMembers(),
+ GroupController.getUsersThatReadMessage());
 router.get('/api/group/:groupId/users',
  GroupController.permitOnlyGroupMembers(),
  GroupController.getGroupUsers());
