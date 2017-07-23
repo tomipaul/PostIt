@@ -1,6 +1,6 @@
 module.exports = {
   up(queryInterface, Sequelize) {
-    return queryInterface.createTable('UserUnreadMessages', {
+    return queryInterface.createTable('UserReadMessages', {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -28,6 +28,10 @@ module.exports = {
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
+      },
+      GroupId: {
+        allowNull: false,
+        type: Sequelize.UUID
       }
     });
   },
