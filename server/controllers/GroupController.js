@@ -235,6 +235,36 @@ class GroupController {
       });
     };
   }
+
+  /**
+   * Read a message posted to a group
+   * @method
+   * @memberof GroupController
+   * @static
+   * @return {function} Express middleware function
+   * whuch adds a user to a message
+   */
+  static readGroupMessage() {
+    return (req, res, next) => {
+      const { messageId } = req.body;
+      ModelService.getModelInstance(models.User, {
+        username: req.username
+      })
+      .then((user) => {
+        return user.addMessage(messageId, {
+          through: { GroupId: req.group.id }
+        });
+      })
+      .then(() => {
+        return res.status(200).json({
+          message: `Hi ${req.username}, you just read a message`
+        });
+      })
+      .catch((err) => {
+        return next(err);
+      });
+    };
+  }
 }
 
 export default GroupController;

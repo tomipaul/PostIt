@@ -154,16 +154,7 @@ class AdhocModelService {
     .then((groupInstance) => {
       return AdhocModelService.validateInputs(models.Message, message)
       .then(() => {
-        return Promise.all([
-          groupInstance.createMessage(message),
-          groupInstance.getUsers()
-        ]);
-      })
-      .then((resolved) => {
-        return resolved[0].addUsers(resolved[1])
-        .then(() => {
-          return resolved[0];
-        });
+        return groupInstance.createMessage(message);
       });
     })
     .catch((err) => {
