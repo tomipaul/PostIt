@@ -219,7 +219,9 @@ class AdhocModelService {
   static getUserGroups(username) {
     return AdhocModelService.returnModelInstance('User', username)
     .then((user) => {
-      return user.getGroups();
+      return user.getGroups({
+        attributes: ['id', 'name', 'description', 'CreatorUsername']
+      });
     })
     .catch((err) => {
       throw err;

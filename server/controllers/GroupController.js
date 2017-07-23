@@ -105,9 +105,9 @@ class GroupController {
         .then((group) => {
           return group.addUser(req.username)
           .then(() => {
-            const { id, name, description } = group;
+            const { id, name, description, CreatorUsername } = group;
             return res.status(201).json({
-              group: { id, name, description },
+              group: { id, name, description, CreatorUsername },
               message: 'Group created'
             });
           });
@@ -131,9 +131,9 @@ class GroupController {
     return (req, res, next) => {
       const username = req.body.username;
       return AdhocModelService.addUserToGroup(username, req.group)
-      .then((user) => {
+      .then(() => {
         return res.status(200).json({
-          user,
+          username,
           message: `User ${username} added to group`
         });
       })
@@ -226,6 +226,7 @@ class GroupController {
       .removeUserFromGroup(username, req.group)
       .then(() => {
         return res.status(200).json({
+          username,
           message: 'User removed from group'
         });
       })

@@ -182,7 +182,7 @@ class UserController {
           username: user.username,
           email: user.email,
           phoneNo: user.phoneNo,
-          createdAt: user.createdAt,
+          status: user.status
         };
         return next();
       })
@@ -228,8 +228,9 @@ class UserController {
         username: req.params.username
       }, req.body)
       .then((user) => {
+        const { username, email, phoneNo, status } = user;
         return res.status(200).json({
-          user,
+          user: { username, email, phoneNo, status },
           message: 'User updated'
         });
       })
@@ -252,8 +253,11 @@ class UserController {
       ModelService.getModelInstance(userModel, {
         username: req.params.username
       })
-      .then((user) => {
-        return res.status(200).json({ user });
+      .then((userObj) => {
+        const { username, email, phoneNo, status } = userObj;
+        return res.status(200).json({
+          user: { username, email, phoneNo, status }
+        });
       })
       .catch((err) => {
         return next(err);
