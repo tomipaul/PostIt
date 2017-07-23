@@ -41,7 +41,7 @@ export default (sequelize, DataTypes) => {
       onDelete: 'SET NULL'
     });
     Message.belongsToMany(models.User, {
-      through: 'UserUnreadMessages'
+      through: models.UserReadMessages
     });
   };
   return Message;
