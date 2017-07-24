@@ -218,5 +218,49 @@ class AdhocModelService {
       throw err;
     });
   }
+
+  /**
+   * @method
+   * @memberof ModelService
+   * @static
+   * @param {string} messageId
+   * @param {string} username
+   * @param {string} groupId
+   * @returns {Promise} resolves on success
+   */
+  static addUserToMessage(messageId, username, groupId) {
+    return ModelService.getModelInstance(models.Message, {
+      id: messageId
+    })
+    .then((message) => {
+      return message.addUser(username, {
+        through: { GroupId: groupId }
+      });
+    })
+    .catch((err) => {
+      throw err;
+    });
+  }
+
+  /**
+   * @method
+   * @memberof ModelService
+   * @static
+   * @param {string} messageId
+   * @returns {Promise} resolves on success with an array of users
+   */
+  static getMessageUsers(messageId) {
+    return ModelService.getModelInstance(models.Message, {
+      id: messageId
+    })
+    .then((message) => {
+      return message.getUsers({
+        attributes: ['username', 'email', 'phoneNo', 'status']
+      });
+    })
+    .catch((err) => {
+      throw err;
+    });
+  }
 }
 export default AdhocModelService;

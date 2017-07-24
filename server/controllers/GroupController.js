@@ -247,14 +247,8 @@ class GroupController {
   static readGroupMessage() {
     return (req, res, next) => {
       const { messageId } = req.body;
-      ModelService.getModelInstance(models.Message, {
-        id: messageId
-      })
-      .then((message) => {
-        return message.addUser(req.username, {
-          through: { GroupId: req.group.id }
-        });
-      })
+      AdhocModelService
+      .addUserToMessage(messageId, req.username, req.group.id)
       .then(() => {
         return res.status(200).json({
           message: `Hi ${req.username}, you just read a message`
@@ -277,13 +271,8 @@ class GroupController {
    */
   static getUsersThatReadMessage() {
     return (req, res, next) => {
-      const { messageId } = req.body;
-      ModelService.getModelInstance(models.Message, {
-        id: messageId
-      })
-      .then((message) => {
-        return message.getUsers();
-      })
+      const { messageId } = req.params;
+      AdhocModelService.getMessageUsers(messageId)
       .then((users) => {
         return res.status(200).json({ users });
       })
