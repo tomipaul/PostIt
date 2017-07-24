@@ -2,6 +2,7 @@ import ModelService from '../services/ModelService';
 import AdhocModelService from '../services/AdhocModelService';
 import AuthService from '../services/AuthService';
 import models from '../models';
+import emailService from '../services/emailService.js';
 
 const userModel = models.User;
 
@@ -278,6 +279,27 @@ class UserController {
       AdhocModelService.getUserGroups(req.username)
       .then((groups) => {
         return res.status(200).json({ groups });
+      })
+      .catch((err) => {
+        return next(err);
+      });
+    };
+  }
+
+  /**
+   * Send mail to reset user password
+   * @method
+   * @memberof UserController
+   * @static
+   * @returns {function} Express middleware function which sends
+   * a password reset mail to user
+   */
+  static resetPassword() {
+    return (req, res, next) => {
+      const { recipient } = req.body;
+      return emailService.sendResetPasswordMail(recipient)
+      .then((message) => {
+        return res.status(200).json({ message });
       })
       .catch((err) => {
         return next(err);
