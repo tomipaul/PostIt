@@ -155,6 +155,7 @@ span[priority=critical] {
   margin-top: 0px !important;
   border-color: #75a3a3;
   color: #75a3a3;
+  height: 100%;
 }
 .message-input {
   background-color: #f9f7f7;
@@ -166,6 +167,7 @@ span[priority=critical] {
   width: 90%;
   bottom: 0;
   margin-bottom: 0;
+  overflow: auto;
 }
 .message-board {
   position: relative;
