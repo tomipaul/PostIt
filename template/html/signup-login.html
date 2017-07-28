@@ -2,68 +2,67 @@
 <html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/signup-login.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   </head>
   <body>
-    <div class="container-fluid">
+    <div class="container-board">
       <header>
-        <img src="../images/post-it-icon.png"></img>
-        <i class="fa fa-envelope fa-2x"></i>
-        <div class="header-nav">
+        <img src="../images/postit-icon.png"></img>
+        <!--<div class="header-nav">
           <i class="glyphicon glyphicon-home"></i>
           <i class="glyphicon glyphicon-user"></i>
           <i class="glyphicon glyphicon-blackboard"></i>
           <i class="fa fa-group"></i>  
-        </div>
+        </div>-->
       </header>
-      <div class="col-sm-offset-3 col-sm-6 col-sm-offset-3 form-div">
+      <div class="form-div">
         <form id="log-in">
-          <h2>Login to PostIt</h2>
-          <div class="form-group">
-            <label for="email">Email:</label>
-            <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-              <input type="email" class="form-control" id="email" placeholder="e.g. element@postit.com">
-            </div>
+          <h4>Login to PostIt</h4>
+          <div class="input-field">
+            <i class="fa fa-user prefix"></i>
+            <input type="text" id="username" placeholder="e.g. elementDeveloper">
+            <label for="username">Username:</label>
           </div>
-          <div class="form-group">
+          <div class="input-field">
+            <i class="fa fa-unlock-alt prefix"></i>
+            <input type="password" id="pwd" placeholder="Enter password">
             <label for="pwd">Password:</label>
-            <div class = "input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-              <input type="password" class="form-control" id="pwd" placeholder="Enter password">
-            </div>
           </div>
-          <button type="button" class="btn btn-primary">Log In</button>
+          <a class="waves-effect waves-light btn">Log In</a>
           <div id ='message'> Don't have a PostIt account? <a href=# id="go-to-signup">Signup</a> </div>
         </form>
         <form class="hidden" id = "sign-up">
-          <h2>Create a PostIt Account</h2>
-          <div class = "form-group">
-            <label for="name">Name:</label>
-            <input type="text" class="form-control" id="name" placeholder="e.g Tomi Paul">
+          <h4>Create a PostIt Account</h4>
+          <div class = "input-field">
+            <i class="fa fa-user prefix"></i>
+            <input type="text" id="username" placeholder="e.g Tomi Paul">
+            <label for="username">Username:</label>
           </div>
-          <div class = "form-group">
+          <div class = "input-field">
+            <i class="fa fa-envelope prefix"></i>
+            <input type="email" id="email" placeholder="e.g. element@postit.com">
             <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" placeholder="e.g. element@postit.com">
           </div>
-          <div class = "form-group">
+          <div class = "input-field">
+            <i class="fa fa-phone prefix"></i>
+            <input type="text" id="phone-no" placeholder="e.g +2348107976596">
             <label for="phone-no">Phone No:</label>
-            <input type="number" class="form-control" id="phone-no" placeholder="e.g +2348107976596">
           </div>
-          <div class = "form-group">
+          <div class = "input-field">
+            <i class="fa fa-key prefix"></i>
+            <input type="password" id="pwd" placeholder="Enter password">
             <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" placeholder="Enter password">
           </div>
-          <button type="button" class="btn btn-success">Sign Up</button>
+          <a class="waves-effect waves-light btn">Sign Up</a>
           <div id ='message'> Have a PostIt account? <a href=# id="go-to-login">Login</a> </div>
         </form>
       </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
     <script src="../js/signup-login.js"></script>
   </body>
 </html>
