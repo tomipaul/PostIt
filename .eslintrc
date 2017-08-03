@@ -10,10 +10,12 @@
     "node": true,
     "es6": true,
     "mocha": true,
-    "jasmine": true
+    "jasmine": true,
+    "jquery": true
   },
   "globals": {
-    "document": true
+    "document": true,
+    "window": true
   },
   "rules": {
     "one-var": 0,
