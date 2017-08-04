@@ -252,7 +252,7 @@ class UserController {
   static getUser() {
     return (req, res, next) => {
       ModelService.getModelInstance(userModel, {
-        username: req.params.username
+        username: req.params.username || req.username
       })
       .then((userObj) => {
         const { username, email, phoneNo, status } = userObj;
