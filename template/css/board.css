@@ -268,6 +268,25 @@ span[priority=critical] {
   height: 100%;
   background-color: white;
 }
+#modal1 {
+  height: 50%;
+  width: 40%;
+}
+.modal-content > h4 {
+  font-family: 'Rambla', sans-serif;
+}
+.modal-content .input-field {
+  display: block;
+  width: 70%;
+  margin: auto;
+  margin-top: 5%;
+  font-family: 'Rambla', sans-serif;
+  font-size: 2rem;
+}
+.modal-content form {
+  display: block;
+  margin: auto;
+}
 @media only screen and (max-width : 992px) {
   header, main, footer {
     padding-left: 0;

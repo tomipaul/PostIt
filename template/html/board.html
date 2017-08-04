@@ -5,7 +5,7 @@
     <link href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Rambla" rel="stylesheet">
     <link rel="stylesheet" href="../css/board.css">
   </head>
   <body>
@@ -85,12 +85,6 @@
             <span class='label'>urgent</span>
             <span class='label'>critical</span>
           </div>
-          <!--<select class = 'select-priority col s3'>
-            <option value="" disabled selected>Choose priority</option>
-            <option value="1">Normal</option>
-            <option value="2">Urgent</option>
-            <option value="2">Critical</option>
-          </select>-->
           <div class='col s1 send-button'>
             <i class="material-icons circle">send</i>
           </div>
@@ -138,11 +132,17 @@
     <!-- Modal Structure -->
     <div id="modal1" class="modal modal-fixed-footer">
       <div class="modal-content">
-        <h4>Modal Header</h4>
-        <p>A bunch of text</p>
+        <h4>Create a Group</h4>
+        <form>
+          <div class="input-field">
+            <input id="group_name" type="text" placeholder='Give a cool name' class="validate">
+            <input id="group_desc" type="text" placeholder='Describe your group' class="validate">
+            <!--<textarea id="textarea1" class="materialize-textarea" placeholder='Describe your group' row=8></textarea>-->
+          </div>
+        </form>
       </div>
       <div class="modal-footer">
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Create<i class="material-icons right">send</i></a>
       </div>
     </div>
     <div class='right-bar z-depth-2'>
