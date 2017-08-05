@@ -109,11 +109,14 @@ class UserController {
       const rsaKey = process.env.PUBLIC_KEY;
       return AuthService.verifyTokenGetPayload(req.token, rsaKey)
       .then((decodedPayload) => {
-        req.username = decodedPayload.username;
-        req.userStatus = decodedPayload.status;
+        const { username, status, email, phoneNo } = decodedPayload;
+        req.username = username;
+        req.userStatus = status;
+        req.auth = { username, status, email, phoneNo };
         return next();
       })
-      .catch(() => {
+      .catch((err0) => {
+        console.log(err0);
         const err = new Error('Invalid token sent in request');
         err.code = 401;
         return next(err);

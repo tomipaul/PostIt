@@ -14,5 +14,8 @@ authRouter.use('/api', [
   UserController.getClientAuthToken(),
   UserController.authorizeUser()
 ]);
+authRouter.get('/api/user/authorize', (req, res) => {
+  res.status(200).json({ auth: req.auth });
+});
 
 export default authRouter;
