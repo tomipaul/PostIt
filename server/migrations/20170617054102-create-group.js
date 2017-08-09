@@ -48,6 +48,6 @@ module.exports = {
     });
   },
   down(queryInterface) {
-    return queryInterface.dropTable('Groups');
+    return queryInterface.dropTable('Groups', { cascade: true });
   }
 };

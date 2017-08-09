@@ -73,6 +73,6 @@ module.exports = {
     });
   },
   down(queryInterface) {
-    return queryInterface.dropTable('Users');
+    return queryInterface.dropTable('Users', { cascade: true });
   }
 };

@@ -61,6 +61,6 @@ module.exports = {
     });
   },
   down(queryInterface) {
-    return queryInterface.dropTable('Messages');
+    return queryInterface.dropTable('Messages', { cascade: true });
   }
 };
