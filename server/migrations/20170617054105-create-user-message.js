@@ -36,6 +36,6 @@ module.exports = {
     });
   },
   down(queryInterface) {
-    return queryInterface.dropTable('UserUnreadMessages');
+    return queryInterface.dropTable('UserReadMessages');
   }
 };
