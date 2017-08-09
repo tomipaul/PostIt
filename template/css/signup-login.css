@@ -53,6 +53,7 @@ form {
   height: 80%;
 }
 form > h4 {
+  font-size: 2em;
   margin-top: -4%;
 }
 .input-field {
