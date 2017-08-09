@@ -131,7 +131,13 @@ class AdhocModelService {
     return AdhocModelService.returnModelInstance('Group', group)
     .then((groupInstance) => {
       return groupInstance.getUsers({
-        attributes: ['username', 'email', 'phoneNo', 'status']
+        attributes: [
+          'username',
+          'email',
+          'phoneNo',
+          'status',
+          'photoURL'
+        ]
       });
     })
     .catch((err) => {
@@ -255,7 +261,13 @@ class AdhocModelService {
     })
     .then((message) => {
       return message.getUsers({
-        attributes: ['username', 'email', 'phoneNo', 'status']
+        attributes: [
+          'username',
+          'email',
+          'phoneNo',
+          'status',
+          'photoURL'
+        ]
       });
     })
     .catch((err) => {

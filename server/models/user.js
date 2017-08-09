@@ -65,6 +65,10 @@ export default (sequelize, DataTypes) => {
     status: {
       type: DataTypes.STRING,
       defaultValue: 'user'
+    },
+    photoURL: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   }, {
     hooks: {

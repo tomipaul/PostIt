@@ -11,6 +11,25 @@ const userModel = models.User;
  */
 class UserController {
   /**
+   * extract user details
+   * @method extractFromUserObject
+   * @memberof UserController
+   * @static
+   * @param {object} userObject
+   * @return {object} an object with username, email
+   * phoneNo, status and photoURL
+   */
+  static extractFromUserObject(userObject) {
+    const {
+      username,
+      email,
+      phoneNo,
+      status,
+      photoURL
+    } = userObject;
+    return { username, email, phoneNo, status, photoURL };
+  }
+  /**
    * Check if authentication request is valid
    * @method
    * @memberof UserController
@@ -81,9 +100,9 @@ class UserController {
           throw new Error('Invalid Password');
         })
         .then((token) => {
-          const { username, email, phoneNo } = user;
+          const userInfo = UserController.extractFromUserObject(user);
           return res.status(200).json({
-            user: { username, email, phoneNo },
+            user: userInfo,
             token,
             message: 'Authentication Successful'
           });
@@ -109,14 +128,14 @@ class UserController {
       const rsaKey = process.env.PUBLIC_KEY;
       return AuthService.verifyTokenGetPayload(req.token, rsaKey)
       .then((decodedPayload) => {
-        const { username, status, email, phoneNo } = decodedPayload;
-        req.username = username;
-        req.userStatus = status;
-        req.auth = { username, status, email, phoneNo };
+        const userInfo = UserController
+        .extractFromUserObject(decodedPayload);
+        req.username = userInfo.username;
+        req.userStatus = userInfo.status;
+        req.auth = userInfo;
         return next();
       })
-      .catch((err0) => {
-        console.log(err0);
+      .catch(() => {
         const err = new Error('Invalid token sent in request');
         err.code = 401;
         return next(err);
@@ -182,12 +201,8 @@ class UserController {
         return ModelService.createModelInstance(userModel, credentials);
       })
       .then((user) => {
-        req.user = {
-          username: user.username,
-          email: user.email,
-          phoneNo: user.phoneNo,
-          status: user.status
-        };
+        const userInfo = UserController.extractFromUserObject(user);
+        req.user = userInfo;
         return next();
       })
       .catch((err) => {
@@ -232,9 +247,9 @@ class UserController {
         username: req.params.username
       }, req.body)
       .then((user) => {
-        const { username, email, phoneNo, status } = user;
+        const userInfo = UserController.extractFromUserObject(user);
         return res.status(200).json({
-          user: { username, email, phoneNo, status },
+          user: userInfo,
           message: 'User updated'
         });
       })
@@ -258,9 +273,10 @@ class UserController {
         username: req.params.username || req.username
       })
       .then((userObj) => {
-        const { username, email, phoneNo, status } = userObj;
+        const userInfo = UserController
+        .extractFromUserObject(userObj);
         return res.status(200).json({
-          user: { username, email, phoneNo, status }
+          user: userInfo
         });
       })
       .catch((err) => {
