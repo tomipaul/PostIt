@@ -132,7 +132,6 @@ class UserController {
         .extractFromUserObject(decodedPayload);
         req.username = userInfo.username;
         req.userStatus = userInfo.status;
-        req.auth = userInfo;
         return next();
       })
       .catch(() => {
