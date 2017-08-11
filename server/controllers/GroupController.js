@@ -157,16 +157,13 @@ class GroupController {
         ...req.body,
         AuthorUsername: req.username
       };
-      return ModelService.getModelInstance(models.User, {
-        username: message.AuthorUsername
-      })
-      .then((user) => {
-        return AdhocModelService
-        .addMessageToGroup(message, req.group)
-        .then((createdMessage) => {
-          createdMessage.dataValues = {
-            ...createdMessage.dataValues,
-            AuthorImageLink: user.photoURL
+      return AdhocModelService
+      .addMessageToGroup(message, req.group)
+      .then((createdMessage) => {
+        return createdMessage.getAuthor()
+        .then((author) => {
+          createdMessage.dataValues.Author = {
+            photoURL: author.photoURL
           };
           return res.status(200).json({
             createdMessage,
