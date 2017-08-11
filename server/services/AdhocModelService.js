@@ -199,7 +199,12 @@ class AdhocModelService {
   static getGroupMessages(group) {
     return AdhocModelService.returnModelInstance('Group', group)
     .then((groupInstance) => {
-      return groupInstance.getMessages();
+      return groupInstance.getMessages({
+        include: [{
+          association: 'Author',
+          attributes: ['photoURL']
+        }]
+      });
     })
     .catch((err) => {
       throw err;
