@@ -13,8 +13,9 @@ class ModelService {
    * matching model instance
    */
   static getModelInstance(model, attributes) {
-    const promise = (Object.keys(attributes).includes('id')) ?
-    model.findById(attributes.id) :
+    const id = attributes.id || attributes.username;
+    const promise = (id) ?
+    model.findById(id) :
     model.findOne({ where: attributes });
     return promise.then((modelInstance) => {
       if (modelInstance) {
