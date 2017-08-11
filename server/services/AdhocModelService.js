@@ -83,7 +83,8 @@ class AdhocModelService {
             err.code = 400;
             throw err;
           }
-          return groupInstance.addUser(username);
+          return groupInstance.addUser(username)
+          .then(() => { return isValid[1]; });
         });
       }
     })

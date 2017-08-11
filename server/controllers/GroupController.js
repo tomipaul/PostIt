@@ -131,9 +131,10 @@ class GroupController {
     return (req, res, next) => {
       const username = req.body.username;
       return AdhocModelService.addUserToGroup(username, req.group)
-      .then(() => {
+      .then((user) => {
+        const { userName, photoURL } = user;
         return res.status(200).json({
-          username,
+          user: { userName, photoURL },
           message: `User ${username} added to group`
         });
       })
