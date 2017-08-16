@@ -48,3 +48,4 @@ dist
 .DS_Store
 
 package-lock.json
+client/bin/bundle

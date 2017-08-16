@@ -6,7 +6,7 @@ const NODE_ENV = process.env.NODE_ENV;
 const webpackConfig = {
   entry: path.resolve(__dirname, './client/index.jsx'),
   output: {
-    path: path.resolve(__dirname, 'client', 'bin'),
+    path: path.resolve(__dirname, 'client', 'bin', 'bundle'),
     publicPath: '/',
     sourceMapFilename: 'source.map',
     filename: 'bundle.js'
