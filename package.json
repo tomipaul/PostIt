@@ -3,15 +3,24 @@
   "version": "1.0.0",
   "description": "A simple application that allows friends and colleagues create groups for notifications",
   "main": "index.js",
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost",
+    "mapCoverage": true,
+    "globals":{
+      "NODE_ENV": "jest"
+    }
+  },
   "scripts": {
     "start": "npm run prod:setup && node dist/index.js",
     "start:dev": "babel-watch server/index.js",
     "migrations": "sequelize db:migrate",
     "transpile": "babel server --out-dir dist --copy-files",
-    "test": "nyc mocha server/tests/**/*.js --timeout 10000",
+    "frontend:test": "jest --coverage --collectCoverageFrom=client/**/*.{js,jsx}",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "prod:setup": "npm run transpile && npm run migrations",
-    "build": "webpack-dev-server"
+    "build": "webpack-dev-server",
+    "test": "NODE_ENV=test nyc mocha server/tests/**/*.js --timeout 10000"
   },
   "repository": {
     "type": "git",
@@ -33,6 +42,8 @@
   },
   "homepage": "https://github.com/tomipaul/PostIt#readme",
   "devDependencies": {
+    "babel-jest": "^20.0.3",
+    "babel-preset-stage-0": "^6.24.1",
     "babel-watch": "^2.0.6",
     "chai": "^4.0.2",
     "chai-http": "^3.0.0",
@@ -43,10 +54,14 @@
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-jsx-a11y": "^5.0.3",
     "eslint-plugin-react": "^7.1.0",
+    "jest": "^20.0.4",
     "keypair": "^1.0.1",
     "mocha": "^3.4.2",
+    "moxios": "^0.4.0",
+    "nock": "^9.0.14",
     "node-sass": "^4.5.3",
     "nyc": "^11.0.2",
+    "redux-mock-store": "^1.2.3",
     "sinon": "^2.3.6",
     "supertest": "^3.0.0"
   },
