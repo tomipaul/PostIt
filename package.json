@@ -7,7 +7,7 @@
     "verbose": true,
     "testURL": "http://localhost",
     "mapCoverage": true,
-    "globals":{
+    "globals": {
       "NODE_ENV": "jest"
     }
   },
@@ -19,7 +19,8 @@
     "frontend:test": "jest --coverage --collectCoverageFrom=client/**/*.{js,jsx}",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "prod:setup": "npm run transpile && npm run migrations",
-    "build": "webpack-dev-server",
+    "build:dev": "webpack-dev-server",
+    "build": "webpack -p",
     "test": "NODE_ENV=test nyc mocha server/tests/**/*.js --timeout 10000"
   },
   "repository": {

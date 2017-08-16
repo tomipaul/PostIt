@@ -2,15 +2,15 @@ import webpack from 'webpack';
 import path from 'path';
 import Dotenv from 'dotenv-webpack';
 
+const NODE_ENV = process.env.NODE_ENV;
 const webpackConfig = {
   entry: path.resolve(__dirname, './client/index.jsx'),
   output: {
-    path: '/client/bin/',
+    path: path.resolve(__dirname, 'client', 'bin'),
     publicPath: '/',
     sourceMapFilename: 'source.map',
     filename: 'bundle.js'
   },
-
   module: {
     rules: [
       {
@@ -46,10 +46,11 @@ const webpackConfig = {
   resolve: {
     extensions: ['.js', '.json', '.jsx', '.scss', '.css'],
   },
-  devtool: 'cheap-module-eval-source-map',
+  devtool: (NODE_ENV === 'development') ?
+  'cheap-module-eval-source-map' : 'cheap-module-source-map',
   target: 'web',
   stats: 'errors-only',
-  devServer: {
+  devServer: (NODE_ENV === 'development') ? {
     proxy: {
       '/api': 'http://localhost:5000'
     },
@@ -59,7 +60,7 @@ const webpackConfig = {
     https: false,
     noInfo: false,
     stats: 'minimal'
-  },
+  } : {},
   node: {
     dns: 'mock',
     fs: 'empty',
@@ -68,14 +69,13 @@ const webpackConfig = {
     path: true,
     url: false
   },
-  plugins: [
+  plugins: (NODE_ENV === 'development') ? (
+  [
     new Dotenv(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('development')
-      }
+      'process.env.NODE_ENV': JSON.stringify('development')
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',
@@ -83,7 +83,26 @@ const webpackConfig = {
       'window.jQuery': 'jquery',
       'window.$': 'jquery'
     })
-  ],
+  ]) : (
+  [
+    new Dotenv(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true
+    }),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+      'window.$': 'jquery'
+    })
+  ])
 };
 
 export default webpackConfig;
