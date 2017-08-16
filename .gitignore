@@ -45,7 +45,12 @@ jspm_packages
 # transpiled code
 dist
 
-.DS_Store
-
-package-lock.json
+# bundle
 client/bin/bundle
+
+#others
+.DS_Store
+package-lock.json
+jest_0
+test-templates
+server/key
