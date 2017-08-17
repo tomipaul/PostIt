@@ -6,6 +6,7 @@ import PostMessage from '../container/PostMessage.jsx';
 import CreateGroup from '../container/CreateGroup.jsx';
 import ShowPreloader from '../container/ShowPreloader.jsx';
 import UpdateProfilePicture from '../container/UpdateProfilePicture.jsx';
+import ShowErrorDialog from '../container/ShowErrorDialog.jsx';
 
 /**
  * @class DashboardView
@@ -43,6 +44,7 @@ class Dashboard extends React.Component {
         <CreateGroup />
         <ShowPreloader id="main-preloader" />
         <UpdateProfilePicture />
+        <ShowErrorDialog />
       </div>
     );
   }
