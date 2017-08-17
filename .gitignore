@@ -46,7 +46,10 @@ jspm_packages
 dist
 
 # bundle
-client/bin/bundle
+client/bin/*.js
+client/bin/*.woff
+client/bin/*.woff2
+client/bin/*.map
 
 #others
 .DS_Store
