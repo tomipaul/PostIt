@@ -6,13 +6,12 @@ import Group from './Group.jsx';
 
 const SideNav = ({
   imageLink,
-  username,
-  groups,
-  unreadCountObject,
+  username = '',
+  groups = {},
+  unreadCountObject = {},
   exploreGroup
-}) => {
-  const groupIdArray = Object.keys(groups);
-  return (
+}) =>
+  (
     <ul id="slide-out" className="side-nav fixed">
       <UserView
         imageLink={imageLink}
@@ -23,9 +22,7 @@ const SideNav = ({
         <a className="subheader">GROUPS</a>
       </li>
       {
-        (groupIdArray.length !== 0) ?
-        (
-          groupIdArray.map((groupId) => {
+          Object.keys(groups).map((groupId) => {
             const group = groups[groupId];
             return (
               <Group
@@ -37,26 +34,20 @@ const SideNav = ({
                 onClick={() => { exploreGroup(group.id); }}
               />
             );
-          })
-        ) : null
+          }
+          )
       }
     </ul>
   );
-};
 
 SideNav.propTypes = {
   imageLink: PropTypes.string.isRequired,
-  username: PropTypes.string,
+  username: PropTypes.string.isRequired,
   groups: PropTypes.objectOf(
     PropTypes.object
   ).isRequired,
-  unreadCountObject: PropTypes.objectOf(PropTypes.number),
+  unreadCountObject: PropTypes.objectOf(PropTypes.number).isRequired,
   exploreGroup: PropTypes.func.isRequired
-};
-
-SideNav.defaultProps = {
-  username: '',
-  unreadCountObject: {},
 };
 
 export default SideNav;

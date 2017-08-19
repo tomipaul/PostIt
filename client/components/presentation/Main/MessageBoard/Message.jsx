@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Message = ({ Author, priority, text }) => {
-  return (
+const Message = ({ Author, priority, text }) =>
+  (
     <div className="message-text">
       <a href=""><span className="author-name">{Author}</span></a>
       <div className="priority-tag">
@@ -15,7 +15,6 @@ const Message = ({ Author, priority, text }) => {
       </div>
     </div>
   );
-};
 
 Message.propTypes = {
   text: PropTypes.string.isRequired,

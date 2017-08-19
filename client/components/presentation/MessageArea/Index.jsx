@@ -8,16 +8,16 @@ import SubmitButton from './SubmitButton.jsx';
  * @class Footer
  * @extends React.Component
  */
-class Footer extends React.Component {
+class MessageArea extends React.Component {
   /**
    * @constructor
    * @param {object} props
    */
   constructor(props) {
     super(props);
-    this.state = { text: '', priority: 'normal' };
-    this.messageWasChanged = this.messageWasChanged.bind(this);
-    this.priorityWasSelected = this.priorityWasSelected.bind(this);
+    this.state = {};
+    this.onMessageChange = this.onMessageChange.bind(this);
+    this.onPrioritySelect = this.onPrioritySelect.bind(this);
     this.onSubmitMessage = this.onSubmitMessage.bind(this);
   }
   /**
@@ -27,7 +27,7 @@ class Footer extends React.Component {
    * @returns {void}
    */
   onSubmitMessage() {
-    this.props.onClick(this.state);
+    this.props.addMessageToGroup(this.state);
     this.setState({ text: '', priority: 'normal' });
   }
   /**
@@ -36,7 +36,7 @@ class Footer extends React.Component {
    * @param {object} event
    * @returns {void}
    */
-  messageWasChanged(event) {
+  onMessageChange(event) {
     event.preventDefault();
     this.setState({ text: event.target.value });
   }
@@ -47,7 +47,7 @@ class Footer extends React.Component {
    * @param {object} event
    * @returns {void}
    */
-  priorityWasSelected(event) {
+  onPrioritySelect(event) {
     event.preventDefault();
     this.setState({
       priority: event.target.getAttribute('data-priority')
@@ -67,11 +67,11 @@ class Footer extends React.Component {
           <div className="message-input row">
             <TextBox
               message={this.state.text}
-              messageWasChanged={this.messageWasChanged}
+              changeMessage={this.onMessageChange}
               onSubmitMessage={this.onSubmitMessage}
             />
             <PrioritySelect
-              priorityWasSelected={this.priorityWasSelected}
+              selectPriority={this.onPrioritySelect}
             />
             <SubmitButton
               onClick={this.onSubmitMessage}
@@ -83,9 +83,9 @@ class Footer extends React.Component {
   }
 }
 
-Footer.propTypes = {
-  onClick: PropTypes.func.isRequired,
+MessageArea.propTypes = {
+  addMessageToGroup: PropTypes.func.isRequired,
   dashboardIsActive: PropTypes.bool.isRequired
 };
 
-export default Footer;
+export default MessageArea;

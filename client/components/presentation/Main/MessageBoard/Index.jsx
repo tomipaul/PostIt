@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MessageBox from './MessageBox.jsx';
 
-const MessageBoard = ({ messages }) => {
-  return (
+const MessageBoard = ({ messages }) =>
+  (
     <div className="message-board">
       {
         messages.map((message) => {
@@ -18,7 +18,6 @@ const MessageBoard = ({ messages }) => {
       }
     </div>
   );
-};
 
 MessageBoard.propTypes = {
   messages: PropTypes.arrayOf(PropTypes.shape({

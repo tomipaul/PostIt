@@ -3,7 +3,7 @@ import { Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import LoadDashboard from '../container/LoadDashboard.jsx';
-import Home from '../presentation/Home.jsx';
+import AuthenticationPage from '../presentation/AuthenticationPage.jsx';
 
 const Routes = () => {
   const token = window.localStorage.getItem('auth_token');
@@ -11,20 +11,18 @@ const Routes = () => {
     <div>
       <Route
         path="/dashboard"
-        render={() => {
-          return (!token) ?
+        render={() =>
+          ((!token) ?
           (<Redirect to="/" />) :
-          (<LoadDashboard />);
-        }}
+          (<LoadDashboard />))
+        }
       />
       <Route
         exact
         path="/"
-        render={() => {
-          return (token) ?
+        render={() => ((token) ?
           (<Redirect to="/dashboard" />) :
-          (<Home />);
-        }}
+          (<AuthenticationPage />))}
       />
     </div>
   );
@@ -34,10 +32,8 @@ Routes.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = (state) => {
-  return {
-    isAuthenticated: state.auth.isAuthenticated
-  };
-};
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
 
 export default withRouter(connect(mapStateToProps)(Routes));

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Preloader = ({ requestCount, id }) => {
-  return (
+const Preloader = ({ requestCount, id }) =>
+  (
     (requestCount > 0) ? (
       <div
         id={id}
@@ -12,7 +12,6 @@ const Preloader = ({ requestCount, id }) => {
       </div>
     ) : null
   );
-};
 
 Preloader.propTypes = {
   id: PropTypes.string.isRequired,

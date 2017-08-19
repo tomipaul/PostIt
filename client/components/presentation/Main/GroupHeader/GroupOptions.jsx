@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const GroupOptions = ({ showSearchUserView, showGroupMemberView }) => {
-  return (
+const GroupOptions = ({ showSearchUserView, showGroupMemberView }) =>
+  (
     <ul id="dropdown1" className="dropdown-content">
       <li>
         <a
@@ -22,7 +22,6 @@ const GroupOptions = ({ showSearchUserView, showGroupMemberView }) => {
       <li className="divider" />
     </ul>
   );
-};
 
 GroupOptions.propTypes = {
   showSearchUserView: PropTypes.func.isRequired,
