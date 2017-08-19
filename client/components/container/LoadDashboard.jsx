@@ -5,26 +5,17 @@ import {
   logOutSuccess
 } from '../../actions/actionCreators/UserActions';
 
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = state =>
+  ({
     isAuth: state.auth.isAuthenticated
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onReload: () => {
-      dispatch(validateUserToken());
-    },
-    logOut: () => {
-      dispatch(logOutSuccess());
-    }
-  };
-};
+  });
 
 const LoadDashboard = connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    validateUserToken,
+    logOut: logOutSuccess
+  }
 )(Dashboard);
 
 export default LoadDashboard;

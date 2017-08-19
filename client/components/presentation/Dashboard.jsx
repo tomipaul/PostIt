@@ -19,10 +19,10 @@ class Dashboard extends React.Component {
    * @return {void}
    */
   componentDidMount() {
-    const { onReload, isAuth } = this.props;
+    const { validateUserToken, isAuth } = this.props;
     const token = window.localStorage.getItem('auth_token');
     if (token && !isAuth) {
-      onReload();
+      validateUserToken();
     }
   }
 
@@ -51,7 +51,7 @@ class Dashboard extends React.Component {
 }
 
 Dashboard.propTypes = {
-  onReload: PropTypes.func.isRequired,
+  validateUserToken: PropTypes.func.isRequired,
   logOut: PropTypes.func.isRequired,
   isAuth: PropTypes.bool.isRequired
 };

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ErrorDialog = ({ error, clearError }) => {
-  return (
+const ErrorDialog = ({ error, clearError }) =>
+  (
     (error) ? (
       <div className="error-dialog">
         <i
@@ -17,7 +17,6 @@ const ErrorDialog = ({ error, clearError }) => {
       </div>
     ) : null
   );
-};
 
 ErrorDialog.propTypes = {
   error: PropTypes.string,

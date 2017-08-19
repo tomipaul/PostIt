@@ -5,8 +5,8 @@ const SearchBox = ({
   onChange,
   onKeyPress,
   onClick
-}) => {
-  return (
+}) =>
+  (
     <div className="input-field">
       <input
         className="browser-default"
@@ -24,7 +24,6 @@ const SearchBox = ({
       />
     </div>
   );
-};
 
 SearchBox.propTypes = {
   onChange: PropTypes.func.isRequired,

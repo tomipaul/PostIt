@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const UserView = ({ user, selectUser }) => {
-  return (
+const UserView = ({ user, selectUser }) =>
+  (
     (Object.keys(user).length) ? (
       <div
         className="z-depth-1 userview-box"
@@ -23,7 +23,6 @@ const UserView = ({ user, selectUser }) => {
       </div>
     ) : null
   );
-};
 
 UserView.propTypes = {
   selectUser: PropTypes.func.isRequired,

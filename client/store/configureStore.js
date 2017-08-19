@@ -7,11 +7,10 @@ const loggerMiddleware = createLogger();
 const middleware = (process.env.NODE_ENV === 'development') ?
 applyMiddleware(thunkMiddleware, loggerMiddleware) :
 applyMiddleware(thunkMiddleware);
-const configureStore = (preloadedState) => {
-  return createStore(
+const configureStore = preloadedState =>
+  createStore(
     rootReducer,
     preloadedState,
     middleware
   );
-};
 export default configureStore;

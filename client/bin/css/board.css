@@ -197,9 +197,10 @@ a {
 }
 .message-text {
   white-space: pre-wrap;
-  width: 100%;
+  width: 90%;
 }
 .message {
+  width: 100%;
   padding-top: 1%;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -438,6 +439,16 @@ span[data-priority=critical] {
 }
 .info span {
   color: #75a3a3;
+}
+.fileName, .selected-file-intro {
+  float: left;
+  margin-left: 2%;
+  padding-top: 2.5%;
+}
+.selected-file-intro {
+  color: #004d4d;
+  margin-left: 4%;
+  font-weight: 900;
 }
 @media only screen and (max-width : 992px) {
   header, .board-body, footer {

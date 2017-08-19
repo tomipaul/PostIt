@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const UserView = ({ imageLink, username }) => {
-  return (
+const UserView = ({ imageLink, username }) =>
+  (
     <li>
       <div className="user-view">
         <a
@@ -19,7 +19,6 @@ const UserView = ({ imageLink, username }) => {
       </div>
     </li>
   );
-};
 
 UserView.propTypes = {
   imageLink: PropTypes.string.isRequired,

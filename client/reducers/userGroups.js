@@ -9,14 +9,12 @@ const userGroups = (state = { groups: {}, groupsById: [] }, action) => {
   switch (action.type) {
     case FETCH_USER_GROUPS_SUCCESS: {
       const groups = action.response.groups
-      .reduce((groupsObject, group) => {
-        groupsObject[group.id] = group;
-        return groupsObject;
+      .reduce((accumulator, group) => {
+        accumulator[group.id] = group;
+        return accumulator;
       }, {});
       const groupsById = action.response.groups
-      .reduce((groupsIdArray, group) => {
-        return groupsIdArray.concat(group.id);
-      }, []);
+      .map(group => (group.id));
       return {
         groupsById,
         groups
