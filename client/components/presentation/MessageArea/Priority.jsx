@@ -27,7 +27,7 @@ class Priority extends React.Component {
    * @returns {object} component
    */
   render() {
-    const { priorityType, onClick } = this.props;
+    const { priorityType, onClick, selected } = this.props;
     return (
       <span
         className="label"
@@ -35,7 +35,7 @@ class Priority extends React.Component {
         aria-checked="false"
         tabIndex="-1"
         data-priority={
-          (priorityType === 'normal') ?
+          (selected) ?
           priorityType : null
         }
         onClick={onClick}
@@ -47,7 +47,8 @@ class Priority extends React.Component {
 
 Priority.propTypes = {
   priorityType: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+  selected: PropTypes.bool.isRequired
 };
 
 export default Priority;

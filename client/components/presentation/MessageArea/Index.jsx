@@ -21,57 +21,94 @@ class MessageArea extends React.Component {
     this.onSubmitMessage = this.onSubmitMessage.bind(this);
   }
   /**
+   * set initial MessageArea state for a selected group
+   * @method componentWillReceiveProps
+   * @param {object} nextProps
+   * @returns {void}
+   */
+  componentWillReceiveProps(nextProps) {
+    const newActiveGroup = nextProps.activeGroup;
+    if (newActiveGroup &&
+    !this.state[newActiveGroup]) {
+      this.setState({
+        [newActiveGroup]: {
+          text: '',
+          priority: 'normal'
+        }
+      });
+    }
+  }
+  /**
    * event handler: submit message
    * @method onSubmitMessage
    * @param {object} event
    * @returns {void}
    */
   onSubmitMessage() {
-    this.props.addMessageToGroup(this.state);
-    this.setState({ text: '', priority: 'normal' });
+    const { activeGroup } = this.props;
+    this.props.addMessageToGroup(this.state[activeGroup]);
+    this.setState({
+      [activeGroup]: {
+        text: '',
+        priority: 'normal'
+      }
+    });
   }
   /**
    * event handler: set local state when text in TextBox changes
-   * @method
+   * @method onMessageChange
    * @param {object} event
    * @returns {void}
    */
   onMessageChange(event) {
     event.preventDefault();
-    this.setState({ text: event.target.value });
+    const { activeGroup } = this.props;
+    this.setState({
+      [activeGroup]: {
+        ...this.state[activeGroup],
+        text: event.target.value
+      }
+    });
   }
 
   /**
    * event handler: set local state when message priority is selected
-   * @method
+   * @method onPrioritySelect
    * @param {object} event
    * @returns {void}
    */
   onPrioritySelect(event) {
     event.preventDefault();
+    const { activeGroup } = this.props;
     this.setState({
-      priority: event.target.getAttribute('data-priority')
+      [activeGroup]: {
+        ...this.state[activeGroup],
+        priority: event.target.getAttribute('data-priority')
+      }
     });
   }
   /**
    * render component
-   * @method
+   * @method render
    * @returns {object} component
    */
   render() {
-    const { dashboardIsActive } = this.props;
+    const { activeGroup } = this.props;
     return (
-      (dashboardIsActive) ?
+      (activeGroup) ?
       (
         <footer>
           <div className="message-input row">
             <TextBox
-              message={this.state.text}
+              message={this.state[activeGroup].text}
               changeMessage={this.onMessageChange}
               onSubmitMessage={this.onSubmitMessage}
             />
             <PrioritySelect
               selectPriority={this.onPrioritySelect}
+              activePriority={
+                this.state[activeGroup].priority || 'normal'
+              }
             />
             <SubmitButton
               onClick={this.onSubmitMessage}
@@ -85,7 +122,7 @@ class MessageArea extends React.Component {
 
 MessageArea.propTypes = {
   addMessageToGroup: PropTypes.func.isRequired,
-  dashboardIsActive: PropTypes.bool.isRequired
+  activeGroup: PropTypes.string.isRequired
 };
 
 export default MessageArea;
