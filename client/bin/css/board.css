@@ -426,7 +426,7 @@ span[data-priority=critical] {
 }
 .profile-photo {
   display: block;
-  width: 90%;
+  max-width: 90%;
   height: 38%;
   margin: auto;
 }

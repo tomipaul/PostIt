@@ -24,12 +24,10 @@ const mapDispatchToProps = dispatch =>
     exploreGroup: (groupId) => {
       dispatch(selectGroup(groupId));
       dispatch(getGroupMessages());
+      dispatch(getGroupUsers());
     },
     loadUserGroups: () => {
       dispatch(fetchUserGroups());
-    },
-    getGroupUsers: () => {
-      dispatch(getGroupUsers());
     }
   });
 

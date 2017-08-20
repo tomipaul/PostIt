@@ -98,8 +98,6 @@ class Main extends React.Component {
    * @returns {void}
    */
   showGroupMemberView() {
-    const { getGroupUsers } = this.props;
-    getGroupUsers();
     this.showRightBar();
     this.setState({ groupMemberView: true });
   }
@@ -183,8 +181,7 @@ Main.propTypes = {
   })).isRequired,
   unreadCountObject: PropTypes.objectOf(PropTypes.number),
   exploreGroup: PropTypes.func.isRequired,
-  loadUserGroups: PropTypes.func.isRequired,
-  getGroupUsers: PropTypes.func.isRequired
+  loadUserGroups: PropTypes.func.isRequired
 };
 
 Main.defaultProps = {
