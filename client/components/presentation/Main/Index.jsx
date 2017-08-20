@@ -125,7 +125,7 @@ class Main extends React.Component {
           groups={userGroups.groups || []}
           unreadCountObject={unreadCountObject}
           exploreGroup={exploreGroup}
-          imageLink={user.photoURL || 'images/female-avatar.png'}
+          imageLink={user.photoURL}
         />
         {
           (selectedGroup) ? (

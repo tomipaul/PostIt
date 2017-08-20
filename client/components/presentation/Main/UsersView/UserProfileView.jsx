@@ -6,7 +6,7 @@ const UserProfileView = ({ user }) =>
     <div className="user-profile">
       <img
         className="profile-photo"
-        src={user.photoURL}
+        src={user.photoURL || '/images/silhouette.jpeg'}
         alt={user.username}
       />
       <div>

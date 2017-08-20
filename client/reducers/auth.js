@@ -6,14 +6,17 @@ import {
 
 const auth = (state = {
   isAuthenticated: false,
-  user: {}
+  user: { photoURL: '/images/silhouette.jpeg' }
 }, action) => {
   switch (action.type) {
     case AUTHENTICATION_SUCCESS:
       return {
         isAuthenticated: true,
-        user: action.response.user ||
-        action.response.auth
+        user: {
+          ...state.user,
+          ...action.response.user ||
+          action.response.auth
+        }
       };
     case LOG_OUT_SUCCESS:
       return {
@@ -26,6 +29,7 @@ const auth = (state = {
         return {
           isAuthenticated: true,
           user: {
+            ...state.user,
             ...updatedUser
           }
         };

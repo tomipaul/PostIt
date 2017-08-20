@@ -14,7 +14,9 @@ const UserView = ({ user, selectUser }) =>
       >
         <img
           className="userview-thumbnail circle"
-          src={user.photoURL}
+          src={
+            user.photoURL || '/images/silhouette.jpeg'
+          }
           alt={user.username}
         />
         <span

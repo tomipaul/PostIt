@@ -6,17 +6,17 @@ const AuthorImage = ({ AuthorImageLink }) =>
     <div className="author-image">
       <img
         className="circle"
-        src={AuthorImageLink}
-        alt="initials"
+        src={
+          AuthorImageLink ||
+          '/images/silhouette.jpeg'
+        }
+        alt=""
       />
     </div>
   );
 
 AuthorImage.propTypes = {
-  AuthorImageLink: PropTypes.string
+  AuthorImageLink: PropTypes.string.isRequired
 };
 
-AuthorImage.defaultProps = {
-  AuthorImageLink: '../images/female-avatar.png'
-};
 export default AuthorImage;
