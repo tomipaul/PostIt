@@ -14,20 +14,21 @@ class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.onInputChange = this.onInputChange.bind(this);
   }
 
   /**
    * Handle onChange events on form inputs
    * @method onInputChange
    * @member SignIn
-   * @param {string} field
+   * @param {object} event
    * @returns {function} a function that handles change event on inputs
    */
-  onInputChange(field) {
-    return (event) => {
-      event.preventDefault();
-      this.setState({ [field]: event.target.value });
-    };
+  onInputChange(event) {
+    event.preventDefault();
+    const inputName = event.target.name;
+    const inputValue = event.target.value;
+    this.setState({ [inputName]: inputValue });
   }
 
   /**
@@ -38,15 +39,16 @@ class SignIn extends React.Component {
    */
   render() {
     return (
-      <form className="auth-form" id="log-in">
+      <form className="auth-form" id="log-in" >
         <h4>Login to PostIt</h4>
         <div className="input-field">
           <i className="fa fa-user prefix" />
           <input
             type="text"
             id="username"
+            name="username"
             placeholder="e.g. elementDeveloper"
-            onChange={this.onInputChange('username')}
+            onChange={this.onInputChange}
           />
           <label htmlFor="username">Username:</label>
         </div>
@@ -55,8 +57,9 @@ class SignIn extends React.Component {
           <input
             type="password"
             id="pwd"
+            name="password"
             placeholder="Enter password"
-            onChange={this.onInputChange('password')}
+            onChange={this.onInputChange}
           />
           <label htmlFor="pwd">Password:</label>
         </div>
@@ -65,7 +68,8 @@ class SignIn extends React.Component {
           role="button"
           tabIndex="0"
           onClick={() => {
-            this.props.onSubmit(this.state);
+            const { username, password } = this.state;
+            this.props.onSubmit(username, password);
           }}
         >
           Log In

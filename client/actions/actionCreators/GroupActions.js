@@ -160,7 +160,7 @@ export function addUserToGroup(username) {
 /**
  * async helper function: post message to a group
  * @function addMessageToGroup
- * @param {string} message
+ * @param {object} message
  * @param {string} groupId
  * @returns {function} asynchronous action
  */

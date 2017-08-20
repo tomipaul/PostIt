@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CommonModal from '../Common/CommonModal.jsx';
 import ShowPreloader from '../../container/ShowPreloader.jsx';
 /**
  * @class UploadPictureModal
  * @extends CommonModal
  */
-class UploadPictureModal extends CommonModal {
+class UploadPictureModal extends React.Component {
   /**
    * @constructor
    * @extends React.Component
@@ -17,6 +16,17 @@ class UploadPictureModal extends CommonModal {
     this.state = {};
     this.triggerFileSelect = this.triggerFileSelect.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
+  }
+  /**
+   * handle change in file input
+   * @method onInputChange
+   * @memberof UploadPictureModal
+   * @param {object} event
+   * @return {void}
+   */
+  onInputChange(event) {
+    const filename = event.target.files[0].name;
+    this.setState({ filename });
   }
   /**
    * trigger file selection
@@ -34,50 +44,58 @@ class UploadPictureModal extends CommonModal {
    * @return {void}
    */
   render() {
-    this.state.id = 'user1';
-    this.state.content = (
-      <div>
-        <ShowPreloader id="modal-preloader" />
-        <h4>Change profile picture</h4> <i
-          className="fa fa-picture-o"
-        />
-        <img
-          className="current-profile-photo responsive-img"
-          src={this.props.image}
-          alt={this.props.username}
-        />
-        <a
-          className="btn-floating btn-large waves-effect waves-light teal upload"
-          onClick={this.triggerFileSelect}
-          role="button"
-          tabIndex="0"
-        ><i className="fa fa-folder-open-o" />
-        </a>
-        <input
-          type="file"
-          ref={(fileinput) => { this.fileinput = fileinput; }}
-          id="upload-input"
-          className="hidden"
-        />
-        {/*<span className="fileName">{this.fileinput.files[0].name}
-        </span>*/}
+    return (
+      <div id="user1" className="modal modal-fixed-footer">
+        <div className="modal-content">{this.state.content}
+          <ShowPreloader id="modal-preloader" />
+          <h4>Change profile picture</h4> <i
+            className="fa fa-picture-o"
+          />
+          <img
+            className="current-profile-photo responsive-img"
+            src={this.props.image}
+            alt={this.props.username}
+          />
+          <a
+            className="btn-floating btn-large waves-effect waves-light teal upload"
+            onClick={this.triggerFileSelect}
+            role="button"
+            tabIndex="0"
+          ><i className="fa fa-folder-open-o" />
+          </a>
+          <input
+            type="file"
+            ref={(fileinput) => { this.fileinput = fileinput; }}
+            id="upload-input"
+            onChange={this.onInputChange}
+            className="hidden"
+          />
+        </div>
+        <div className="modal-footer">{this.state.footer}
+          {
+            (this.state.filename) ?
+            (
+              <div>
+                <span className="selected-file-intro">Selected File |</span>
+                <span className="fileName">{this.state.filename}</span>
+              </div>
+            ) : null
+          }
+          <a
+            href="#!"
+            className="modal-action modal-close waves-effect waves-green btn-flat"
+            onClick={() => {
+              this.props.updateProfilePicture(this.fileinput.files[0]);
+            }}
+          >Upload<i className="material-icons right">send</i></a>
+        </div>
       </div>
     );
-    this.state.footer = (
-      <a
-        href="#!"
-        className="modal-action modal-close waves-effect waves-green btn-flat"
-        onClick={() => {
-          this.props.onSubmit(this.fileinput.files[0]);
-        }}
-      >Upload<i className="material-icons right">send</i></a>
-    );
-    return super.render();
   }
 }
 
 UploadPictureModal.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  updateProfilePicture: PropTypes.func.isRequired,
   image: PropTypes.string,
   username: PropTypes.string
 };

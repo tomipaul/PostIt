@@ -2,21 +2,13 @@ import { connect } from 'react-redux';
 import ErrorDialog from '../presentation/Common/ErrorDialog';
 import { clearError } from '../../actions/actionCreators/errorAction';
 
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = state =>
+  ({
     error: state.logError[0]
-  };
-};
-const mapDispatchToProps = (dispatch) => {
-  return {
-    clearError: () => {
-      dispatch(clearError());
-    }
-  };
-};
+  });
 
 const ShowErrorDialog = connect(
   mapStateToProps,
-  mapDispatchToProps
+  { clearError }
 )(ErrorDialog);
 export default ShowErrorDialog;

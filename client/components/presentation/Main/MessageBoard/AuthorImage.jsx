@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const AuthorImage = ({ AuthorImageLink }) => {
-  return (
+const AuthorImage = ({ AuthorImageLink }) =>
+  (
     <div className="author-image">
       <img
         className="circle"
@@ -11,7 +11,6 @@ const AuthorImage = ({ AuthorImageLink }) => {
       />
     </div>
   );
-};
 
 AuthorImage.propTypes = {
   AuthorImageLink: PropTypes.string

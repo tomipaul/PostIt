@@ -2,24 +2,15 @@ import { connect } from 'react-redux';
 import UploadPictureModal from '../presentation/Modals/UploadPictureModal.jsx';
 import { updateProfilePicture } from '../../actions/actionCreators/UserActions';
 
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = state =>
+  ({
     image: state.auth.user.photoURL,
     username: state.auth.user.username
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onSubmit: (file) => {
-      dispatch(updateProfilePicture(file));
-    }
-  };
-};
+  });
 
 const UpdateProfilePicture = connect(
   mapStateToProps,
-  mapDispatchToProps
+  { updateProfilePicture }
 )(UploadPictureModal);
 
 export default UpdateProfilePicture;

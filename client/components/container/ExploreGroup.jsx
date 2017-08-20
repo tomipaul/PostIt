@@ -9,19 +9,18 @@ import {
   fetchUserGroups
 } from '../../actions/actionCreators/UserActions';
 
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = state =>
+  ({
     isAuthenticated: state.auth.isAuthenticated,
     user: state.auth.user,
     userGroups: state.userGroups,
     unreadCountObject: state.unreadCountObject,
     selectedGroup: state.activeGroup,
     selectedGroupMessages: state.activeGroupMessages
-  };
-};
+  });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
+const mapDispatchToProps = dispatch =>
+  ({
     exploreGroup: (groupId) => {
       dispatch(selectGroup(groupId));
       dispatch(getGroupMessages());
@@ -32,8 +31,7 @@ const mapDispatchToProps = (dispatch) => {
     getGroupUsers: () => {
       dispatch(getGroupUsers());
     }
-  };
-};
+  });
 
 const ExploreGroup = connect(
   mapStateToProps,

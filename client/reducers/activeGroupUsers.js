@@ -7,11 +7,7 @@ import {
 const activeGroupUsers = (state = [], action) => {
   switch (action.type) {
     case GET_GROUP_USERS_SUCCESS: {
-      const groupUsers = action.response.users
-      .reduce((usersArray, user) => {
-        return usersArray.concat(user);
-      }, []);
-      return groupUsers;
+      return action.response.users;
     }
     case ADD_USER_TO_GROUP_SUCCESS: {
       return [
@@ -20,13 +16,9 @@ const activeGroupUsers = (state = [], action) => {
       ];
     }
     case REMOVE_USER_FROM_GROUP_SUCCESS: {
-      const groupUsers = [...state];
-      const indexOfRemovedUser = groupUsers
-      .findIndex((user) => {
-        return user.username === action.response.username;
-      });
-      groupUsers.splice(indexOfRemovedUser, 1);
-      return groupUsers;
+      return state.filter(user =>
+        (user.username !== action.response.username)
+      );
     }
     default:
       return state;

@@ -31,3 +31,5 @@ exclude_paths:
 - "server/tests"
 - "server/migrations"
 - "server/seeders"
+- "client/tests"
+- "template/"

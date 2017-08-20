@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const SubmitButton = ({ onClick }) => {
-  return (
+const SubmitButton = ({ onClick }) =>
+  (
     <div className="col s1 send-button">
       <i
         className="material-icons"
@@ -12,7 +12,6 @@ const SubmitButton = ({ onClick }) => {
       >send</i>
     </div>
   );
-};
 
 SubmitButton.propTypes = {
   onClick: PropTypes.func.isRequired,

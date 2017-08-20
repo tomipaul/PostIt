@@ -9,8 +9,8 @@ const GroupHeader = ({
   description,
   showSearchUserView,
   showGroupMemberView
-}) => {
-  return (
+}) =>
+  (
     <div className="group-board-header z-depth-2">
       <div className="group-header-flex row">
         <GroupNameDescription
@@ -31,7 +31,6 @@ const GroupHeader = ({
       </div>
     </div>
   );
-};
 
 GroupHeader.propTypes = {
   name: PropTypes.string.isRequired,

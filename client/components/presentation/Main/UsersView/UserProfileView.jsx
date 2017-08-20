@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const UserProfileView = ({ user }) => {
-  return (
+const UserProfileView = ({ user }) =>
+  (
     <div className="user-profile">
       <img
         className="profile-photo"
@@ -25,7 +25,6 @@ const UserProfileView = ({ user }) => {
       </div>
     </div>
   );
-};
 
 UserProfileView.propTypes = {
   user: PropTypes.shape({

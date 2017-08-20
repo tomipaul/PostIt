@@ -65,8 +65,9 @@ class CreateGroupModal extends React.Component {
             href="#!"
             className="modal-action modal-close waves-effect waves-green btn-flat"
             onClick={() => {
-              this.props.onSubmit(this.state);
-              this.state = {};
+              const { name, description } = this.state;
+              this.props.createGroup(name, description);
+              this.setState({ name: '', description: '' });
             }}
           >Create<i className="material-icons right">send</i></a>
         </div>
@@ -76,7 +77,7 @@ class CreateGroupModal extends React.Component {
 }
 
 CreateGroupModal.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  createGroup: PropTypes.func.isRequired
 };
 
 export default CreateGroupModal;
