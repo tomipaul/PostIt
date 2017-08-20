@@ -37,13 +37,18 @@ class ModelService {
    * @method
    * @static
    * @memberof ModelService
-   * @param {Object} model
-   * @param {Object} attributes
+   * @param {Object.object} model
+   * @param {Object.object} where scope of search
+   * @param {Object.<object|array>} attributes list of attributes to select
+   * or an object with include and exclude keys
    * @returns {Promise.array.object} A promise which resolves to
    * an array of matching model instances
    */
-  static getModelInstances(model, attributes) {
-    return model.findAll({ where: attributes })
+  static getModelInstances({ model, where, attributes }) {
+    return model.findAll({
+      where,
+      attributes
+    })
     .then((instanceArray) => {
       return instanceArray;
     })

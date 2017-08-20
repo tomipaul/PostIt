@@ -93,8 +93,11 @@ describe('ModelService.getModelInstance', () => {
 describe('ModelService.getModelInstances', () => {
   it('should get specified multiple instances of a model',
   () => {
-    return ModelService.getModelInstances(Message, {
-      priority: 'normal'
+    return ModelService.getModelInstances({
+      model: Message,
+      where: {
+        priority: 'normal'
+      }
     })
     .then((fromDbArray) => {
       expect(fromDbArray).to.be.an('array');

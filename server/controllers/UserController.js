@@ -285,6 +285,31 @@ class UserController {
   }
 
   /**
+   * Get all users
+   * @method
+   * @memberof ModelService
+   * @static
+   * @returns {function} Express middleware function which gets
+   * all users and sends response to client
+   */
+  static getAllUsers() {
+    return (req, res, next) => {
+      ModelService.getModelInstances({
+        model: userModel,
+        attributes: {
+          exclude: ['password']
+        }
+      })
+      .then((users) => {
+        return res.status(200).json(users);
+      })
+      .catch((err) => {
+        return next(err);
+      });
+    };
+  }
+
+  /**
    * Get all the groups a user belong to
    * @method
    * @memberof ModelService
