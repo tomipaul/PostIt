@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import marked from 'marked';
 import PrioritySelect from './PrioritySelect.jsx';
 import TextBox from './TextBox.jsx';
 import SubmitButton from './SubmitButton.jsx';
@@ -20,6 +21,7 @@ class MessageArea extends React.Component {
     this.onPrioritySelect = this.onPrioritySelect.bind(this);
     this.onSubmitMessage = this.onSubmitMessage.bind(this);
   }
+
   /**
    * set initial MessageArea state for a selected group
    * @method componentWillReceiveProps
@@ -38,6 +40,7 @@ class MessageArea extends React.Component {
       });
     }
   }
+
   /**
    * event handler: submit message
    * @method onSubmitMessage
@@ -46,7 +49,11 @@ class MessageArea extends React.Component {
    */
   onSubmitMessage() {
     const { activeGroup } = this.props;
-    this.props.addMessageToGroup(this.state[activeGroup]);
+    const { text, priority } = this.state[activeGroup];
+    this.props.addMessageToGroup({
+      text: marked(text),
+      priority
+    });
     this.setState({
       [activeGroup]: {
         text: '',
@@ -54,6 +61,7 @@ class MessageArea extends React.Component {
       }
     });
   }
+
   /**
    * event handler: set local state when text in TextBox changes
    * @method onMessageChange
@@ -87,6 +95,7 @@ class MessageArea extends React.Component {
       }
     });
   }
+
   /**
    * render component
    * @method render
