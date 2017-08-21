@@ -14,20 +14,37 @@ class CreateGroupModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.onInputChange = this.onInputChange.bind(this);
+    this.createGroup = this.createGroup.bind(this);
   }
 
   /**
    * Handle onChange events on form inputs
    * @method onInputChange
    * @memberof CreateGroupModal
-   * @param {string} field
+   * @param {object} event
    * @returns {function} a function that handles change event on inputs
    */
-  onInputChange(field) {
-    return (event) => {
-      event.preventDefault();
-      this.setState({ [field]: event.target.value });
-    };
+  onInputChange(event) {
+    event.preventDefault();
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
+  /**
+   * create group
+   * @method createGroup
+   * @memberof createGroupModal
+   * @param {object} event
+   * @return {function} an event handler that creates group
+   * on click of submit button
+   */
+  createGroup(event) {
+    event.preventDefault();
+    const { name, description } = this.state;
+    this.props.createGroup(name, description);
+    this.setState({ name: '', description: '' });
   }
 
   /**
@@ -46,14 +63,18 @@ class CreateGroupModal extends React.Component {
               <input
                 id="group_name"
                 type="text"
-                onChange={this.onInputChange('name')}
+                name="name"
+                value={this.state.name}
+                onChange={this.onInputChange}
                 placeholder="Give a cool name"
                 className="validate"
               />
               <input
                 id="group_desc"
                 type="text"
-                onChange={this.onInputChange('description')}
+                name="description"
+                value={this.state.description}
+                onChange={this.onInputChange}
                 placeholder="Describe your group"
                 className="validate"
               />
@@ -64,11 +85,7 @@ class CreateGroupModal extends React.Component {
           <a
             href="#!"
             className="modal-action modal-close waves-effect waves-green btn-flat"
-            onClick={() => {
-              const { name, description } = this.state;
-              this.props.createGroup(name, description);
-              this.setState({ name: '', description: '' });
-            }}
+            onClick={this.createGroup}
           >Create<i className="material-icons right">send</i></a>
         </div>
       </div>
