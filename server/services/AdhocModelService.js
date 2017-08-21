@@ -204,7 +204,8 @@ class AdhocModelService {
         include: [{
           association: 'Author',
           attributes: ['photoURL']
-        }]
+        }],
+        order: ['createdAt']
       });
     })
     .catch((err) => {
