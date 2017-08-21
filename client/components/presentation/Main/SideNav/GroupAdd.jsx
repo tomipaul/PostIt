@@ -1,18 +1,23 @@
 import React from 'react';
+import ReactTooltip from 'react-tooltip';
 
 const GroupAdd = () => {
   $(document).ready(() => {
     $('.modal').modal();
   });
   return (
-    <a
-      className="btn-floating btn-large waves-effect waves-light modal-trigger group-add"
-      role="button"
-      href="#modal1"
-      tabIndex="-1"
-    >
-      <i className="material-icons">add</i>
-    </a>
+    <div>
+      <a
+        className="btn-floating btn-large waves-effect waves-light modal-trigger group-add"
+        role="button"
+        data-tip="Add group"
+        href="#modal1"
+        tabIndex="-1"
+      >
+        <i className="material-icons">add</i>
+      </a>
+      <ReactTooltip place="top" type="dark" effect="float" />
+    </div>
   );
 };
 
