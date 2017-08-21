@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactTooltip from 'react-tooltip';
 import PropTypes from 'prop-types';
 
 const Header = ({ isDashboard, logOut }) => {
@@ -19,14 +20,13 @@ const Header = ({ isDashboard, logOut }) => {
           alt=""
         />
         <i
-          className="fa fa-sign-out fa-2x tooltipped"
+          className="fa fa-sign-out fa-2x"
           role="button"
           tabIndex="0"
-          data-position="top"
-          data-delay="10"
-          data-tooltip="logout"
+          data-tip="logout"
           onClick={logOut}
         />
+        <ReactTooltip place="top" type="dark" effect="float" />
       </div>
     </header>
   ) : (
