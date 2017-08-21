@@ -451,6 +451,9 @@ span[data-priority=critical] {
   margin-left: 4%;
   font-weight: 900;
 }
+.message-text a {
+  color: darkred;
+}
 @media only screen and (max-width : 992px) {
   header, .board-body, footer {
     padding-left: 0;
