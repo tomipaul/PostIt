@@ -21,10 +21,6 @@ export default (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           msg: 'Group name cannot be an empty string'
-        },
-        is: {
-          args: /^[a-z1-9_]+$/i,
-          msg: 'Name can contain only letters, numbers and underscores'
         }
       }
     },
