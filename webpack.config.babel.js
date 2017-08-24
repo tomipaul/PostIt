@@ -52,7 +52,7 @@ const webpackConfig = {
   stats: 'errors-only',
   devServer: (NODE_ENV === 'development') ? {
     proxy: {
-      '/api': 'http://localhost:5000'
+      '/': 'http://localhost:5000'
     },
     contentBase: path.join(__dirname, '/client/bin/'),
     historyApiFallback: true,

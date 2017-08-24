@@ -173,9 +173,6 @@ export function addMessageToGroup(message) {
     return axios.post(`/api/group/${groupId}/message`, message, {
       headers: { Authorization: `Bearer ${token}` }
     })
-    .then((response) => {
-      dispatch(addMessageToGroupSuccess(response.data));
-    })
     .catch((error) => {
       dispatch(logError(error.response.data));
     });

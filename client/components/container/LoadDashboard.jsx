@@ -1,10 +1,14 @@
 import { connect } from 'react-redux';
 import Dashboard from '../presentation/Dashboard.jsx';
 import {
+  subscribeToMessages
+} from '../../actions/actionCreators/SSEAction';
+import {
   validateUserToken,
   getAllUsers,
   logOutSuccess
 } from '../../actions/actionCreators/UserActions';
+
 
 const mapStateToProps = state =>
   ({
@@ -16,6 +20,7 @@ const LoadDashboard = connect(
   {
     validateUserToken,
     getAllUsers,
+    subscribeToMessages,
     logOut: logOutSuccess
   }
 )(Dashboard);

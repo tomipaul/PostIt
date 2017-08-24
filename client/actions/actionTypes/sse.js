@@ -1,0 +1,1 @@
+export default 'SUBSCRIBE_TO_MESSAGES_SUCCESS';

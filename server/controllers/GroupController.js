@@ -179,7 +179,8 @@ class GroupController {
               message: 'Message posted to group'
             }
           };
-          return next();
+          res.sseSend(createdMessage);
+          next();
         });
       })
       .catch((err) => {

@@ -4,7 +4,7 @@ import { addMessageToGroup } from '../../actions/actionCreators/GroupActions';
 
 const mapStateToProps = state =>
   ({
-    activeGroup: state.activeGroup
+    activeGroup: state.activeGroup || ''
   });
 
 const PostMessage = connect(
