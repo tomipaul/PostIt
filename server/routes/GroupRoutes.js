@@ -2,26 +2,38 @@ import express from 'express';
 import GroupController from '../controllers/GroupController';
 
 const router = express.Router();
-router.post('/api/group', GroupController.createGroup());
+router.post('/api/group',
+  GroupController.createGroup()
+);
 router.route('/api/group/:groupId/user')
-.post(GroupController.permitOnlyGroupMembers(),
- GroupController.addUserToGroup())
-.delete(GroupController.permitOnlyGroupOwner(),
-GroupController.removeUserFromGroup());
+.post(
+  GroupController.permitOnlyGroupMembers(),
+  GroupController.addUserToGroup()
+)
+.delete(
+  GroupController.permitOnlyGroupOwner(),
+  GroupController.removeUserFromGroup()
+);
 router.post('/api/group/:groupId/message',
- GroupController.permitOnlyGroupMembers(),
- GroupController.addMessageToGroup());
+  GroupController.permitOnlyGroupMembers(),
+  GroupController.addMessageToGroup()
+);
 router.get('/api/group/:groupId/messages',
- GroupController.permitOnlyGroupMembers(),
- GroupController.getGroupMessages());
+  GroupController.permitOnlyGroupMembers(),
+  GroupController.getGroupMessages()
+);
 router.post('/api/group/:groupId/message/read',
- GroupController.permitOnlyGroupMembers(),
- GroupController.readGroupMessage());
+  GroupController.permitOnlyGroupMembers(),
+  GroupController.readGroupMessage()
+);
 router.get('/api/group/:groupId/message/:messageId/users',
- GroupController.permitOnlyGroupMembers(),
- GroupController.getUsersThatReadMessage());
+  GroupController.permitOnlyGroupMembers(),
+  GroupController.getUsersThatReadMessage()
+);
 router.get('/api/group/:groupId/users',
- GroupController.permitOnlyGroupMembers(),
- GroupController.getGroupUsers());
+  GroupController.permitOnlyGroupMembers(),
+  GroupController.getGroupUsers()
+);
+router.use(GroupController.sendResponse());
 
 export default router;

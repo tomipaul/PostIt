@@ -106,10 +106,14 @@ class GroupController {
           return group.addUser(req.username)
           .then(() => {
             const { id, name, description, CreatorUsername } = group;
-            return res.status(201).json({
-              group: { id, name, description, CreatorUsername },
-              message: 'Group created'
-            });
+            req.res = {
+              statusCode: 201,
+              data: {
+                group: { id, name, description, CreatorUsername },
+                message: 'Group created'
+              }
+            };
+            return next();
           });
         });
       })
@@ -133,10 +137,13 @@ class GroupController {
       return AdhocModelService.addUserToGroup(userName, req.group)
       .then((user) => {
         const { username, photoURL } = user;
-        return res.status(200).json({
-          user: { userName, photoURL },
-          message: `User ${username} added to group`
-        });
+        req.res = {
+          data: {
+            user: { userName, photoURL },
+            message: `User ${username} added to group`
+          }
+        };
+        return next();
       })
       .catch((err) => {
         return next(err);
@@ -166,10 +173,13 @@ class GroupController {
           createdMessage.dataValues.Author = {
             photoURL: author.photoURL
           };
-          return res.status(200).json({
-            createdMessage,
-            message: 'Message posted to group'
-          });
+          req.res = {
+            data: {
+              createdMessage,
+              message: 'Message posted to group'
+            }
+          };
+          return next();
         });
       })
       .catch((err) => {
@@ -190,7 +200,8 @@ class GroupController {
     return (req, res, next) => {
       return AdhocModelService.getGroupMessages(req.group)
       .then((messages) => {
-        return res.status(200).json({ messages });
+        req.res = { data: { messages } };
+        return next();
       })
       .catch((err) => {
         return next(err);
@@ -210,7 +221,8 @@ class GroupController {
     return (req, res, next) => {
       return AdhocModelService.getAllGroupUsers(req.group)
       .then((users) => {
-        return res.status(200).json({ users });
+        req.res = { data: { users } };
+        return next();
       })
       .catch((err) => {
         return next(err);
@@ -232,10 +244,13 @@ class GroupController {
       return AdhocModelService
       .removeUserFromGroup(username, req.group)
       .then(() => {
-        return res.status(200).json({
-          username,
-          message: 'User removed from group'
-        });
+        req.res = {
+          data: {
+            username,
+            message: 'User removed from group'
+          }
+        };
+        return next();
       })
       .catch((err) => {
         return next(err);
@@ -257,9 +272,12 @@ class GroupController {
       AdhocModelService
       .addUserToMessage(messageId, req.username, req.group.id)
       .then(() => {
-        return res.status(200).json({
-          message: `Hi ${req.username}, you just read a message`
-        });
+        req.res = {
+          data: {
+            message: `Hi ${req.username}, you just read a message`
+          }
+        };
+        return next();
       })
       .catch((err) => {
         return next(err);
@@ -281,11 +299,28 @@ class GroupController {
       const { messageId } = req.params;
       AdhocModelService.getMessageUsers(messageId)
       .then((users) => {
-        return res.status(200).json({ users });
+        req.res = {
+          data: { users }
+        };
+        return next();
       })
       .catch((err) => {
         return next(err);
       });
+    };
+  }
+  /**
+   * Send response to client and end the request response cycle
+   * @method
+   * @memberof GroupController
+   * @static
+   * @return {function} Express middleware function that
+   * sends response to client and ends the request
+   */
+  static sendResponse() {
+    return (req, res) => {
+      const status = req.res.statusCode || 200;
+      return res.status(status).json(req.res.data);
     };
   }
 }
