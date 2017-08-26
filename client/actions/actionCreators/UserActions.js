@@ -1,6 +1,9 @@
 import axios from 'axios';
 import * as firebase from 'firebase';
-import { logError } from './errorAction';
+import {
+  showErrorNotification,
+  showSuccessNotification
+} from './helpers';
 import sendRequest from './requestAction';
 import {
   FETCH_USER_GROUPS_SUCCESS,
@@ -149,9 +152,10 @@ export function signUpUser(username, password, email, phoneNo) {
     })
     .then((response) => {
       dispatch(authenticationSuccess(response.data));
+      dispatch(showSuccessNotification({ response }));
     })
     .catch((error) => {
-      dispatch(logError(error.response.data));
+      dispatch(showErrorNotification(error));
     });
   };
 }
@@ -171,9 +175,10 @@ export function signInUser(username, password) {
     })
     .then((response) => {
       dispatch(authenticationSuccess(response.data));
+      dispatch(showSuccessNotification({ response }));
     })
     .catch((error) => {
-      dispatch(logError(error.response.data));
+      dispatch(showErrorNotification(error));
     });
   };
 }
@@ -192,10 +197,25 @@ export function validateUserToken() {
     .then((response) => {
       response.data.token = token;
       dispatch(authenticationSuccess(response.data));
+      dispatch(showSuccessNotification({ response }));
     })
     .catch((error) => {
-      dispatch(logError(error.response.data));
+      dispatch(showErrorNotification(error));
     });
+  };
+}
+/**
+ * async helper function: sign in user
+ * @function logOutUser
+ * @returns {function} asynchronous action
+ */
+export function logOutUser() {
+  return (dispatch) => {
+    dispatch(sendRequest());
+    dispatch(logOutSuccess());
+    dispatch(showSuccessNotification({
+      message: 'Log out successful'
+    }));
   };
 }
 /**
@@ -214,7 +234,7 @@ export function fetchUserGroups() {
       dispatch(fetchUserGroupsSuccess(response.data));
     })
     .catch((error) => {
-      dispatch(logError(error.response.data));
+      dispatch(showErrorNotification(error));
     });
   };
 }
@@ -235,7 +255,7 @@ export function getUser(username) {
       dispatch(getUserSuccess(response.data));
     })
     .catch((error) => {
-      dispatch(logError(error.response.data));
+      dispatch(showErrorNotification(error));
     });
   };
 }
@@ -276,9 +296,10 @@ export function updateUser(newCredentials) {
       headers: { Authorization: `Bearer ${token}` }
     }).then((response) => {
       dispatch(updateUserSuccess(response.data));
+      dispatch(showSuccessNotification({ response }));
     })
     .catch((error) => {
-      dispatch(logError(error.response.data));
+      dispatch(showErrorNotification(error));
     });
   };
 }
@@ -298,7 +319,7 @@ export function deleteUser() {
       dispatch(deleteUserSuccess(response.data));
     })
     .catch((error) => {
-      dispatch(logError(error.response.data));
+      dispatch(showErrorNotification(error));
     });
   };
 }
@@ -318,8 +339,8 @@ export function updateProfilePicture(image) {
         photoURL: snapshot.downloadURL
       }));
     })
-    .catch(() => {
-      dispatch(logError({ error: 'Upload failed!' }));
+    .catch((error) => {
+      dispatch(showErrorNotification(error));
     });
   };
 }

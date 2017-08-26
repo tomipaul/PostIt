@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { reducer as notifs } from 'redux-notifications';
 import logError from './logError';
 import auth from './auth';
 import selectedUser from './selectedUser';
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   auth,
   users,
   logError,
+  notifs,
   requestCount,
   selectedUser,
   userGroups,

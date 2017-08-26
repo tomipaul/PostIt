@@ -1,16 +1,21 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import { Notifs } from 'redux-notifications';
 import configureStore from '../../store/configureStore';
+import Dialog from '../presentation/Common/Dialog';
 import Routes from './Routes.jsx';
 
 const store = configureStore();
 const Root = () =>
   (
     <Provider store={store}>
-      <BrowserRouter forceRefresh>
-        <Routes />
-      </BrowserRouter>
+      <div>
+        <BrowserRouter>
+          <Routes />
+        </BrowserRouter>
+        <Notifs CustomComponent={Dialog} />
+      </div>
     </Provider>
   );
 

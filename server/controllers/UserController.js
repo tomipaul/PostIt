@@ -2,7 +2,7 @@ import ModelService from '../services/ModelService';
 import AdhocModelService from '../services/AdhocModelService';
 import AuthService from '../services/AuthService';
 import models from '../models';
-import emailService from '../services/emailService.js';
+import NotificationService from '../services/NotificationService.js';
 
 const userModel = models.User;
 
@@ -340,7 +340,7 @@ class UserController {
   static resetPassword() {
     return (req, res, next) => {
       const { recipient } = req.body;
-      return emailService.sendResetPasswordMail(recipient)
+      return NotificationService.sendResetPasswordMail(recipient)
       .then((message) => {
         return res.status(200).json({ message });
       })

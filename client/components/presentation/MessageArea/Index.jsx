@@ -16,7 +16,12 @@ class MessageArea extends React.Component {
    */
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      [props.activeGroup]: {
+        text: '',
+        priority: 'normal'
+      }
+    };
     this.onMessageChange = this.onMessageChange.bind(this);
     this.onPrioritySelect = this.onPrioritySelect.bind(this);
     this.onSubmitMessage = this.onSubmitMessage.bind(this);

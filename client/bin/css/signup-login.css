@@ -80,11 +80,10 @@ form > h4 {
   display: block;
   position: fixed;
   top: 15%;
-  left: 67%;
+  left: 65%;
   color: black;
   font-size: 1em;
   z-index: 10;
-  background-color: #ffb3b3;
   width: 30%;
   min-height: 8%;
   animation: example 2s ease;
@@ -94,6 +93,7 @@ form > h4 {
 .error-dialog .fa-times-circle {
   float: right;
   font-size: 1.2em;
+  outline: none;
 }
 .error-dialog .fa-times-circle:hover {
   cursor: pointer;
@@ -105,7 +105,39 @@ form > h4 {
   width: 90%;
   padding-top: 5%;
   text-align: center;
+  font-size: 1.1em;
+  font-weight: 400;
+}
+.kind-icon .fa {
+  font-size: 2em;
+  padding-left: 5%;
+  margin-right: -1%;
+  float: left;
+}
+.notif {
+  text-align: center;
+  height: 100%;
+}
+.notif__container {
+  height: 5%;
+  top: 10%;
+  left: 50%;
+}
+.notif--success {
+  background-color: #64ce83;
+}
 
+.notif--info {
+  background-color: #99ceff;
+}
+
+.notif--warning {
+  background-color: black;
+  color: white;
+}
+
+.notif--danger {
+  background-color: #ff8080;
 }
 @media only screen and (max-width : 992px) {
   form {

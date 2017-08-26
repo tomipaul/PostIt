@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
+import 'redux-notifications/lib/styles.css';
 import 'materialize-css/dist/js/materialize.js';
 import 'materialize-css/dist/css/materialize.min.css';
 import './bin/css/signup-login.css';

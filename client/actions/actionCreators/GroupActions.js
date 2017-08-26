@@ -1,6 +1,9 @@
 import axios from 'axios';
-import { logError } from './errorAction';
 import sendRequest from './requestAction';
+import {
+  showErrorNotification,
+  showSuccessNotification
+} from './helpers';
 import {
   SELECT_GROUP,
   CREATE_GROUP_SUCCESS,
@@ -123,9 +126,10 @@ export function createGroup(name, description) {
     })
     .then((response) => {
       dispatch(createGroupSuccess(response.data));
+      dispatch(showSuccessNotification({ response }));
     })
     .catch((error) => {
-      dispatch(logError(error.response.data));
+      dispatch(showErrorNotification(error));
     });
   };
 }
@@ -150,9 +154,10 @@ export function addUserToGroup(username) {
     })
     .then((response) => {
       dispatch(addUserToGroupSuccess(response.data));
+      dispatch(showSuccessNotification({ response }));
     })
     .catch((error) => {
-      dispatch(logError(error.response.data));
+      dispatch(showErrorNotification(error));
     });
   };
 }
@@ -173,8 +178,12 @@ export function addMessageToGroup(message) {
     return axios.post(`/api/group/${groupId}/message`, message, {
       headers: { Authorization: `Bearer ${token}` }
     })
+    .then((response) => {
+      dispatch(addMessageToGroupSuccess(response.data));
+      dispatch(showSuccessNotification({ response }));
+    })
     .catch((error) => {
-      dispatch(logError(error.response.data));
+      dispatch(showErrorNotification(error));
     });
   };
 }
@@ -197,9 +206,10 @@ export function removeUserFromGroup(username) {
     })
     .then((response) => {
       dispatch(removeUserFromGroupSuccess(response.data));
+      dispatch(showSuccessNotification({ response }));
     })
     .catch((error) => {
-      dispatch(logError(error.response.data));
+      dispatch(showErrorNotification(error));
     });
   };
 }
@@ -223,7 +233,7 @@ export function getGroupUsers() {
       dispatch(getGroupUsersSuccess(response.data));
     })
     .catch((error) => {
-      dispatch(logError(error.response.data));
+      dispatch(showErrorNotification(error));
     });
   };
 }
@@ -247,7 +257,8 @@ export function getGroupMessages() {
       dispatch(getGroupMessagesSuccess(response.data));
     })
     .catch((error) => {
-      dispatch(logError(error.response.data));
+      dispatch(showErrorNotification(error));
     });
   };
 }
+

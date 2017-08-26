@@ -1,5 +1,6 @@
 import express from 'express';
 import GroupController from '../controllers/GroupController';
+import { sendNotifications } from '../controllers/otherControllers';
 
 const router = express.Router();
 router.post('/api/group',
@@ -16,7 +17,8 @@ router.route('/api/group/:groupId/user')
 );
 router.post('/api/group/:groupId/message',
   GroupController.permitOnlyGroupMembers(),
-  GroupController.addMessageToGroup()
+  GroupController.addMessageToGroup(),
+  sendNotifications
 );
 router.get('/api/group/:groupId/messages',
   GroupController.permitOnlyGroupMembers(),
