@@ -62,7 +62,8 @@ class GroupMemberView extends React.Component {
           (this.state.listView) ?
           (<MemberListView
             users={users}
-            viewUser={this.showProfileView}
+            selectUser={this.showProfileView}
+            flags={[]}
           />)
           : (this.state.profileView) ?
           (

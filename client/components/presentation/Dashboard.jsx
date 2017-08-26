@@ -19,10 +19,25 @@ class Dashboard extends React.Component {
    * @return {void}
    */
   componentDidMount() {
-    const { validateUserToken, isAuth } = this.props;
+    const {
+      validateUserToken,
+      isAuth
+    } = this.props;
     const token = window.localStorage.getItem('auth_token');
     if (token && !isAuth) {
       validateUserToken();
+    }
+  }
+
+  /**
+   * @method componentWillReceiveProps
+   * @param {object} nextProps
+   * @return {void}
+   */
+  componentWillReceiveProps(nextProps) {
+    const { getAllUsers } = this.props;
+    if (nextProps.isAuth) {
+      getAllUsers();
     }
   }
 
@@ -52,6 +67,7 @@ class Dashboard extends React.Component {
 
 Dashboard.propTypes = {
   validateUserToken: PropTypes.func.isRequired,
+  getAllUsers: PropTypes.func.isRequired,
   logOut: PropTypes.func.isRequired,
   isAuth: PropTypes.bool.isRequired
 };

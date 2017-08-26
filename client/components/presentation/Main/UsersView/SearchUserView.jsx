@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import UserView from './UserView.jsx';
 import SearchBox from './SearchBox.jsx';
+import MemberListView from './MemberListView.jsx';
 
 /**
  * @class SearchUserview
@@ -14,6 +14,10 @@ class SearchUserView extends React.Component {
    */
   constructor(props) {
     super(props);
+    this.state = {
+      searchString: '',
+      matchedUsers: []
+    };
     this.onInputChange = this.onInputChange.bind(this);
     this.onClickSearch = this.onClickSearch.bind(this);
     this.onKeyPressEnterSearch = this.onKeyPressEnterSearch
@@ -37,7 +41,20 @@ class SearchUserView extends React.Component {
    */
   onInputChange(event) {
     event.preventDefault();
-    this.setState({ searchString: event.target.value });
+    const searchString = event.target.value;
+    const { users } = this.props;
+    const matchedUsers = users.filter(user =>
+      (
+        (searchString) ?
+        (user.username.toLowerCase())
+        .startsWith(searchString.toLowerCase()) :
+        false
+      )
+    );
+    this.setState({
+      searchString: event.target.value,
+      matchedUsers
+    });
   }
   /**
    * event handler: handle click on search button
@@ -76,9 +93,10 @@ class SearchUserView extends React.Component {
           onKeyPress={this.onKeyPressEnterSearch}
           onClick={this.onClickSearch}
         />
-        <UserView
-          user={this.props.user}
+        <MemberListView
+          users={this.state.matchedUsers}
           selectUser={this.props.addUserToGroup}
+          flags={['isSearchUserView']}
         />
       </div>
     );
@@ -89,10 +107,7 @@ SearchUserView.propTypes = {
   getUser: PropTypes.func.isRequired,
   addUserToGroup: PropTypes.func.isRequired,
   clearSelectedUser: PropTypes.func.isRequired,
-  user: PropTypes.shape({
-    photoURL: PropTypes.string,
-    username: PropTypes.string
-  }).isRequired,
+  users: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default SearchUserView;

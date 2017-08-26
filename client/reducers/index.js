@@ -7,9 +7,11 @@ import activeGroupMessages from './activeGroupMessages';
 import activeGroupUsers from './activeGroupUsers';
 import userGroups from './userGroups.js';
 import requestCount from './request.js';
+import users from './users.js';
 
 const rootReducer = combineReducers({
   auth,
+  users,
   logError,
   requestCount,
   selectedUser,

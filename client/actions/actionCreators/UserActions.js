@@ -4,6 +4,7 @@ import { logError } from './errorAction';
 import sendRequest from './requestAction';
 import {
   FETCH_USER_GROUPS_SUCCESS,
+  GET_ALL_USERS_SUCCESS,
   GET_USER_SUCCESS,
   DELETE_USER_SUCCESS,
   UPDATE_USER_SUCCESS,
@@ -83,6 +84,19 @@ export function fetchUserGroupsSuccess(response) {
 export function getUserSuccess(response) {
   return {
     type: GET_USER_SUCCESS,
+    response
+  };
+}
+
+/**
+ * create action: get all users: success
+ * @function getAllUsersSuccess
+ * @param {object} response
+ * @returns {object} action: type and response
+ */
+export function getAllUsersSuccess(response) {
+  return {
+    type: GET_ALL_USERS_SUCCESS,
     response
   };
 }
@@ -219,6 +233,26 @@ export function getUser(username) {
     })
     .then((response) => {
       dispatch(getUserSuccess(response.data));
+    })
+    .catch((error) => {
+      dispatch(logError(error.response.data));
+    });
+  };
+}
+/**
+ * aync helper function: get all users
+ * @function getAllUsers
+ * @returns {function} asynchronous action
+ */
+export function getAllUsers() {
+  return (dispatch) => {
+    const token = window.localStorage.getItem('auth_token');
+    dispatch(sendRequest());
+    return axios.get('/api/users', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then((response) => {
+      dispatch(getAllUsersSuccess(response.data));
     })
     .catch((error) => {
       dispatch(logError(error.response.data));
