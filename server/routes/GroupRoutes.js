@@ -34,6 +34,6 @@ router.get('/api/group/:groupId/users',
   GroupController.permitOnlyGroupMembers(),
   GroupController.getGroupUsers()
 );
-router.use(GroupController.sendResponse());
+router.use('/api/group', GroupController.sendResponse());
 
 export default router;
