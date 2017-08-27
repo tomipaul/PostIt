@@ -29,7 +29,6 @@ class SignUp extends React.Component {
     const inputName = event.target.name;
     const inputValue = event.target.value;
     this.setState({ [inputName]: inputValue });
-    console.log(this.state);
   }
 
   /**
@@ -40,7 +39,7 @@ class SignUp extends React.Component {
    */
   render() {
     return (
-      <form className="hidden auth-form" id="sign-up">
+      <form className="auth-form" id="sign-up">
         <h4>Create a PostIt Account</h4>
         <div className="input-field">
           <i className="fa fa-user prefix" />
@@ -48,7 +47,6 @@ class SignUp extends React.Component {
             type="text"
             id="username"
             name="username"
-            placeholder="e.g Tomi Paul"
             onChange={this.onInputChange}
           />
           <label htmlFor="username">Username:</label>
@@ -81,7 +79,6 @@ class SignUp extends React.Component {
             type="password"
             id="pwd"
             name="password"
-            placeholder="Enter password"
             onChange={this.onInputChange}
           />
           <label htmlFor="pwd">Password:</label>
@@ -105,6 +102,7 @@ class SignUp extends React.Component {
         <div id="message"> Have a PostIt account? <a
           href="#!"
           id="go-to-login"
+          onClick={this.props.showLogin}
         >Login</a>
         </div>
       </form>
@@ -113,7 +111,8 @@ class SignUp extends React.Component {
 }
 
 SignUp.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  showLogin: PropTypes.func.isRequired
 };
 
 export default SignUp;

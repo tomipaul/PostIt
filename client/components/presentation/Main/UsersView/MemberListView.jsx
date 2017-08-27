@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import UserView from './UserView.jsx';
 
-const MemberListView = ({ users, selectUser, flags }) =>
+const MemberListView = ({ users, selectUser }) =>
   (
     <div>
       {
@@ -19,8 +19,7 @@ const MemberListView = ({ users, selectUser, flags }) =>
 
 MemberListView.propTypes = {
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
-  selectUser: PropTypes.func.isRequired,
-  flags: PropTypes.arrayOf(PropTypes.string).isRequired
+  selectUser: PropTypes.func.isRequired
 };
 
 export default MemberListView;

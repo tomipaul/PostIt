@@ -18,10 +18,17 @@ class Dashboard extends React.Component {
    * @return {void}
    */
   componentDidMount() {
-    const { validateUserToken, isAuth, subscribeToMessages } = this.props;
+    const {
+      isAuth,
+      validateUserToken,
+      subscribeToMessages,
+      getAllUsers
+    } = this.props;
     const token = window.localStorage.getItem('auth_token');
     if (token && !isAuth) {
       validateUserToken();
+    } else if (token && isAuth) {
+      getAllUsers();
       subscribeToMessages();
     }
   }
@@ -32,9 +39,10 @@ class Dashboard extends React.Component {
    * @return {void}
    */
   componentWillReceiveProps(nextProps) {
-    const { getAllUsers } = this.props;
-    if (nextProps.isAuth) {
+    const { getAllUsers, subscribeToMessages } = this.props;
+    if (!this.props.isAuth && nextProps.isAuth) {
       getAllUsers();
+      subscribeToMessages();
     }
   }
 

@@ -9,8 +9,9 @@ import activeGroupUsers from './activeGroupUsers';
 import userGroups from './userGroups.js';
 import requestCount from './request.js';
 import users from './users.js';
+import { LOG_OUT_SUCCESS } from '../actions/actionTypes/User';
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   auth,
   users,
   logError,
@@ -22,5 +23,12 @@ const rootReducer = combineReducers({
   activeGroupMessages,
   activeGroupUsers
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === LOG_OUT_SUCCESS) {
+    state = undefined;
+  }
+  return appReducer(state, action);
+};
 
 export default rootReducer;

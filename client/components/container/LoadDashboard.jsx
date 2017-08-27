@@ -6,7 +6,7 @@ import {
 import {
   validateUserToken,
   getAllUsers,
-  logOutSuccess
+  logOutUser
 } from '../../actions/actionCreators/UserActions';
 
 
@@ -21,7 +21,7 @@ const LoadDashboard = connect(
     validateUserToken,
     getAllUsers,
     subscribeToMessages,
-    logOut: logOutSuccess
+    logOut: logOutUser
   }
 )(Dashboard);
 

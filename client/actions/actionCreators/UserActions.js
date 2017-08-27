@@ -59,7 +59,6 @@ export function authenticationSuccess(response) {
  * @returns {object} action: type
  */
 export function logOutSuccess() {
-  window.localStorage.removeItem('auth_token');
   return {
     type: LOG_OUT_SUCCESS,
   };
@@ -205,7 +204,7 @@ export function validateUserToken() {
   };
 }
 /**
- * async helper function: sign in user
+ * async helper function: log out user
  * @function logOutUser
  * @returns {function} asynchronous action
  */
@@ -213,6 +212,7 @@ export function logOutUser() {
   return (dispatch) => {
     dispatch(sendRequest());
     dispatch(logOutSuccess());
+    window.localStorage.removeItem('auth_token');
     dispatch(showSuccessNotification({
       message: 'Log out successful'
     }));
@@ -275,7 +275,7 @@ export function getAllUsers() {
       dispatch(getAllUsersSuccess(response.data));
     })
     .catch((error) => {
-      dispatch(logError(error.response.data));
+      dispatch(showErrorNotification(error));
     });
   };
 }

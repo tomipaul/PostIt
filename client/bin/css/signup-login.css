@@ -121,7 +121,6 @@ form > h4 {
 .notif__container {
   height: 5%;
   top: 10%;
-  left: 50%;
 }
 .notif--success {
   background-color: #64ce83;

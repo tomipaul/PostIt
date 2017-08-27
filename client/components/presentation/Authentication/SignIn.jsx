@@ -47,7 +47,6 @@ class SignIn extends React.Component {
             type="text"
             id="username"
             name="username"
-            placeholder="e.g. elementDeveloper"
             onChange={this.onInputChange}
           />
           <label htmlFor="username">Username:</label>
@@ -58,7 +57,6 @@ class SignIn extends React.Component {
             type="password"
             id="pwd"
             name="password"
-            placeholder="Enter password"
             onChange={this.onInputChange}
           />
           <label htmlFor="pwd">Password:</label>
@@ -77,6 +75,7 @@ class SignIn extends React.Component {
         <div id="message"> Don&apos;t have a PostIt account? <a
           href="#!"
           id="go-to-signup"
+          onClick={this.props.showSignup}
         >Signup</a>
         </div>
       </form>
@@ -85,7 +84,8 @@ class SignIn extends React.Component {
 }
 
 SignIn.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  showSignup: PropTypes.func.isRequired
 };
 
 export default SignIn;

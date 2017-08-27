@@ -1,6 +1,5 @@
 import {
   AUTHENTICATION_SUCCESS,
-  LOG_OUT_SUCCESS,
   UPDATE_USER_SUCCESS
 } from '../actions/actionTypes/User';
 
@@ -18,11 +17,6 @@ const auth = (state = {
           photoURL: action.response.user.photoURL
           || state.user.photoURL
         }
-      };
-    case LOG_OUT_SUCCESS:
-      return {
-        isAuthenticated: false,
-        user: null
       };
     case UPDATE_USER_SUCCESS: {
       const updatedUser = action.response.user;

@@ -96,7 +96,7 @@ class SearchUserView extends React.Component {
         <MemberListView
           users={this.state.matchedUsers}
           selectUser={this.props.addUserToGroup}
-          flags={['isSearchUserView']}
+          isSearchUserView
         />
       </div>
     );
