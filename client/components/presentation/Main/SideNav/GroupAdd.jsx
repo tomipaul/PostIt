@@ -16,7 +16,7 @@ const GroupAdd = () => {
       >
         <i className="material-icons">add</i>
       </a>
-      <ReactTooltip place="top" type="dark" effect="float" />
+      <ReactTooltip place="left" type="dark" effect="float" />
     </div>
   );
 };

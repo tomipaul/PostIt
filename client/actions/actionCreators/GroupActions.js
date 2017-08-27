@@ -179,7 +179,6 @@ export function addMessageToGroup(message) {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then((response) => {
-      dispatch(addMessageToGroupSuccess(response.data));
       dispatch(showSuccessNotification({ response }));
     })
     .catch((error) => {

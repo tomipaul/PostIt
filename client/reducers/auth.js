@@ -13,9 +13,10 @@ const auth = (state = {
       return {
         isAuthenticated: true,
         user: {
-          ...state.user,
           ...action.response.user ||
-          action.response.auth
+          action.response.auth,
+          photoURL: action.response.user.photoURL
+          || state.user.photoURL
         }
       };
     case LOG_OUT_SUCCESS:
@@ -30,7 +31,9 @@ const auth = (state = {
           isAuthenticated: true,
           user: {
             ...state.user,
-            ...updatedUser
+            ...updatedUser,
+            photoURL: updatedUser.photoURL ||
+            state.user.photoURL
           }
         };
       }

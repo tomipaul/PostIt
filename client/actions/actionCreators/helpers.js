@@ -20,8 +20,9 @@ export function showErrorNotification(error) {
 
 /**
  * async helper function: show success notification
- * @function showErrorNotification
+ * @function showSuccessrNotification
  * @param {string} message
+ * @param {object} response
  * @returns {function} asynchronous action
  */
 export function showSuccessNotification({ message, response }) {
@@ -30,6 +31,22 @@ export function showSuccessNotification({ message, response }) {
       message: message || response.data.message,
       kind: 'success',
       dismissAfter: 5000
+    }));
+  };
+}
+
+/**
+ * async helper function: show info notification
+ * @function showInfoNotification
+ * @param {string} message
+ * @returns {function} asynchronous action
+ */
+export function showInfoNotification({ message }) {
+  return (dispatch) => {
+    dispatch(notifSend({
+      message,
+      kind: 'info',
+      dismissAfter: 15000
     }));
   };
 }

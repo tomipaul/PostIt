@@ -1,3 +1,4 @@
+import { showInfoNotification } from './helpers';
 import SUBSCRIBE_TO_MESSAGES_SUCCESS from '../actionTypes/sse';
 import { addMessageToGroupSuccess } from './GroupActions';
 import sendRequest from './requestAction';
@@ -30,11 +31,22 @@ export function subscribeToMessages() {
       dispatch(subscribeToMessagesSuccess());
     }, false);
     source.addEventListener('message', (e) => {
+      const state = getState();
       const newMessage = JSON.parse(e.data);
-      const activeGroup = getState().activeGroup;
-      if (newMessage.GroupId === activeGroup) {
+      const author = newMessage.AuthorUsername;
+      const recipientGroupId = newMessage.GroupId;
+      const activeGroup = state.activeGroup;
+      const recipientGroup = state
+      .userGroups.groups[recipientGroupId];
+      if (recipientGroupId === activeGroup) {
         dispatch(addMessageToGroupSuccess({
           createdMessage: newMessage
+        }));
+      }
+      if (recipientGroup &&
+      author !== state.auth.user.username) {
+        dispatch(showInfoNotification({
+          message: `${author} posted a message to ${recipientGroup.name}`
         }));
       }
     }, false);

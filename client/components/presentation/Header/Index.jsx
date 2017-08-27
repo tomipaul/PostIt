@@ -26,7 +26,7 @@ const Header = ({ isDashboard, logOut }) => {
           data-tip="logout"
           onClick={logOut}
         />
-        <ReactTooltip place="top" type="dark" effect="float" />
+        <ReactTooltip place="left" type="dark" effect="float" />
       </div>
     </header>
   ) : (

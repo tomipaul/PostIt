@@ -1,6 +1,7 @@
 import ModelService from '../services/ModelService';
 import AdhocModelService from '../services/AdhocModelService';
 import models from '../models';
+import UserController from './UserController';
 
 const groupModel = models.Group;
 /**
@@ -136,11 +137,11 @@ class GroupController {
       const userName = req.body.username;
       return AdhocModelService.addUserToGroup(userName, req.group)
       .then((user) => {
-        const { username, photoURL } = user;
+        const userInfo = UserController.extractFromUserObject(user);
         req.res = {
           data: {
-            user: { userName, photoURL },
-            message: `User ${username} added to group`
+            user: userInfo,
+            message: `User ${userInfo.username} added to group`
           }
         };
         return next();
