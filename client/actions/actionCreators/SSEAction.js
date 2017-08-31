@@ -1,6 +1,7 @@
 import { showInfoNotification } from './helpers';
 import SUBSCRIBE_TO_MESSAGES_SUCCESS from '../actionTypes/sse';
 import { addMessageToGroupSuccess } from './GroupActions';
+import { addToUnreadMessages } from './UserActions';
 import sendRequest from './requestAction';
 
 /**
@@ -38,16 +39,22 @@ export function subscribeToMessages() {
       const activeGroup = state.activeGroup;
       const recipientGroup = state
       .userGroups.groups[recipientGroupId];
-      if (recipientGroupId === activeGroup) {
-        dispatch(addMessageToGroupSuccess({
-          createdMessage: newMessage
-        }));
-      }
-      if (recipientGroup &&
-      author !== state.auth.user.username) {
-        dispatch(showInfoNotification({
-          message: `${author} posted a message to ${recipientGroup.name}`
-        }));
+      if (recipientGroup) {
+        if (recipientGroupId === activeGroup) {
+          dispatch(addMessageToGroupSuccess({
+            createdMessage: newMessage
+          }));
+        } else {
+          dispatch(addToUnreadMessages({
+            groupId: recipientGroupId,
+            messageId: newMessage.id
+          }));
+        }
+        if (author !== state.auth.user.username) {
+          dispatch(showInfoNotification({
+            message: `${author} posted a message to ${recipientGroup.name}`
+          }));
+        }
       }
     }, false);
     source.addEventListener('error', (e) => {

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const Group = ({ groupName, unreadCount, onClick }) => {
   let unreadCountLabel = null;
   if (unreadCount > 0) {
-    unreadCountLabel = <span className="new badge">{unreadCount}</span>;
+    unreadCountLabel = <span className="badge">{unreadCount}</span>;
   }
   return (
     <li>

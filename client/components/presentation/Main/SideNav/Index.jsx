@@ -8,7 +8,7 @@ const SideNav = ({
   imageLink,
   username = '',
   groups = {},
-  unreadCountObject = {},
+  unreadMessages = {},
   exploreGroup
 }) =>
   (
@@ -28,8 +28,8 @@ const SideNav = ({
               <Group
                 key={group.id}
                 groupName={group.name}
-                unreadCount={
-                  unreadCountObject[group.name] || 0
+                unreadCount={(unreadMessages[group.id]) ?
+                  unreadMessages[group.id].length : 0
                 }
                 onClick={() => { exploreGroup(group.id); }}
               />
@@ -46,7 +46,7 @@ SideNav.propTypes = {
   groups: PropTypes.objectOf(
     PropTypes.object
   ).isRequired,
-  unreadCountObject: PropTypes.objectOf(PropTypes.number).isRequired,
+  unreadMessages: PropTypes.objectOf(PropTypes.array).isRequired,
   exploreGroup: PropTypes.func.isRequired
 };
 

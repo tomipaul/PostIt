@@ -21,6 +21,8 @@ class Main extends React.Component {
     this.hideRightBar = this.hideRightBar.bind(this);
     this.showSearchUserView = this.showSearchUserView.bind(this);
     this.showGroupMemberView = this.showGroupMemberView.bind(this);
+    this.filterUnreadMessages = this.filterUnreadMessages.bind(this);
+    this.readUnreadGroupMessages = this.readUnreadGroupMessages.bind(this);
   }
 
   /**
@@ -36,12 +38,16 @@ class Main extends React.Component {
 
   /**
    * select a group and load group messages
-   * @method componentDidMount
+   * @method componentDidUpdate
    * @memberof Main
    * @returns {void}
    */
   componentDidUpdate() {
-    const { userGroups, selectedGroup, exploreGroup } = this.props;
+    const {
+      userGroups,
+      selectedGroup,
+      exploreGroup
+    } = this.props;
     const defaultGroupId = userGroups.groupsById[0];
     const groupsCount = Object.keys(userGroups.groups).length;
     if (groupsCount && !selectedGroup) {
@@ -101,6 +107,50 @@ class Main extends React.Component {
     this.showRightBar();
     this.setState({ groupMemberView: true });
   }
+
+  /**
+   * get unread messages in a group or return all messages
+   * if unread count is 0
+   * @method filterUnreadMessages
+   * @memberof Main
+   * @returns {array.object} An array of unread messages or
+   * all messages in selected group
+   */
+  filterUnreadMessages() {
+    const {
+      unreadMessages,
+      selectedGroup,
+      selectedGroupMessages
+    } = this.props;
+    const unreadCount = (unreadMessages[selectedGroup]) ?
+    unreadMessages[selectedGroup].length : 0;
+    return (unreadCount > 15) ?
+    selectedGroupMessages.slice(-unreadCount)
+    : selectedGroupMessages.slice(-15);
+  }
+  /**
+   * explore a selected group
+   * @method readUnreadGroupMessages
+   * @memberof Main
+   * @param {object} event
+   * @returns {void}
+   */
+  readUnreadGroupMessages(event) {
+    const {
+      readUnreadGroupMessages,
+      unreadMessages,
+      selectedGroup
+    } = this.props;
+    if (unreadMessages[selectedGroup]) {
+      const elem = event.target;
+      const unreadNotEmpty = unreadMessages[selectedGroup].length;
+      if (unreadNotEmpty &&
+      elem.scrollHeight - elem.scrollTop === elem.clientHeight) {
+        readUnreadGroupMessages();
+      }
+    }
+  }
+
   /**
    * render component
    * @method render
@@ -111,17 +161,16 @@ class Main extends React.Component {
     const {
       user,
       userGroups,
-      unreadCountObject,
-      selectedGroup,
-      selectedGroupMessages,
-      exploreGroup
+      exploreGroup,
+      unreadMessages,
+      selectedGroup
     } = this.props;
     return (
       <main className="board-body">
         <SideNav
           username={user.username || ''}
           groups={userGroups.groups || []}
-          unreadCountObject={unreadCountObject}
+          unreadMessages={unreadMessages}
           exploreGroup={exploreGroup}
           imageLink={user.photoURL}
         />
@@ -145,7 +194,9 @@ class Main extends React.Component {
           )
         }
         <MessageBoard
-          messages={selectedGroupMessages}
+          messages={this.filterUnreadMessages()}
+          onScroll={this.readUnreadGroupMessages}
+          onFocus={this.readUnreadGroupMessages}
         />
         {
           (this.state.rightBar) ?
@@ -179,15 +230,16 @@ Main.propTypes = {
     text: PropTypes.string,
     priority: PropTypes.string
   })).isRequired,
-  unreadCountObject: PropTypes.objectOf(PropTypes.number),
+  unreadMessages: PropTypes.objectOf(PropTypes.array).isRequired,
   exploreGroup: PropTypes.func.isRequired,
-  loadUserGroups: PropTypes.func.isRequired
+  loadUserGroups: PropTypes.func.isRequired,
+  readUnreadGroupMessages: PropTypes.func.isRequired
 };
 
 Main.defaultProps = {
   selectedGroup: '',
   selectedGroupMessages: [],
-  unreadCountObject: {}
+  unreadMessages: {}
 };
 
 export default Main;

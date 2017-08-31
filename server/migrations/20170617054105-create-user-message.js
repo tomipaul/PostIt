@@ -1,6 +1,6 @@
 module.exports = {
   up(queryInterface, Sequelize) {
-    return queryInterface.createTable('UserReadMessages', {
+    return queryInterface.createTable('UserMessages', {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -32,10 +32,14 @@ module.exports = {
       GroupId: {
         allowNull: false,
         type: Sequelize.UUID
+      },
+      read: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       }
     });
   },
   down(queryInterface) {
-    return queryInterface.dropTable('UserReadMessages');
+    return queryInterface.dropTable('UserMessages');
   }
 };

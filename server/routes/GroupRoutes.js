@@ -24,13 +24,13 @@ router.get('/api/group/:groupId/messages',
   GroupController.permitOnlyGroupMembers(),
   GroupController.getGroupMessages()
 );
-router.post('/api/group/:groupId/message/read',
+router.post('/api/group/:groupId/messages/read',
   GroupController.permitOnlyGroupMembers(),
-  GroupController.readGroupMessage()
+  GroupController.readGroupMessages()
 );
 router.get('/api/group/:groupId/message/:messageId/users',
   GroupController.permitOnlyGroupMembers(),
-  GroupController.getUsersThatReadMessage()
+  GroupController.getUsersWithMessageRead()
 );
 router.get('/api/group/:groupId/users',
   GroupController.permitOnlyGroupMembers(),

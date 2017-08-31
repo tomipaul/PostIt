@@ -92,7 +92,7 @@ export default (sequelize, DataTypes) => {
   });
   User.associate = function associate(models) {
     User.belongsToMany(models.Message, {
-      through: models.UserReadMessages
+      through: models.UserMessages
     });
     User.belongsToMany(models.Group, {
       through: 'GroupUsers'

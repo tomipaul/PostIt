@@ -11,7 +11,8 @@ import {
   ADD_MESSAGE_TO_GROUP_SUCCESS,
   REMOVE_USER_FROM_GROUP_SUCCESS,
   GET_GROUP_USERS_SUCCESS,
-  GET_GROUP_MESSAGES_SUCCESS
+  GET_GROUP_MESSAGES_SUCCESS,
+  GROUP_MESSAGES_READ,
 } from '../actionTypes/Group';
 
 /**
@@ -105,6 +106,19 @@ export function getGroupMessagesSuccess(response) {
   };
 }
 
+/**
+ * create action: read unread group messages: success
+ * @function readGroupMessagesSuccess
+ * @param {string} groupId
+ * @returns {object} action: type
+ */
+export function groupMessagesRead(groupId) {
+  return {
+    type: GROUP_MESSAGES_READ,
+    groupId
+  };
+}
+
 /* ----------------------------------------- */
 /* Asynchronous action creators using thunk */
 /**
@@ -138,7 +152,6 @@ export function createGroup(name, description) {
  * async helper function: add a user to a group
  * @function addUserToGroup
  * @param {string} username
- * @param {string} groupId
  * @returns {function} asynchronous action
  */
 export function addUserToGroup(username) {
@@ -166,7 +179,6 @@ export function addUserToGroup(username) {
  * async helper function: post message to a group
  * @function addMessageToGroup
  * @param {object} message
- * @param {string} groupId
  * @returns {function} asynchronous action
  */
 export function addMessageToGroup(message) {
@@ -191,7 +203,6 @@ export function addMessageToGroup(message) {
  * async helper function: remove a user from a group
  * @function removeUserFromGroup
  * @param {string} username
- * @param {string} groupId
  * @returns {function} asynchronous action
  */
 export function removeUserFromGroup(username) {
@@ -216,7 +227,6 @@ export function removeUserFromGroup(username) {
 /**
  * async helper function: get all users in a group
  * @function getGroupUsers
- * @param {string} groupId
  * @returns {function} asynchronous action
  */
 export function getGroupUsers() {
@@ -240,7 +250,6 @@ export function getGroupUsers() {
 /**
  * async helper function: get all messages posted to a group
  * @function getGroupMessages
- * @param {string} groupId
  * @returns {function} asynchronous action
  */
 export function getGroupMessages() {
@@ -257,6 +266,33 @@ export function getGroupMessages() {
     })
     .catch((error) => {
       dispatch(showErrorNotification(error));
+    });
+  };
+}
+
+/**
+ * async helper function: read all unread group messages
+ * @function readUnreadGroupMessages
+ * @returns {function} asynchronous action
+ */
+export function readUnreadGroupMessages() {
+  return (dispatch, getState) => {
+    const state = getState();
+    const {
+      activeGroup,
+      unreadMessages
+    } = state;
+    const unreadMessagesArray = unreadMessages[activeGroup];
+    return axios.post(`/api/group/${activeGroup}/messages/read`,
+      { messages: unreadMessagesArray }
+    )
+    .then(() => {
+      dispatch(groupMessagesRead(activeGroup));
+    })
+    .catch(() => {
+      dispatch(showErrorNotification(
+        'Request errored out, Please try again')
+      );
     });
   };
 }

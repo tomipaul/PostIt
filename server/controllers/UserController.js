@@ -145,7 +145,7 @@ class UserController {
   /**
    * Restrict access to profile owner and admin only
    * @method permitUserorAdmin
-   * @memberof GroupController
+   * @memberof UserController
    * @static
    * @return {function} Express middleware function which
    * permits only the authenticated user or
@@ -167,7 +167,7 @@ class UserController {
   /**
    * Restrict access to admin only
    * @method permitAdmin
-   * @memberof GroupController
+   * @memberof UserController
    * @static
    * @return {function} Express middleware function which
    * permits only the admin to utilize an endpoint
@@ -213,7 +213,7 @@ class UserController {
   /**
    * Delete a user
    * @method
-   * @memberof ModelService
+   * @memberof UserController
    * @static
    * @returns {function} Express middleware function which deletes
    * user and sends response to client
@@ -235,7 +235,7 @@ class UserController {
   /**
    * Update user profile
    * @method
-   * @memberof ModelService
+   * @memberof UserController
    * @static
    * @returns {function} Express middleware function which updates
    * user details and sends response to client
@@ -261,7 +261,7 @@ class UserController {
   /**
    * Get a user
    * @method
-   * @memberof ModelService
+   * @memberof UserController
    * @static
    * @returns {function} Express middleware function which gets
    * a user and sends response to client
@@ -287,7 +287,7 @@ class UserController {
   /**
    * Get all users
    * @method
-   * @memberof ModelService
+   * @memberof UserController
    * @static
    * @returns {function} Express middleware function which gets
    * all users and sends response to client
@@ -312,7 +312,7 @@ class UserController {
   /**
    * Get all the groups a user belong to
    * @method
-   * @memberof ModelService
+   * @memberof UserController
    * @static
    * @returns {function} Express middleware function which gets
    * user's groups and sends response to client
@@ -349,5 +349,36 @@ class UserController {
       });
     };
   }
+
+  /**
+   * Get the count of all unread messages per group
+   * @method
+   * @memberof UserController
+   * @static
+   * @return {function} Express middleware function
+   * which gets the count of all unread messages per group
+   * and send response to client
+   */
+  static getUnreadMessages() {
+    return (req, res, next) => {
+      return AdhocModelService.getUnreadMessages({
+        UserUsername: req.username
+      })
+      .then((unreadMessages) => {
+        const unreadMessagesObject = unreadMessages
+        .reduce((acc, unreadMessage) => {
+          acc[unreadMessage.GroupId] = (acc[unreadMessage.GroupId]) ?
+          (acc[unreadMessage.GroupId].concat(unreadMessage.MessageId))
+          : [unreadMessage.MessageId];
+          return acc;
+        }, {});
+        return res.status(200).json(unreadMessagesObject);
+      })
+      .catch((err) => {
+        return next(err);
+      });
+    };
+  }
 }
+
 export default UserController;

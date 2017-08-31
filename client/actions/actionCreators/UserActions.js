@@ -6,6 +6,8 @@ import {
 } from './helpers';
 import sendRequest from './requestAction';
 import {
+  GET_UNREAD_MESSAGES_SUCCESS,
+  ADD_TO_UNREAD_MESSAGES,
   FETCH_USER_GROUPS_SUCCESS,
   GET_ALL_USERS_SUCCESS,
   GET_USER_SUCCESS,
@@ -16,6 +18,9 @@ import {
   SELECT_USER,
   CLEAR_SELECTED_USER
 } from '../actionTypes/User';
+
+const AUTH_TOKEN = window.localStorage.getItem('auth_token');
+axios.defaults.headers.common.Authorization = AUTH_TOKEN;
 
 /**
  * create action: select user
@@ -126,6 +131,34 @@ export function deleteUserSuccess(response) {
   return {
     type: DELETE_USER_SUCCESS,
     response
+  };
+}
+
+/**
+ * create action: get unread messages count: success
+ * @function getUnreadMessagesCountSuccess
+ * @param {object} response
+ * @returns {object} action: type and response
+ */
+export function getUnreadMessagesSuccess(response) {
+  return {
+    type: GET_UNREAD_MESSAGES_SUCCESS,
+    response
+  };
+}
+
+/**
+ * create action: add to the unread messages count object
+ * if a new message is received while out of the group board
+ * @param {string} groupId
+ * @function addToUnreadCountObject
+ * @returns {object} action: type
+ */
+export function addToUnreadMessages({ groupId, messageId }) {
+  return {
+    type: ADD_TO_UNREAD_MESSAGES,
+    groupId,
+    messageId
   };
 }
 
@@ -317,6 +350,23 @@ export function deleteUser() {
       headers: { Authorization: `Bearer ${token}` }
     }).then((response) => {
       dispatch(deleteUserSuccess(response.data));
+    })
+    .catch((error) => {
+      dispatch(showErrorNotification(error));
+    });
+  };
+}
+/**
+ * async helper function: get unread messages count
+ * @function getUnreadMessagesCount
+ * @returns {function} asynchronous action
+ */
+export function getUnreadMessages() {
+  return (dispatch) => {
+    dispatch(sendRequest());
+    return axios.get('/api/messages/unread')
+    .then((response) => {
+      dispatch(getUnreadMessagesSuccess(response.data));
     })
     .catch((error) => {
       dispatch(showErrorNotification(error));

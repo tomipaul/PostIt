@@ -137,6 +137,17 @@ class GroupController {
       const userName = req.body.username;
       return AdhocModelService.addUserToGroup(userName, req.group)
       .then((user) => {
+        return AdhocModelService.getGroupMessages(req.group)
+        .then((messages) => {
+          return user.addMessages(messages, {
+            through: { GroupId: req.group.id }
+          })
+          .then(() => {
+            return user;
+          });
+        });
+      })
+      .then((user) => {
         const userInfo = UserController.extractFromUserObject(user);
         req.res = {
           data: {
@@ -169,6 +180,21 @@ class GroupController {
       return AdhocModelService
       .addMessageToGroup(message, req.group)
       .then((createdMessage) => {
+        return req.group.getUsers({
+          where: {
+            username: { ne: createdMessage.AuthorUsername }
+          }
+        })
+        .then((users) => {
+          return createdMessage.addUsers(users, {
+            through: { GroupId: req.group.id }
+          })
+          .then(() => {
+            return createdMessage;
+          });
+        });
+      })
+      .then((createdMessage) => {
         return createdMessage.getAuthor()
         .then((author) => {
           createdMessage.dataValues.Author = {
@@ -181,7 +207,7 @@ class GroupController {
             }
           };
           res.sseSend(createdMessage);
-          next();
+          return next();
         });
       })
       .catch((err) => {
@@ -266,17 +292,25 @@ class GroupController {
    * @memberof GroupController
    * @static
    * @return {function} Express middleware function
-   * which adds a user to a message
    */
-  static readGroupMessage() {
+  static readGroupMessages() {
     return (req, res, next) => {
-      const { messageId } = req.body;
-      AdhocModelService
-      .addUserToMessage(messageId, req.username, req.group.id)
+      const { messages } = req.body;
+      const messagesArray = (typeof messages === 'string') ?
+      messages.split(' ') : messages;
+      Promise.all(messagesArray.map((message) => {
+        return ModelService.updateModelInstance(models.UserMessages, {
+          UserUsername: req.username,
+          GroupId: req.group.id,
+          MessageId: message
+        }, {
+          read: true
+        });
+      }))
       .then(() => {
         req.res = {
           data: {
-            message: `Hi ${req.username}, you just read a message`
+            message: `Hi ${req.username}, you just read one or more messages`
           }
         };
         return next();
@@ -296,10 +330,10 @@ class GroupController {
    * which gets all users that have read a group message
    * and send response to client
    */
-  static getUsersThatReadMessage() {
+  static getUsersWithMessageRead() {
     return (req, res, next) => {
       const { messageId } = req.params;
-      AdhocModelService.getMessageUsers(messageId)
+      AdhocModelService.getUsersWithMessageRead(messageId)
       .then((users) => {
         req.res = {
           data: { users }
@@ -311,6 +345,7 @@ class GroupController {
       });
     };
   }
+
   /**
    * Send response to client and end the request response cycle
    * @method

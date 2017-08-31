@@ -96,7 +96,7 @@ class AdhocModelService {
   /**
    * Remove a user from a group
    * @method removeUserFromGroup
-   * @memberof ModelService
+   * @memberof AdhocModelService
    * @static
    * @param {String|Array.<string>} username
    * @param {String} group primary key or instance of group
@@ -123,7 +123,7 @@ class AdhocModelService {
   /**
    * Get all users in a group
    * @method getAllGroupUsers
-   * @memberof ModelService
+   * @memberof AdhocModelService
    * @static
    * @param {String|Object} group primary key or instance of group
    * @returns {Promise.array} resolves with an array of user instances
@@ -147,8 +147,8 @@ class AdhocModelService {
   }
 
   /**
-   * @method postMessageToGroup
-   * @memberof ModelService
+   * @method addMessageToGroup
+   * @memberof AdhocModelService
    * @static
    * @param {Object} message
    * @param {Object.string} message.text
@@ -172,10 +172,10 @@ class AdhocModelService {
   /**
    * Remove a message from a group
    * @method
-   * @memberof ModelService
+   * @memberof AdhocModelService
    * @static
    * @param {String} messageId
-   * @param {String} group primary key or instance of group
+   * @param {String|object} group primary key or instance of group
    * @returns {Promise} resolves with void on success
    */
   static removeMessageFromGroup(messageId, group) {
@@ -192,9 +192,9 @@ class AdhocModelService {
 
   /**
    * @method
-   * @memberof ModelService
+   * @memberof AdhocModelService
    * @static
-   * @param {String} group primary key or instance of group
+   * @param {String|object} group primary key or instance of group
    * @returns {Promise} resolves with an array of message instances
    */
   static getGroupMessages(group) {
@@ -215,7 +215,7 @@ class AdhocModelService {
 
   /**
    * @method
-   * @memberof ModelService
+   * @memberof AdhocModelService
    * @static
    * @param {String} username
    * @returns {Promise} resolve with an array of group instances
@@ -233,22 +233,20 @@ class AdhocModelService {
   }
 
   /**
+   * get users that have read a particular message
    * @method
-   * @memberof ModelService
+   * @memberof AdhocModelService
    * @static
    * @param {string} messageId
-   * @param {string} username
-   * @param {string} groupId
-   * @returns {Promise} resolves on success
+   * @returns {Promise} resolves on success with an array of users
    */
-  static addUserToMessage(messageId, username, groupId) {
-    return ModelService.getModelInstance(models.Message, {
-      id: messageId
-    })
-    .then((message) => {
-      return message.addUser(username, {
-        through: { GroupId: groupId }
-      });
+  static getUsersWithMessageRead(messageId) {
+    return ModelService.getModelInstances({
+      model: models.UserMessages,
+      where: {
+        read: true,
+        MessageId: messageId
+      }
     })
     .catch((err) => {
       throw err;
@@ -256,26 +254,21 @@ class AdhocModelService {
   }
 
   /**
+   * get the count of unread messages
+   * in a particular group for a user
    * @method
-   * @memberof ModelService
+   * @memberof AdhocModelService
    * @static
-   * @param {string} messageId
+   * @param {string} attributes
    * @returns {Promise} resolves on success with an array of users
    */
-  static getMessageUsers(messageId) {
-    return ModelService.getModelInstance(models.Message, {
-      id: messageId
-    })
-    .then((message) => {
-      return message.getUsers({
-        attributes: [
-          'username',
-          'email',
-          'phoneNo',
-          'status',
-          'photoURL'
-        ]
-      });
+  static getUnreadMessages(attributes) {
+    return ModelService.getModelInstances({
+      model: models.UserMessages,
+      where: {
+        ...attributes,
+        read: false
+      }
     })
     .catch((err) => {
       throw err;

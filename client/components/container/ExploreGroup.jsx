@@ -3,10 +3,12 @@ import Main from '../presentation/Main/Index.jsx';
 import {
   selectGroup,
   getGroupMessages,
-  getGroupUsers
+  getGroupUsers,
+  readUnreadGroupMessages
 } from '../../actions/actionCreators/GroupActions';
 import {
-  fetchUserGroups
+  fetchUserGroups,
+  getUnreadMessages
 } from '../../actions/actionCreators/UserActions';
 
 const mapStateToProps = state =>
@@ -14,7 +16,7 @@ const mapStateToProps = state =>
     isAuthenticated: state.auth.isAuthenticated,
     user: state.auth.user,
     userGroups: state.userGroups,
-    unreadCountObject: state.unreadCountObject,
+    unreadMessages: state.unreadMessages,
     selectedGroup: state.activeGroup,
     selectedGroupMessages: state.activeGroupMessages
   });
@@ -27,7 +29,11 @@ const mapDispatchToProps = dispatch =>
       dispatch(getGroupUsers());
     },
     loadUserGroups: () => {
+      dispatch(getUnreadMessages());
       dispatch(fetchUserGroups());
+    },
+    readUnreadGroupMessages: () => {
+      dispatch(readUnreadGroupMessages());
     }
   });
 
