@@ -6,10 +6,6 @@ import {
   getGroupUsers,
   readUnreadGroupMessages
 } from '../../actions/actionCreators/GroupActions';
-import {
-  fetchUserGroups,
-  getUnreadMessages
-} from '../../actions/actionCreators/UserActions';
 
 const mapStateToProps = state =>
   ({
@@ -27,10 +23,6 @@ const mapDispatchToProps = dispatch =>
       dispatch(selectGroup(groupId));
       dispatch(getGroupMessages());
       dispatch(getGroupUsers());
-    },
-    loadUserGroups: () => {
-      dispatch(getUnreadMessages());
-      dispatch(fetchUserGroups());
     },
     readUnreadGroupMessages: () => {
       dispatch(readUnreadGroupMessages());

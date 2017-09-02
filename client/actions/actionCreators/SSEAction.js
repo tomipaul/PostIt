@@ -1,6 +1,9 @@
 import { showInfoNotification } from './helpers';
 import SUBSCRIBE_TO_MESSAGES_SUCCESS from '../actionTypes/sse';
-import { addMessageToGroupSuccess } from './GroupActions';
+import {
+  addMessageToGroupSuccess,
+  readUnreadGroupMessages
+} from './GroupActions';
 import { addToUnreadMessages } from './UserActions';
 import sendRequest from './requestAction';
 
@@ -44,6 +47,13 @@ export function subscribeToMessages() {
           dispatch(addMessageToGroupSuccess({
             createdMessage: newMessage
           }));
+          if (author !== state.auth.user.username) {
+            dispatch(addToUnreadMessages({
+              groupId: recipientGroupId,
+              messageId: newMessage.id
+            }));
+            dispatch(readUnreadGroupMessages());
+          }
         } else {
           dispatch(addToUnreadMessages({
             groupId: recipientGroupId,

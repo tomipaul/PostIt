@@ -19,9 +19,6 @@ import {
   CLEAR_SELECTED_USER
 } from '../actionTypes/User';
 
-const AUTH_TOKEN = window.localStorage.getItem('auth_token');
-axios.defaults.headers.common.Authorization = AUTH_TOKEN;
-
 /**
  * create action: select user
  * @function selectUser
@@ -222,17 +219,15 @@ export function signInUser(username, password) {
 export function validateUserToken() {
   return (dispatch) => {
     dispatch(sendRequest());
-    const token = window.localStorage.getItem('auth_token');
-    return axios.get('/api/user/authorize', {
-      headers: { Authorization: `Bearer ${token}` }
-    })
+    return axios.get('/api/user/authorize')
     .then((response) => {
-      response.data.token = token;
+      response.data.token = window.localStorage.getItem('auth_token');
       dispatch(authenticationSuccess(response.data));
-      dispatch(showSuccessNotification({ response }));
     })
-    .catch((error) => {
-      dispatch(showErrorNotification(error));
+    .catch(() => {
+      dispatch(showErrorNotification({
+        message: 'Validation failed!'
+      }));
     });
   };
 }
@@ -246,6 +241,7 @@ export function logOutUser() {
     dispatch(sendRequest());
     dispatch(logOutSuccess());
     window.localStorage.removeItem('auth_token');
+    window.localStorage.removeItem('last_viewed');
     dispatch(showSuccessNotification({
       message: 'Log out successful'
     }));
@@ -258,11 +254,8 @@ export function logOutUser() {
  */
 export function fetchUserGroups() {
   return (dispatch) => {
-    const token = window.localStorage.getItem('auth_token');
     dispatch(sendRequest());
-    return axios.get('/api/user/groups', {
-      headers: { Authorization: `Bearer ${token}` }
-    })
+    return axios.get('/api/user/groups')
     .then((response) => {
       dispatch(fetchUserGroupsSuccess(response.data));
     })
@@ -279,11 +272,8 @@ export function fetchUserGroups() {
  */
 export function getUser(username) {
   return (dispatch) => {
-    const token = window.localStorage.getItem('auth_token');
     dispatch(sendRequest());
-    return axios.get(`/api/user/${username}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
+    return axios.get(`/api/user/${username}`)
     .then((response) => {
       dispatch(getUserSuccess(response.data));
     })
@@ -299,11 +289,8 @@ export function getUser(username) {
  */
 export function getAllUsers() {
   return (dispatch) => {
-    const token = window.localStorage.getItem('auth_token');
     dispatch(sendRequest());
-    return axios.get('/api/users', {
-      headers: { Authorization: `Bearer ${token}` }
-    })
+    return axios.get('/api/users')
     .then((response) => {
       dispatch(getAllUsersSuccess(response.data));
     })
@@ -321,12 +308,9 @@ export function getAllUsers() {
 export function updateUser(newCredentials) {
   return (dispatch, getState) => {
     const { auth } = getState();
-    const token = window.localStorage.getItem('auth_token');
     dispatch(sendRequest());
     return axios.put(`/api/user/${auth.user.username}`, {
       ...newCredentials
-    }, {
-      headers: { Authorization: `Bearer ${token}` }
     }).then((response) => {
       dispatch(updateUserSuccess(response.data));
       dispatch(showSuccessNotification({ response }));
@@ -344,11 +328,9 @@ export function updateUser(newCredentials) {
 export function deleteUser() {
   return (dispatch, getState) => {
     const { auth } = getState();
-    const token = window.localStorage.getItem('auth_token');
     dispatch(sendRequest());
-    return axios.delete(`/api/user/${auth.user.username}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    }).then((response) => {
+    return axios.delete(`/api/user/${auth.user.username}`)
+    .then((response) => {
       dispatch(deleteUserSuccess(response.data));
     })
     .catch((error) => {

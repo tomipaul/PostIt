@@ -177,6 +177,7 @@ a {
   height: 98%;
   top: 10%;
   overflow: auto;
+  padding-bottom: 5%;
 }
 .message-box {
   display: flex;
@@ -495,6 +496,13 @@ span.badge {
 }
 .see-older hr {
   width: 30%;
+}
+.before-auth {
+  display: block;
+  position: fixed;
+  margin: auto;
+  top: 40%;
+  left: 45%;
 }
 
 @media only screen and (max-width : 992px) {

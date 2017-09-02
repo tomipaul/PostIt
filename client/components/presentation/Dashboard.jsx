@@ -13,36 +13,25 @@ import UpdateProfilePicture from '../container/UpdateProfilePicture.jsx';
  */
 class Dashboard extends React.Component {
   /**
-   * @method componentDidMount
+   * @constructor
+   * @extends React.Component
    * @param {object} props
-   * @return {void}
    */
-  componentDidMount() {
+  constructor(props) {
+    super(props);
     const {
       isAuth,
-      validateUserToken,
       subscribeToMessages,
-      getAllUsers
+      getAllUsers,
+      fetchUserGroups,
+      getUnreadMessages
     } = this.props;
     const token = window.localStorage.getItem('auth_token');
-    if (token && !isAuth) {
-      validateUserToken();
-    } else if (token && isAuth) {
+    if (token && isAuth) {
       getAllUsers();
       subscribeToMessages();
-    }
-  }
-
-  /**
-   * @method componentWillReceiveProps
-   * @param {object} nextProps
-   * @return {void}
-   */
-  componentWillReceiveProps(nextProps) {
-    const { getAllUsers, subscribeToMessages } = this.props;
-    if (!this.props.isAuth && nextProps.isAuth) {
-      getAllUsers();
-      subscribeToMessages();
+      fetchUserGroups();
+      getUnreadMessages();
     }
   }
 
@@ -70,9 +59,10 @@ class Dashboard extends React.Component {
 }
 
 Dashboard.propTypes = {
-  validateUserToken: PropTypes.func.isRequired,
   getAllUsers: PropTypes.func.isRequired,
   subscribeToMessages: PropTypes.func.isRequired,
+  fetchUserGroups: PropTypes.func.isRequired,
+  getUnreadMessages: PropTypes.func.isRequired,
   logOut: PropTypes.func.isRequired,
   isAuth: PropTypes.bool.isRequired
 };

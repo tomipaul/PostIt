@@ -23,7 +23,7 @@ const unreadMessages = (state = {}, action) => {
     case GROUP_MESSAGES_READ: {
       return {
         ...state,
-        [action.groupId]: []
+        [action.groupId]: null
       };
     }
     default:

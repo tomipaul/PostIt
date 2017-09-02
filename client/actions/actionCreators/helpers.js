@@ -8,10 +8,10 @@ const { notifSend } = notifActions;
  * @param {object} error
  * @returns {function} asynchronous action
  */
-export function showErrorNotification(error) {
+export function showErrorNotification({ message, error }) {
   return (dispatch) => {
     dispatch(notifSend({
-      message: error.response.data.error,
+      message: message || error.response.data.error,
       kind: 'danger',
       dismissAfter: 5000
     }));

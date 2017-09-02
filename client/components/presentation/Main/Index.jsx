@@ -23,36 +23,78 @@ class Main extends React.Component {
     this.showGroupMemberView = this.showGroupMemberView.bind(this);
     this.filterUnreadMessages = this.filterUnreadMessages.bind(this);
     this.readUnreadGroupMessages = this.readUnreadGroupMessages.bind(this);
+    this.getMessageBoardNodeRef = this.getMessageBoardNodeRef.bind(this);
   }
 
   /**
-   * load user groups
-   * @method componentDidMount
+   * select a default group on render and load group messages
+   * @method componentWillUpdate
    * @memberof Main
+   * @param {object} nextProps
    * @returns {void}
    */
-  componentDidMount() {
-    const { loadUserGroups } = this.props;
-    loadUserGroups();
+  // eslint-disable-next-line
+  componentWillReceiveProps(nextProps) {
+    const {
+      userGroups,
+      exploreGroup,
+      selectedGroup
+    } = nextProps;
+    const defaultGroupId = window.localStorage.getItem('last_viewed')
+    || userGroups.groupsById[0];
+    const groupsCount = Object.keys(userGroups.groups).length;
+    if (groupsCount && !selectedGroup) {
+      exploreGroup(defaultGroupId);
+    }
   }
 
   /**
-   * select a group and load group messages
+   * Scroll message board to the bottom
+   * when component is re-rendered
    * @method componentDidUpdate
    * @memberof Main
    * @returns {void}
    */
   componentDidUpdate() {
     const {
-      userGroups,
       selectedGroup,
-      exploreGroup
+      readUnreadGroupMessages
     } = this.props;
-    const defaultGroupId = userGroups.groupsById[0];
-    const groupsCount = Object.keys(userGroups.groups).length;
-    if (groupsCount && !selectedGroup) {
-      exploreGroup(defaultGroupId);
+    const elem = this.messageBoard;
+    if (!this.noScroll) {
+      elem.scrollTop = elem.scrollHeight - elem.clientHeight;
     }
+    if (elem.scrollTop === 0 && this.getUnreadCount(selectedGroup)) {
+      readUnreadGroupMessages();
+    }
+    this.noScroll = false;
+  }
+
+  /**
+   * get a reference to the DOM node of the message board
+   * @method getMessageBoardNodeRef
+   * @memberof Main
+   * @param {object} node
+   * @returns {void}
+   */
+  getMessageBoardNodeRef(node) {
+    this.messageBoard = node;
+  }
+
+  /**
+   * check if a user has unread messages in a group
+   * @method getUnreadCount
+   * @param {string} selectedGroup
+   * @returns {boolean} true or false
+   */
+  getUnreadCount(selectedGroup) {
+    const {
+      unreadMessages,
+    } = this.props;
+    if (unreadMessages[selectedGroup]) {
+      return unreadMessages[selectedGroup].length;
+    }
+    return 0;
   }
 
   /**
@@ -118,18 +160,17 @@ class Main extends React.Component {
    */
   filterUnreadMessages() {
     const {
-      unreadMessages,
       selectedGroup,
       selectedGroupMessages
     } = this.props;
-    const unreadCount = (unreadMessages[selectedGroup]) ?
-    unreadMessages[selectedGroup].length : 0;
+    const unreadCount = this.getUnreadCount(selectedGroup);
     return (unreadCount > 15) ?
     selectedGroupMessages.slice(-unreadCount)
     : selectedGroupMessages.slice(-15);
   }
+
   /**
-   * explore a selected group
+   * mark unread group messages as read
    * @method readUnreadGroupMessages
    * @memberof Main
    * @param {object} event
@@ -143,10 +184,10 @@ class Main extends React.Component {
     } = this.props;
     if (unreadMessages[selectedGroup]) {
       const elem = event.target;
-      const unreadNotEmpty = unreadMessages[selectedGroup].length;
-      if (unreadNotEmpty &&
-      elem.scrollHeight - elem.scrollTop === elem.clientHeight) {
+      const unreadNotEmpty = this.getUnreadCount(selectedGroup);
+      if (unreadNotEmpty && elem.scrollTop === 0) {
         readUnreadGroupMessages();
+        this.noScroll = true;
       }
     }
   }
@@ -194,9 +235,9 @@ class Main extends React.Component {
           )
         }
         <MessageBoard
+          nodeRef={this.getMessageBoardNodeRef}
           messages={this.filterUnreadMessages()}
           onScroll={this.readUnreadGroupMessages}
-          onFocus={this.readUnreadGroupMessages}
         />
         {
           (this.state.rightBar) ?
@@ -232,7 +273,6 @@ Main.propTypes = {
   })).isRequired,
   unreadMessages: PropTypes.objectOf(PropTypes.array).isRequired,
   exploreGroup: PropTypes.func.isRequired,
-  loadUserGroups: PropTypes.func.isRequired,
   readUnreadGroupMessages: PropTypes.func.isRequired
 };
 

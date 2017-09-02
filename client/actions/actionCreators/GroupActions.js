@@ -22,6 +22,7 @@ import {
  * @returns {object} action: type and groupId
  */
 export function selectGroup(groupId) {
+  window.localStorage.setItem('last_viewed', groupId);
   return {
     type: SELECT_GROUP,
     groupId
@@ -290,9 +291,9 @@ export function readUnreadGroupMessages() {
       dispatch(groupMessagesRead(activeGroup));
     })
     .catch(() => {
-      dispatch(showErrorNotification(
-        'Request errored out, Please try again')
-      );
+      dispatch(showErrorNotification({
+        message: 'Request errored out, Please try again'
+      }));
     });
   };
 }

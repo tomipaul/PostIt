@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import * as firebase from 'firebase/app';
+import { initializeApp } from 'firebase';
 import 'firebase/storage';
 import 'redux-notifications/lib/styles.css';
 import 'materialize-css/dist/js/materialize.js';
@@ -17,7 +17,7 @@ const config = {
   storageBucket: process.env.storageBucket,
   messagingSenderId: process.env.messagingSenderId
 };
-firebase.initializeApp(config);
+initializeApp(config);
 render(
   <Root />,
   document.getElementById('root')

@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MessageBox from './MessageBox.jsx';
 
-const MessageBoard = ({ messages, onScroll }) =>
+const MessageBoard = ({ messages, onScroll, nodeRef }) =>
   (
     <div
+      ref={nodeRef}
       className="message-board"
       onScroll={onScroll}
     >
@@ -33,7 +34,8 @@ MessageBoard.propTypes = {
     text: PropTypes.string.isRequired,
     priority: PropTypes.string.isRequired
   }).isRequired).isRequired,
-  onScroll: PropTypes.func.isRequired
+  onScroll: PropTypes.func.isRequired,
+  nodeRef: PropTypes.func.isRequired
 };
 
 export default MessageBoard;

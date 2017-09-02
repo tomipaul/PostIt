@@ -42,7 +42,9 @@ const MessageBox = ({ message }) => {
       className="message-box z-depth-1 col s12 m9"
       data-priority={priority}
     >
-      <AuthorImage AuthorImageLink={Author.photoURL} />
+      <AuthorImage AuthorImageLink={Author.photoURL ||
+      '/images/silhouette.jpeg'}
+      />
       <Message
         Author={AuthorUsername}
         priority={priority}
