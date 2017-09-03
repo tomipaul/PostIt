@@ -112,22 +112,6 @@ describe('/api/group', () => {
       expect(res).to.be.json;
       expect(res.body.error).to.have
       .string('Group name cannot be an empty string');
-      expect(res.body.error).to.have
-      .string('Name can contain only letters, numbers and underscores');
-      return done();
-    });
-  });
-  it('should return validation error if name is not alphanumeric',
-  (done) => {
-    chai.request(server)
-    .post('/api/group')
-    .set('Authorization', `Bearer ${token}`)
-    .send(invalidName)
-    .end((err, res) => {
-      expect(res).to.have.status(400);
-      expect(res).to.be.json;
-      expect(res.body.error).to.have
-      .string('Name can contain only letters, numbers and underscores');
       return done();
     });
   });

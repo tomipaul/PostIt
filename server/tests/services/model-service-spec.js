@@ -107,8 +107,11 @@ describe('ModelService.getModelInstances', () => {
   it('should throw an appropriate error for failure', () => {
     const stub = sinon.stub(Message, 'findAll');
     stub.rejects();
-    return ModelService.getModelInstances(Message, {
-      priority: 'Normal',
+    return ModelService.getModelInstances({
+      model: Message,
+      where: {
+        priority: 'Normal'
+      }
     })
     .catch((err) => {
       expect(err.code).to.equal(500);
@@ -169,7 +172,9 @@ describe('ModelService.deleteModelInstance', () => {
       priority: 'urgent'
     })
     .then(() => {
-      return ModelService.getModelInstances(Message);
+      return ModelService.getModelInstances({
+        model: Message
+      });
     })
     .then((fromDbArray) => {
       expect(fromDbArray).to.have.lengthOf(2);

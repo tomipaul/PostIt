@@ -106,9 +106,9 @@ describe('Create a group with invalid attributes', () => {
       description: 'of sacrifices'
     })
     .catch((errors) => {
-      expect(errors.errors).to.have.lengthOf(3);
+      expect(errors.errors).to.have.lengthOf(2);
       expect(errors.get('id')).to.have.lengthOf(1);
-      expect(errors.get('name')).to.have.lengthOf(2);
+      expect(errors.get('name')).to.have.lengthOf(1);
     });
   });
 });
