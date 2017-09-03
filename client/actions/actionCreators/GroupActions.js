@@ -13,6 +13,7 @@ import {
   GET_GROUP_USERS_SUCCESS,
   GET_GROUP_MESSAGES_SUCCESS,
   GROUP_MESSAGES_READ,
+  GET_USERS_WITH_MESSAGE_READ_SUCCESS
 } from '../actionTypes/Group';
 
 /**
@@ -117,6 +118,21 @@ export function groupMessagesRead(groupId) {
   return {
     type: GROUP_MESSAGES_READ,
     groupId
+  };
+}
+
+/**
+ * create action: get all users that have read a message: success
+ * @function getUsersWithMessageReadSuccess
+ * @param {object} response
+ * @param {string} messageId
+ * @returns {object} action: type and response
+ */
+export function getUsersWithMessageReadSuccess(response, messageId) {
+  return {
+    type: GET_USERS_WITH_MESSAGE_READ_SUCCESS,
+    response,
+    messageId
   };
 }
 
@@ -293,6 +309,27 @@ export function readUnreadGroupMessages() {
     .catch(() => {
       dispatch(showErrorNotification({
         message: 'Request errored out, Please try again'
+      }));
+    });
+  };
+}
+
+/**
+ * async helper function: get all users that have read a message
+ * @param {string} messageId
+ * @returns {function} asynchronous action
+ */
+export function getUsersWithMessageRead(messageId) {
+  return (dispatch, getState) => {
+    const state = getState();
+    const groupId = state.activeGroup;
+    return axios.get(`/api/group/${groupId}/message/${messageId}/users`)
+    .then((response) => {
+      dispatch(getUsersWithMessageReadSuccess(response.data, messageId));
+    })
+    .catch(() => {
+      dispatch(showErrorNotification({
+        message: 'Request failed, Please try again'
       }));
     });
   };

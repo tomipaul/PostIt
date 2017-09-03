@@ -2,7 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MessageBox from './MessageBox.jsx';
 
-const MessageBoard = ({ messages, onScroll, nodeRef }) =>
+const MessageBoard = ({
+  messages,
+  onScroll,
+  nodeRef
+}) =>
   (
     <div
       ref={nodeRef}
@@ -16,11 +20,11 @@ const MessageBoard = ({ messages, onScroll, nodeRef }) =>
       </span>
       {
         messages.map((message) => {
-          const { id, ...messageWithoutId } = message;
+          const { id } = message;
           return (
             <MessageBox
               key={id}
-              message={messageWithoutId}
+              message={message}
             />
           );
         })

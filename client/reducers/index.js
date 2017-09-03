@@ -10,6 +10,7 @@ import userGroups from './userGroups.js';
 import requestCount from './request.js';
 import users from './users.js';
 import unreadMessages from './unreadMessages.js';
+import usersWithMessageRead from './usersWithMessageRead';
 import { LOG_OUT_SUCCESS } from '../actions/actionTypes/User';
 
 const appReducer = combineReducers({
@@ -23,7 +24,8 @@ const appReducer = combineReducers({
   activeGroup,
   activeGroupMessages,
   activeGroupUsers,
-  unreadMessages
+  unreadMessages,
+  usersWithMessageRead
 });
 
 const rootReducer = (state, action) => {

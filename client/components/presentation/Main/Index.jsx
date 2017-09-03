@@ -266,12 +266,14 @@ Main.propTypes = {
     groupsById: PropTypes.array
   }).isRequired,
   selectedGroup: PropTypes.string,
-  selectedGroupMessages: PropTypes.arrayOf(PropTypes.shape({
+  selectedGroupMessages: PropTypes
+  .arrayOf(PropTypes.shape({
     id: PropTypes.string,
     text: PropTypes.string,
     priority: PropTypes.string
   })).isRequired,
-  unreadMessages: PropTypes.objectOf(PropTypes.array).isRequired,
+  unreadMessages: PropTypes.objectOf(PropTypes.array)
+  .isRequired,
   exploreGroup: PropTypes.func.isRequired,
   readUnreadGroupMessages: PropTypes.func.isRequired
 };

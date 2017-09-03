@@ -504,7 +504,12 @@ span.badge {
   top: 40%;
   left: 45%;
 }
-
+.users-load {
+  display: block;
+  position: relative;
+  margin: auto;
+  left: 40%;
+}
 @media only screen and (max-width : 992px) {
   header, .board-body, footer {
     padding-left: 0;
