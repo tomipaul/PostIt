@@ -31,11 +31,12 @@ const convertDateTimeString = (date) => {
  */
 const MessageBox = ({ message }) => {
   const {
+    id,
     Author,
     AuthorUsername,
     priority,
     text,
-    createdAt
+    createdAt,
   } = message;
   return (
     <div
@@ -46,6 +47,7 @@ const MessageBox = ({ message }) => {
       '/images/silhouette.jpeg'}
       />
       <Message
+        messageId={id}
         Author={AuthorUsername}
         priority={priority}
         text={text}
@@ -57,6 +59,7 @@ const MessageBox = ({ message }) => {
 
 MessageBox.propTypes = {
   message: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
     priority: PropTypes.string.isRequired,
     AuthorUsername: PropTypes.string.isRequired,
