@@ -9,14 +9,17 @@ const user = {
   username: 'tomipaul',
   email: 'tomi@paul.com',
   phoneNo: '00009992992',
-  status: 'user'
+  status: 'user',
+  photoURL: '/images/silhouette.jpeg'
 };
 
 describe('auth reducer', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual({
       isAuthenticated: false,
-      user: {}
+      user: {
+        photoURL: '/images/silhouette.jpeg'
+      }
     });
   });
   it('should handle AUTHENTICATION_SUCCESS', () => {
@@ -31,10 +34,11 @@ describe('auth reducer', () => {
     });
   });
   it('should handle UPDATE_USER_SUCCESS', () => {
-    const { username, status } = user;
+    const { username, status, photoURL } = user;
     const updatedUser = {
       username,
       status,
+      photoURL,
       email: 'updated@user.com',
       phoneNo: 9888718778781
     };
@@ -53,9 +57,6 @@ describe('auth reducer', () => {
       reducer({}, {
         type: LOG_OUT_SUCCESS,
       })
-    ).toEqual({
-      isAuthenticated: false,
-      user: null
-    });
+    ).toEqual({});
   });
 });

@@ -160,7 +160,7 @@ export function createGroup(name, description) {
       dispatch(showSuccessNotification({ response }));
     })
     .catch((error) => {
-      dispatch(showErrorNotification(error));
+      dispatch(showErrorNotification({ error }));
     });
   };
 }
@@ -187,7 +187,7 @@ export function addUserToGroup(username) {
       dispatch(showSuccessNotification({ response }));
     })
     .catch((error) => {
-      dispatch(showErrorNotification(error));
+      dispatch(showErrorNotification({ error }));
     });
   };
 }
@@ -211,7 +211,7 @@ export function addMessageToGroup(message) {
       dispatch(showSuccessNotification({ response }));
     })
     .catch((error) => {
-      dispatch(showErrorNotification(error));
+      dispatch(showErrorNotification({ error }));
     });
   };
 }
@@ -236,7 +236,7 @@ export function removeUserFromGroup(username) {
       dispatch(showSuccessNotification({ response }));
     })
     .catch((error) => {
-      dispatch(showErrorNotification(error));
+      dispatch(showErrorNotification({ error }));
     });
   };
 }
@@ -259,7 +259,7 @@ export function getGroupUsers() {
       dispatch(getGroupUsersSuccess(response.data));
     })
     .catch((error) => {
-      dispatch(showErrorNotification(error));
+      dispatch(showErrorNotification({ error }));
     });
   };
 }
@@ -282,7 +282,7 @@ export function getGroupMessages() {
       dispatch(getGroupMessagesSuccess(response.data));
     })
     .catch((error) => {
-      dispatch(showErrorNotification(error));
+      dispatch(showErrorNotification({ error }));
     });
   };
 }

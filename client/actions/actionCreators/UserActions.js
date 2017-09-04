@@ -184,7 +184,7 @@ export function signUpUser(username, password, email, phoneNo) {
       dispatch(showSuccessNotification({ response }));
     })
     .catch((error) => {
-      dispatch(showErrorNotification(error));
+      dispatch(showErrorNotification({ error }));
     });
   };
 }
@@ -207,7 +207,7 @@ export function signInUser(username, password) {
       dispatch(showSuccessNotification({ response }));
     })
     .catch((error) => {
-      dispatch(showErrorNotification(error));
+      dispatch(showErrorNotification({ error }));
     });
   };
 }
@@ -260,7 +260,7 @@ export function fetchUserGroups() {
       dispatch(fetchUserGroupsSuccess(response.data));
     })
     .catch((error) => {
-      dispatch(showErrorNotification(error));
+      dispatch(showErrorNotification({ error }));
     });
   };
 }
@@ -278,7 +278,7 @@ export function getUser(username) {
       dispatch(getUserSuccess(response.data));
     })
     .catch((error) => {
-      dispatch(showErrorNotification(error));
+      dispatch(showErrorNotification({ error }));
     });
   };
 }
@@ -295,7 +295,7 @@ export function getAllUsers() {
       dispatch(getAllUsersSuccess(response.data));
     })
     .catch((error) => {
-      dispatch(showErrorNotification(error));
+      dispatch(showErrorNotification({ error }));
     });
   };
 }
@@ -316,7 +316,7 @@ export function updateUser(newCredentials) {
       dispatch(showSuccessNotification({ response }));
     })
     .catch((error) => {
-      dispatch(showErrorNotification(error));
+      dispatch(showErrorNotification({ error }));
     });
   };
 }
@@ -334,7 +334,7 @@ export function deleteUser() {
       dispatch(deleteUserSuccess(response.data));
     })
     .catch((error) => {
-      dispatch(showErrorNotification(error));
+      dispatch(showErrorNotification({ error }));
     });
   };
 }
@@ -351,7 +351,7 @@ export function getUnreadMessages() {
       dispatch(getUnreadMessagesSuccess(response.data));
     })
     .catch((error) => {
-      dispatch(showErrorNotification(error));
+      dispatch(showErrorNotification({ error }));
     });
   };
 }
@@ -372,7 +372,7 @@ export function updateProfilePicture(image) {
       }));
     })
     .catch((error) => {
-      dispatch(showErrorNotification(error));
+      dispatch(showErrorNotification({ error }));
     });
   };
 }
