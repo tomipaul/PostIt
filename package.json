@@ -5,18 +5,14 @@
   "main": "index.js",
   "jest": {
     "verbose": true,
-    "testURL": "http://localhost",
-    "mapCoverage": true,
-    "globals": {
-      "NODE_ENV": "jest"
-    }
+    "testURL": "http://localhost"
   },
   "scripts": {
     "start": "node dist/index.js",
     "start:dev": "babel-watch server/index.js",
     "migrations": "sequelize db:migrate",
     "transpile": "babel server --out-dir dist --ignore server/tests/*.js",
-    "frontend:test": "jest --coverage --collectCoverageFrom=client/**/*.{js,jsx}",
+    "frontend:test": "NODE_ENV=jest jest --coverage --collectCoverageFrom=client/**/*.{js,jsx}",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "prod:setup": "npm run transpile && npm run migrations",
     "build:dev": "NODE_ENV=development webpack-dev-server",
