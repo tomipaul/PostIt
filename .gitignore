@@ -47,6 +47,7 @@ dist
 
 # bundle
 client/bin/*.js
+client/bin/*.css
 client/bin/*.woff
 client/bin/*.woff2
 client/bin/*.map

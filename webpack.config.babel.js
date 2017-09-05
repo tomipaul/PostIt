@@ -1,6 +1,7 @@
 import webpack from 'webpack';
 import path from 'path';
 import Dotenv from 'dotenv-webpack';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const NODE_ENV = process.env.NODE_ENV;
 const webpackConfig = {
@@ -27,19 +28,17 @@ const webpackConfig = {
       },
       {
         test: /\.scss?$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader']
+        })
       },
       {
         test: /\.css?$/,
-        use: [
-          { loader: 'style-loader' },
-          {
-            loader: 'css-loader',
-            options: {
-              modules: false
-            }
-          },
-        ],
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader']
+        })
       }
     ],
   },
@@ -82,6 +81,10 @@ const webpackConfig = {
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
       'window.$': 'jquery'
+    }),
+    new ExtractTextPlugin({
+      filename: 'app.css',
+      allChunks: true
     })
   ]) : (
   [
@@ -101,6 +104,10 @@ const webpackConfig = {
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
       'window.$': 'jquery'
+    }),
+    new ExtractTextPlugin({
+      filename: 'app.css',
+      allChunks: true
     })
   ])
 };
