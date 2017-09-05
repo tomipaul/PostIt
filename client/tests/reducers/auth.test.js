@@ -1,7 +1,6 @@
 import reducer from '../../reducers/auth';
 import {
   AUTHENTICATION_SUCCESS,
-  LOG_OUT_SUCCESS,
   UPDATE_USER_SUCCESS
 } from '../../actions/actionTypes/User';
 
@@ -51,12 +50,5 @@ describe('auth reducer', () => {
       isAuthenticated: true,
       user: updatedUser
     });
-  });
-  it('should handle LOG_OUT_SUCCESS', () => {
-    expect(
-      reducer({}, {
-        type: LOG_OUT_SUCCESS,
-      })
-    ).toEqual({});
   });
 });

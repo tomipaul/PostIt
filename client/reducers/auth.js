@@ -20,18 +20,15 @@ const auth = (state = {
       };
     case UPDATE_USER_SUCCESS: {
       const updatedUser = action.response.user;
-      if (updatedUser.username === state.user.username) {
-        return {
-          isAuthenticated: true,
-          user: {
-            ...state.user,
-            ...updatedUser,
-            photoURL: updatedUser.photoURL ||
-            state.user.photoURL
-          }
-        };
-      }
-      break;
+      return {
+        isAuthenticated: true,
+        user: {
+          ...state.user,
+          ...updatedUser,
+          photoURL: updatedUser.photoURL ||
+          state.user.photoURL
+        }
+      };
     }
     default:
       return state;
