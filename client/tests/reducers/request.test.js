@@ -12,5 +12,20 @@ describe('requestCount reducer', () => {
       })
     ).toEqual(1);
   });
+  it('should handle actions that include SUCCESS', () => {
+    expect(
+      reducer(3, {
+        type: 'SUCCESS',
+      })
+    ).toEqual(2);
+  });
+  it('should handle actions that include NOTIF', () => {
+    expect(
+      reducer(3, {
+        type: 'NOTIF_SEND',
+        payload: { kind: 'danger' }
+      })
+    ).toEqual(2);
+  });
 });
 
