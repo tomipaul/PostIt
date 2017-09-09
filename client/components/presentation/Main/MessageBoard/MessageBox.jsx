@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AuthorImage from './AuthorImage.jsx';
-import Message from './Message.jsx';
+import AuthorImage from './AuthorImage';
+import Message from './Message';
 
 /**
  * @function convertDateTimeString
@@ -26,8 +26,9 @@ const convertDateTimeString = (date) => {
 
 /**
  * @function MessageBox
- * @param {object.<object>} message
- * @returns {object} component
+ * @param {object} props
+ * @param {object.<object>} props.message
+ * @returns {object} MessageBox component
  */
 const MessageBox = ({ message }) => {
   const {

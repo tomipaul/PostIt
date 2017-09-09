@@ -1,7 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MessageBox from './MessageBox.jsx';
+import MessageBox from './MessageBox';
 
+
+/**
+ * MessageBoard component; displays a message and its metadata
+ * @function MessageBoard
+ * @param {object} props
+ * @param {array.object} messages array of message object
+ * @param {function} onScroll handler for onScroll event on
+ * the messageBoard root div element
+ * @param {object} nodeRef reference to the messageBoard
+ * root div element
+ * @return {object} MessageBoard component
+ */
 const MessageBoard = ({
   messages,
   onScroll,

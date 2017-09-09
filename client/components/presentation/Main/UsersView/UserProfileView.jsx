@@ -1,6 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * display a user's profile
+ * @function UserProfileView
+ * @param {object} props
+ * @param {object} props.user
+ * @return {object} UserProfileView component
+ */
 const UserProfileView = ({ user }) =>
   (
     <div className="user-profile">

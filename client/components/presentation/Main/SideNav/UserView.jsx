@@ -1,6 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+
+/**
+ * display a user's image and username
+ * @function UserView
+ * @param {object} props
+ * @param {string} imageLink
+ * @param {string} username
+ * @return {object} UserView component
+ */
 const UserView = ({ imageLink, username }) =>
   (
     <li>

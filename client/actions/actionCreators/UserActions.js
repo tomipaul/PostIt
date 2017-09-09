@@ -257,7 +257,14 @@ export function fetchUserGroups() {
     dispatch(sendRequest());
     return axios.get('/api/user/groups')
     .then((response) => {
-      dispatch(fetchUserGroupsSuccess(response.data));
+      const groups = response.data.groups
+      .reduce((accumulator, group) => {
+        accumulator[group.id] = group;
+        return accumulator;
+      }, {});
+      const groupsById = response.data.groups
+      .map(group => (group.id));
+      dispatch(fetchUserGroupsSuccess({ groupsById, groups }));
     })
     .catch((error) => {
       dispatch(showErrorNotification({ error }));

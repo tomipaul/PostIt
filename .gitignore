@@ -51,6 +51,11 @@ client/bin/*.css
 client/bin/*.woff
 client/bin/*.woff2
 client/bin/*.map
+client/bin/*.png
+client/bin/*.jpeg
+client/bin/*.jpg
+client/bin/*.gif
+client/bin/*.svg
 
 #others
 .DS_Store

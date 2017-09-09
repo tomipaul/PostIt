@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SearchUserView from './SearchUserView.jsx';
-import GroupMemberView from './GroupMemberView.jsx';
+import SearchUserView from './SearchUserView';
+import GroupMemberView from './GroupMemberView';
 
 /**
  * @class UsersView
@@ -48,7 +48,8 @@ class UsersView extends React.Component {
           (this.props.showSearchUserView) ? (
             <SearchUserView
               user={this.props.user}
-              users={this.props.allUsers}
+              groupMembers={this.props.users}
+              allUsers={this.props.allUsers}
               addUserToGroup={this.addUserToGroup}
               getUser={this.props.getUser}
               clearSelectedUser={

@@ -1,9 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import GroupNameDescription from './GroupNameDescription.jsx';
-import GroupOptions from './GroupOptions.jsx';
-import GroupOptionsDisplayToggle from './GroupOptionsDisplayToggle.jsx';
+import GroupNameDescription from './GroupNameDescription';
+import GroupOptions from './GroupOptions';
+import GroupOptionsDisplayToggle from './GroupOptionsDisplayToggle';
 
+/**
+ * GroupHeader component
+ * @param {object} props
+ * @param {string} props.name name of the active group
+ * @param {string} props.description  description of the active group
+ * @param {function} props.showSearchUserView show the searchbox
+ * where users can be searched
+ * @param {function} props.showGroupMemberView show the view that
+ * displays all members of the active group
+ * @return {object} GroupHeader component
+ */
 const GroupHeader = ({
   name,
   description,

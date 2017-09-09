@@ -58,16 +58,20 @@ class Message extends React.Component {
       usersWithMessageRead,
       user
     } = this.props;
-    if (usersWithMessageRead[messageId]) {
-      const usersArray = [];
+    const usersThatReadMessage = usersWithMessageRead[messageId];
+    if (usersThatReadMessage) {
+      if (usersThatReadMessage.length === 0) {
+        return ['Oops! no one has read this message'];
+      }
+      const users = [];
       usersWithMessageRead[messageId]
       .forEach((username) => {
         if (username === user.username) {
-          return usersArray.unshift('@You ');
+          return users.unshift('@You ');
         }
-        return usersArray.push(`@${username} `);
+        return users.push(`@${username} `);
       });
-      return usersArray;
+      return users;
     }
     return false;
   }
@@ -84,12 +88,11 @@ class Message extends React.Component {
       Author,
       priority,
       text,
-      createdAt,
-      usersWithMessageRead
+      createdAt
     } = this.props;
     const matched = text.split(/<\/?p>/);
     const renderedComponent =
-      usersWithMessageRead[messageId] ?
+      this.displayUsersThatReadMessage(messageId) ?
         (<div>
           {this.displayUsersThatReadMessage(messageId)
           .map(user => (user))}

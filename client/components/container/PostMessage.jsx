@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import MessageArea from '../presentation/MessageArea/Index.jsx';
+import MessageArea from '../presentation/MessageArea';
 import { addMessageToGroup } from '../../actions/actionCreators/GroupActions';
 
 const mapStateToProps = state =>

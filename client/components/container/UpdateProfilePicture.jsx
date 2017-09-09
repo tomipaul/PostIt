@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import UploadPictureModal from '../presentation/Modals/UploadPictureModal.jsx';
+import UploadPictureModal from '../presentation/Modals/UploadPictureModal';
 import { updateProfilePicture } from '../../actions/actionCreators/UserActions';
 
 const mapStateToProps = state =>

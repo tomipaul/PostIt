@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import UsersView from '../presentation/Main/UsersView/Index.jsx';
+import UsersView from '../presentation/Main/UsersView';
 import {
   getUser,
   selectUser,
