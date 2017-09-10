@@ -2,21 +2,7 @@ import reducer from '../../reducers/users';
 import {
   GET_ALL_USERS_SUCCESS
 } from '../../actions/actionTypes/User';
-
-const users = [
-  {
-    username: 'tomipaul',
-    email: 'tomi@paul.com',
-    phoneNo: '00009992992',
-    status: 'user'
-  },
-  {
-    username: 'emeka',
-    email: 'emeka@andela.com',
-    phoneNo: '0567577785875',
-    status: 'user'
-  },
-];
+import { allUsers } from '../__mocks__/dummyData';
 
 describe('users reducer', () => {
   it('should return the initial state', () => {
@@ -26,8 +12,8 @@ describe('users reducer', () => {
     expect(
       reducer([], {
         type: GET_ALL_USERS_SUCCESS,
-        response: { users }
+        response: { allUsers }
       })
-    ).toEqual({ users });
+    ).toEqual({ allUsers });
   });
 });

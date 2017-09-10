@@ -5,7 +5,12 @@ import * as actions from '../../actions/actionCreators/GroupActions';
 import * as groupActionTypes from '../../actions/actionTypes/Group';
 import { sendRequest, notifSend } from '../__mocks__/commonActions';
 import localStorageMock from '../__mocks__/localStorage';
-import { group, user, message } from '../__mocks__/dummyData';
+import {
+  group,
+  user,
+  message,
+  usersThatHaveReadMessage
+} from '../__mocks__/dummyData';
 
 window.localStorage = localStorageMock;
 const middlewares = [thunk];
@@ -132,12 +137,57 @@ describe('Group async actions', () => {
     });
   });
 
+  describe('async action addMessageToGroup', () => {
+    afterEach(() => {
+      nock.cleanAll();
+    });
+    it(`does not create ADD_MESSAGE_TO_GROUP_SUCCESS 
+    when message is added to group`, () => {
+      nock('http://localhost')
+      .post('/api/group/23/message')
+      .reply(200, {
+        createdMessage: message
+      });
+      const expectedActions = [
+        sendRequest,
+        notifSend('success')
+      ];
+      const store = mockStore({ activeGroup: '23' });
+      return store.dispatch(actions
+      .addMessageToGroup(message))
+      .then(() => {
+        const dispatched = store.getActions();
+        expect(dispatched).toMatchObject(expectedActions);
+      });
+    });
+
+    it('creates NOTIF_SEND when adding a message to a group fails',
+    () => {
+      nock('http://localhost')
+      .post('/api/group/23/message')
+      .reply(400, {
+        error: 'Message cannot be added to group'
+      });
+      const expectedActions = [
+        sendRequest,
+        notifSend('danger', 'Message cannot be added to group')
+      ];
+      const store = mockStore({ activeGroup: '23' });
+      return store.dispatch(actions
+      .addMessageToGroup(user.username))
+      .then(() => {
+        const dispatched = store.getActions();
+        expect(dispatched).toMatchObject(expectedActions);
+      });
+    });
+  });
+
   describe('async action removeUserFromGroup', () => {
     afterEach(() => {
       nock.cleanAll();
     });
-    it('creates REMOVE_USER_FROM_GROUP_SUCCESS when user is removed from group',
-    () => {
+    it(`creates REMOVE_USER_FROM_GROUP_SUCCESS when 
+    user is removed from group`, () => {
       nock('http://localhost')
       .delete('/api/group/23/user/tomipaul')
       .reply(200, {
@@ -216,7 +266,7 @@ describe('Group async actions', () => {
     () => {
       nock('http://localhost')
       .get('/api/group/23/users')
-      .reply(400, {
+      .reply(500, {
         error: 'Cannot get group users'
       });
       const expectedActions = [
@@ -237,8 +287,8 @@ describe('Group async actions', () => {
     afterEach(() => {
       nock.cleanAll();
     });
-    it('creates GET_GROUP_MESSAGES_SUCCESS when messages of a group are fetched',
-    () => {
+    it(`creates GET_GROUP_MESSAGES_SUCCESS when messages
+    of a group are fetched`, () => {
       nock('http://localhost')
       .get('/api/group/23/messages')
       .reply(200, {
@@ -266,7 +316,7 @@ describe('Group async actions', () => {
     () => {
       nock('http://localhost')
       .get('/api/group/23/messages')
-      .reply(400, {
+      .reply(500, {
         error: 'Cannot get group messages'
       });
       const expectedActions = [
@@ -276,6 +326,103 @@ describe('Group async actions', () => {
       const store = mockStore({ activeGroup: '23' });
       return store.dispatch(actions
       .getGroupMessages())
+      .then(() => {
+        const dispatched = store.getActions();
+        expect(dispatched).toMatchObject(expectedActions);
+      });
+    });
+  });
+
+  describe('async action readUnreadGroupMessages', () => {
+    afterEach(() => {
+      nock.cleanAll();
+    });
+    it(`creates GROUP_MESSAGES_READ when user reads 
+    unread messages of a group`, () => {
+      nock('http://localhost')
+      .post('/api/group/23/messages/read')
+      .reply(200);
+      const expectedActions = [
+        {
+          type: groupActionTypes.GROUP_MESSAGES_READ,
+          groupId: '23'
+        }
+      ];
+      const store = mockStore({
+        activeGroup: '23',
+        unreadMessages: {
+          23: ['2', '4', '6']
+        }
+      });
+      return store.dispatch(actions
+      .readUnreadGroupMessages())
+      .then(() => {
+        const dispatched = store.getActions();
+        expect(dispatched).toMatchObject(expectedActions);
+      });
+    });
+
+    it('creates NOTIF_SEND when reading group messages fail',
+    () => {
+      nock('http://localhost')
+      .post('/api/group/23/messages/read')
+      .reply(500);
+      const expectedActions = [
+        notifSend('danger', 'Request errored out, Please try again')
+      ];
+      const store = mockStore({
+        activeGroup: '23',
+        unreadMessages: {
+          23: ['2', '4', '6']
+        }
+      });
+      return store.dispatch(actions
+      .readUnreadGroupMessages())
+      .then(() => {
+        const dispatched = store.getActions();
+        expect(dispatched).toMatchObject(expectedActions);
+      });
+    });
+  });
+
+  describe('async action getUsersWithMessageRead', () => {
+    afterEach(() => {
+      nock.cleanAll();
+    });
+    it(`creates GET_USERS_WITH_MESSAGE_READ_SUCCESS when users 
+    that have read a particular message are fetched`, () => {
+      nock('http://localhost')
+      .get('/api/group/23/message/23/users')
+      .reply(200, {
+        users: usersThatHaveReadMessage
+      });
+      const expectedActions = [
+        {
+          type: groupActionTypes.GET_USERS_WITH_MESSAGE_READ_SUCCESS,
+          response: { users: usersThatHaveReadMessage },
+          messageId: '23'
+        }
+      ];
+      const store = mockStore({ activeGroup: '23' });
+      return store.dispatch(actions
+      .getUsersWithMessageRead('23'))
+      .then(() => {
+        const dispatched = store.getActions();
+        expect(dispatched).toMatchObject(expectedActions);
+      });
+    });
+
+    it(`creates NOTIF_SEND when getting users that have read 
+    a message fails`, () => {
+      nock('http://localhost')
+      .get('/api/group/23/message/23/users')
+      .reply(500);
+      const expectedActions = [
+        notifSend('danger', 'Request failed, Please try again')
+      ];
+      const store = mockStore({ activeGroup: '23' });
+      return store.dispatch(actions
+      .getUsersWithMessageRead('23'))
       .then(() => {
         const dispatched = store.getActions();
         expect(dispatched).toMatchObject(expectedActions);

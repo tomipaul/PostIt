@@ -24,7 +24,8 @@ describe('combined reducer', () => {
       selectedUser: {},
       unreadMessages: {},
       userGroups: { groups: {}, groupsById: [] },
-      users: []
+      users: [],
+      usersWithMessageRead: {}
     });
   });
 });
