@@ -5,7 +5,6 @@ import * as actions from '../../actions/actionCreators/GroupActions';
 import * as groupActionTypes from '../../actions/actionTypes/Group';
 import { sendRequest, notifSend } from '../__mocks__/commonActions';
 import localStorageMock from '../__mocks__/localStorage';
-import { group, user, message } from '../__mocks__/dummyData';
 import {
   group,
   user,
