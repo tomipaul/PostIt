@@ -7,6 +7,6 @@ export const notifSend = (kind, message) =>
     payload: {
       message,
       kind,
-      dismissAfter: 5000
+      dismissAfter: (kind === 'info') ? 15000 : 5000
     }
   });

@@ -5,7 +5,7 @@ import * as actions from '../../actions/actionCreators/UserActions';
 import * as userActionTypes from '../../actions/actionTypes/User';
 import localStorageMock from '../__mocks__/localStorage';
 import { sendRequest, notifSend } from '../__mocks__/commonActions';
-import { user } from '../__mocks__/dummyData';
+import { user, unreadMessages, allUsers } from '../__mocks__/dummyData';
 
 window.localStorage = localStorageMock;
 const middlewares = [thunk];
@@ -37,6 +37,20 @@ describe('User synchronous actions', () => {
         type: userActionTypes.LOG_OUT_SUCCESS
       };
       expect(actions.logOutSuccess()).toEqual(expectedAction);
+    });
+  });
+
+  describe('action addToUnreadMessages', () => {
+    it('should create an action when a user logs out', () => {
+      const expectedAction = {
+        type: userActionTypes.ADD_TO_UNREAD_MESSAGES,
+        groupId: '23',
+        messageId: '23'
+      };
+      expect(actions.addToUnreadMessages({
+        groupId: '23',
+        messageId: '23'
+      })).toEqual(expectedAction);
     });
   });
 });
@@ -284,11 +298,11 @@ describe('User async actions', () => {
       nock('http://localhost')
       .get('/api/user/thhgghg')
       .reply(400, {
-        error: 'Invalid user'
+        error: 'User does not exist'
       });
       const expectedActions = [
         sendRequest,
-        notifSend('danger', 'Invalid user')
+        notifSend('danger', 'User does not exist')
       ];
       const store = mockStore({ auth: {} });
       return store.dispatch(actions
@@ -397,6 +411,112 @@ describe('User async actions', () => {
       .then(() => {
         expect(store.getActions()).toMatchObject(expectedActions);
       });
+    });
+  });
+
+  describe('async action getUnreadMessages', () => {
+    afterEach(() => {
+      nock.cleanAll();
+    });
+    it(`creates GET_UNREAD_MESSAGES_SUCCESS when all 
+    unread messages are fetched`, () => {
+      nock('http://localhost')
+      .get('/api/messages/unread')
+      .reply(200, {
+        ...unreadMessages
+      });
+      const expectedActions = [
+        sendRequest,
+        {
+          type: userActionTypes.GET_UNREAD_MESSAGES_SUCCESS,
+          response: { ...unreadMessages }
+        }
+      ];
+      const store = mockStore({});
+      return store.dispatch(actions
+      .getUnreadMessages())
+      .then(() => {
+        expect(store.getActions()).toMatchObject(expectedActions);
+      });
+    });
+
+    it('creates NOTIFY_SEND when getting unread messages fails',
+    () => {
+      nock('http://localhost')
+      .get('/api/messages/unread')
+      .reply(500, {
+        error: 'Operation failed'
+      });
+      const expectedActions = [
+        sendRequest,
+        notifSend('danger', 'Operation failed')
+      ];
+      const store = mockStore({});
+      return store.dispatch(actions
+      .getUnreadMessages())
+      .then(() => {
+        expect(store.getActions()).toMatchObject(expectedActions);
+      });
+    });
+  });
+
+  describe('async action getAllUsers', () => {
+    afterEach(() => {
+      nock.cleanAll();
+    });
+    it(`creates GET_ALL_USERS_SUCCESS when all 
+    users are fetched`, () => {
+      nock('http://localhost')
+      .get('/api/users')
+      .reply(200, allUsers);
+      const expectedActions = [
+        sendRequest,
+        {
+          type: userActionTypes.GET_ALL_USERS_SUCCESS,
+          response: allUsers
+        }
+      ];
+      const store = mockStore([]);
+      return store.dispatch(actions
+      .getAllUsers())
+      .then(() => {
+        expect(store.getActions()).toMatchObject(expectedActions);
+      });
+    });
+
+    it('creates NOTIFY_SEND when getting all users fail',
+    () => {
+      nock('http://localhost')
+      .get('/api/users')
+      .reply(500, {
+        error: 'Operation failed'
+      });
+      const expectedActions = [
+        sendRequest,
+        notifSend('danger', 'Operation failed')
+      ];
+      const store = mockStore({});
+      return store.dispatch(actions
+      .getAllUsers())
+      .then(() => {
+        expect(store.getActions()).toMatchObject(expectedActions);
+      });
+    });
+  });
+
+  describe('async action logOutUser', () => {
+    it(`creates LOG_OUT_SUCCESS when user logs out
+    successfully`, () => {
+      const expectedActions = [
+        sendRequest,
+        {
+          type: userActionTypes.LOG_OUT_SUCCESS
+        },
+        notifSend('success', 'Log out successful')
+      ];
+      const store = mockStore({});
+      store.dispatch(actions.logOutUser());
+      expect(store.getActions()).toMatchObject(expectedActions);
     });
   });
 });
