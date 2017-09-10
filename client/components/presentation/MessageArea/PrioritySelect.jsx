@@ -1,7 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Priority from './Priority.jsx';
+import Priority from './Priority';
 
+/**
+ * select a priority
+ * @param {object} props
+ * @param {function} props.selectActivity
+ * @param {string} props.activePriority
+ * @return {object} PrioritySelect component
+ */
 const PrioritySelect = ({ selectPriority, activePriority }) => (
   <div className="select-priority-2 col s2">
     {

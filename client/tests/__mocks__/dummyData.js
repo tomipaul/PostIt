@@ -81,4 +81,3 @@ export const savedMessage = {
     photoURL: null
   }
 };
-

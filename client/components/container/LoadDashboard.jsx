@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Dashboard from '../presentation/Dashboard.jsx';
+import Dashboard from '../presentation/Dashboard';
 import {
   subscribeToMessages
 } from '../../actions/actionCreators/SSEAction';

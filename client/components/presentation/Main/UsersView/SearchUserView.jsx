@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SearchBox from './SearchBox.jsx';
-import MemberListView from './MemberListView.jsx';
+import SearchBox from './SearchBox';
+import MemberListView from './MemberListView';
 
 /**
  * @class SearchUserview
@@ -22,6 +22,7 @@ class SearchUserView extends React.Component {
     this.onClickSearch = this.onClickSearch.bind(this);
     this.onKeyPressEnterSearch = this.onKeyPressEnterSearch
     .bind(this);
+    this.getUsersNotInGroup = this.getUsersNotInGroup.bind(this);
   }
   /**
    * clear selected user before search
@@ -33,6 +34,25 @@ class SearchUserView extends React.Component {
     this.props.clearSelectedUser();
   }
   /**
+   * Remove a user from list of displayed users after
+   * the user has been added to group
+   * @method componentWillReceiveProps
+   * @memberof SearchUserView
+   * @param {object} nextProps
+   * @return {void}
+   */
+  componentWillReceiveProps(nextProps) {
+    const { groupMembers } = nextProps;
+    if (groupMembers.length !== this.props.groupMembers.length) {
+      const newUser = groupMembers[groupMembers.length - 1];
+      const newMatchedUsers = this.state.matchedUsers
+      .filter(user =>
+        user.username !== newUser.username
+      );
+      this.setState({ matchedUsers: newMatchedUsers });
+    }
+  }
+  /**
    * event handler: handle change in search box input
    * @method onInputChange
    * @memberof SearchUserView
@@ -42,7 +62,7 @@ class SearchUserView extends React.Component {
   onInputChange(event) {
     event.preventDefault();
     const searchString = event.target.value;
-    const { users } = this.props;
+    const users = this.getUsersNotInGroup();
     const matchedUsers = users.filter(user =>
       (
         (searchString) ?
@@ -80,6 +100,19 @@ class SearchUserView extends React.Component {
     }
   }
   /**
+   * get all users that do not belong to the active group
+   * @method getUsersNotInGroup
+   * @returns {void}
+   */
+  getUsersNotInGroup() {
+    const { allUsers, groupMembers } = this.props;
+    return allUsers.filter(user =>
+      !(groupMembers.find(userInGroup =>
+        (user.username === userInGroup.username)
+      ))
+    );
+  }
+  /**
    * render component
    * @method render
    * @memberof SearchUserView
@@ -107,7 +140,8 @@ SearchUserView.propTypes = {
   getUser: PropTypes.func.isRequired,
   addUserToGroup: PropTypes.func.isRequired,
   clearSelectedUser: PropTypes.func.isRequired,
-  users: PropTypes.arrayOf(PropTypes.object).isRequired
+  allUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  groupMembers: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default SearchUserView;

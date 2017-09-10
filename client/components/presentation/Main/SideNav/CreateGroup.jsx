@@ -1,7 +1,12 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
 
-const GroupAdd = () => {
+/**
+ * create a group button
+ * @function CreateGroup
+ * @return {object} CreateGroup component
+ */
+const CreateGroup = () => {
   $(document).ready(() => {
     $('.modal').modal();
   });
@@ -21,4 +26,4 @@ const GroupAdd = () => {
   );
 };
 
-export default GroupAdd;
+export default CreateGroup;

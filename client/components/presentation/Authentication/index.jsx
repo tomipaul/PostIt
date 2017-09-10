@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SignIn from './SignIn.jsx';
-import SignUp from './SignUp.jsx';
+import SignIn from './SignIn';
+import SignUp from './SignUp';
 
 /**
  * @class

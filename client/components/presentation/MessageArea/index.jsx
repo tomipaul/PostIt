@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import marked from 'marked';
-import PrioritySelect from './PrioritySelect.jsx';
-import TextBox from './TextBox.jsx';
-import SubmitButton from './SubmitButton.jsx';
+import PrioritySelect from './PrioritySelect';
+import TextBox from './TextBox';
+import SubmitButton from './SubmitButton';
 
 /**
  * @class Footer

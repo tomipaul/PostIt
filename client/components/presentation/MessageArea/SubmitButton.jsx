@@ -1,6 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * Submit button to post a message
+ * @param {object} props
+ * @param {function} props.onClick
+ * @returns {object} SubmitButton component
+ */
 const SubmitButton = ({ onClick }) =>
   (
     <div className="col s1 send-button">

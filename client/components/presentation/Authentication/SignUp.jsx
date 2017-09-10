@@ -15,12 +15,13 @@ class SignUp extends React.Component {
     super(props);
     this.state = {};
     this.onInputChange = this.onInputChange.bind(this);
+    this.submit = this.submit.bind(this);
   }
 
   /**
    * Handle onChange events on form inputs
    * @method onInputChange
-   * @member SignUp
+   * @memberof SignUp
    * @param {object} event
    * @returns {function} a function that handles change event on inputs
    */
@@ -29,6 +30,23 @@ class SignUp extends React.Component {
     const inputName = event.target.name;
     const inputValue = event.target.value;
     this.setState({ [inputName]: inputValue });
+  }
+
+  /**
+   * Submit username and password for authentication
+   * This is called when the submit button is clicked
+   * @method submit
+   * @memberof SignUp
+   * @returns {void}
+   */
+  submit() {
+    const {
+      username,
+      password,
+      email,
+      phoneNo
+    } = this.state;
+    this.props.onSubmit(username, password, email, phoneNo);
   }
 
   /**
@@ -87,15 +105,7 @@ class SignUp extends React.Component {
           className="waves-effect waves-light btn"
           role="button"
           tabIndex="0"
-          onClick={() => {
-            const {
-              username,
-              password,
-              email,
-              phoneNo
-            } = this.state;
-            this.props.onSubmit(username, password, email, phoneNo);
-          }}
+          onClick={this.submit}
         >
           Sign Up
         </a>

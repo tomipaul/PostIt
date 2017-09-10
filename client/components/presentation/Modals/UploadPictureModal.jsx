@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ShowPreloader from '../../container/ShowPreloader.jsx';
+import ShowPreloader from '../../container/ShowPreloader';
 /**
  * @class UploadPictureModal
  * @extends CommonModal

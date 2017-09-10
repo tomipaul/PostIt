@@ -5,7 +5,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const NODE_ENV = process.env.NODE_ENV;
 const webpackConfig = {
-  entry: path.resolve(__dirname, './client/index.jsx'),
+  entry: path.resolve(__dirname, './client/Index.jsx'),
   output: {
     path: path.resolve(__dirname, 'client', 'bin'),
     publicPath: '/',

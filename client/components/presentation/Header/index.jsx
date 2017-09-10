@@ -2,11 +2,17 @@ import React from 'react';
 import ReactTooltip from 'react-tooltip';
 import PropTypes from 'prop-types';
 
-const Header = ({ isDashboard, logOut }) => {
-  $('.button-collapse').sideNav({
-    closeOnClick: true
-  });
-  return (isDashboard) ?
+/**
+ * Header component
+ * @function Header
+ * @param {object} props
+ * @param {number} props.isDashboard true if it is
+ * the dashboard page else false
+ * @param {function} props.logOut log out user
+ * @returns {object} Header component
+ */
+const Header = ({ isDashboard, logOut }) =>
+  ((isDashboard) ?
   (
     <header className="header-dashboard">
       <div className="header-flex">
@@ -37,8 +43,7 @@ const Header = ({ isDashboard, logOut }) => {
         alt=""
       />
     </header>
-  );
-};
+  ));
 
 Header.propTypes = {
   isDashboard: PropTypes.bool.isRequired,

@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Notifs } from 'redux-notifications';
 import configureStore from '../../store/configureStore';
 import Dialog from '../presentation/Common/Dialog';
-import Routes from './Routes.jsx';
+import Routes from './Routes';
 
 const store = configureStore();
 const Root = () =>

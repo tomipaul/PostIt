@@ -1,5 +1,10 @@
 import React from 'react';
 
+/**
+ * a button that displays a dropdown menu when clicked
+ * @function GroupOptionsDisplayToggle
+ * @returns {object} component
+ */
 const GroupOptionsDisplayToggle = () => {
   $('.dropdown-button').dropdown({
     constrainWidth: false

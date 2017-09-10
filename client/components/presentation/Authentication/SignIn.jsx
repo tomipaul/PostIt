@@ -15,12 +15,13 @@ class SignIn extends React.Component {
     super(props);
     this.state = {};
     this.onInputChange = this.onInputChange.bind(this);
+    this.submit = this.submit.bind(this);
   }
 
   /**
    * Handle onChange events on form inputs
    * @method onInputChange
-   * @member SignIn
+   * @memberof SignIn
    * @param {object} event
    * @returns {function} a function that handles change event on inputs
    */
@@ -31,6 +32,17 @@ class SignIn extends React.Component {
     this.setState({ [inputName]: inputValue });
   }
 
+  /**
+   * Submit username and password for authentication
+   * This is called when the submit button is clicked
+   * @method submit
+   * @memberof SignIn
+   * @returns {void}
+   */
+  submit() {
+    const { username, password } = this.state;
+    this.props.onSubmit(username, password);
+  }
   /**
    * render component
    * @method render
@@ -65,10 +77,7 @@ class SignIn extends React.Component {
           className="waves-effect waves-light btn"
           role="button"
           tabIndex="0"
-          onClick={() => {
-            const { username, password } = this.state;
-            this.props.onSubmit(username, password);
-          }}
+          onClick={this.submit}
         >
           Log In
         </a>
