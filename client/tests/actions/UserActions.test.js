@@ -5,7 +5,12 @@ import * as actions from '../../actions/actionCreators/UserActions';
 import * as userActionTypes from '../../actions/actionTypes/User';
 import localStorageMock from '../__mocks__/localStorage';
 import { sendRequest, notifSend } from '../__mocks__/commonActions';
-import { user, unreadMessages, allUsers } from '../__mocks__/dummyData';
+import {
+  user,
+  unreadMessages,
+  allUsers,
+  group
+} from '../__mocks__/dummyData';
 
 window.localStorage = localStorageMock;
 const middlewares = [thunk];
@@ -218,24 +223,15 @@ describe('User async actions', () => {
       nock('http://localhost')
       .get('/api/user/groups')
       .reply(200, {
-        groups: [
-          {
-            name: 'test',
-            description: 'this is test'
-          }
-        ]
+        groups: [group]
       });
       const expectedActions = [
         sendRequest,
         {
           type: userActionTypes.FETCH_USER_GROUPS_SUCCESS,
           response: {
-            groups: [
-              {
-                name: 'test',
-                description: 'this is test'
-              }
-            ]
+            groups: { [group.id]: group },
+            groupsById: [group.id]
           }
         }
       ];

@@ -29,7 +29,13 @@ describe('userGroups reducer', () => {
     expect(
       reducer({ groups: {}, groupsById: [] }, {
         type: FETCH_USER_GROUPS_SUCCESS,
-        response: { groups }
+        response: {
+          groups: {
+            [groups[0].id]: groups[0],
+            [groups[1].id]: groups[1]
+          },
+          groupsById: [1, 2]
+        }
       })
     ).toEqual({
       groups: {
