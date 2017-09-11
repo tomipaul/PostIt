@@ -1,4 +1,5 @@
 export const group = {
+  id: 3,
   name: 'first_group',
   description: 'This is the first group'
 };
