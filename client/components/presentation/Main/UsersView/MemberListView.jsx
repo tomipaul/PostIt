@@ -1,7 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import UserView from './UserView.jsx';
+import UserView from './UserView';
 
+/**
+ * display all members of a group
+ * @param {object} props
+ * @param {array} props.users
+ * @param {function} props.selectUser
+ * @returns {object} MemberListview component
+ */
 const MemberListView = ({ users, selectUser }) =>
   (
     <div>

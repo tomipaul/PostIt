@@ -8,17 +8,7 @@ import {
 const userGroups = (state = { groups: {}, groupsById: [] }, action) => {
   switch (action.type) {
     case FETCH_USER_GROUPS_SUCCESS: {
-      const groups = action.response.groups
-      .reduce((accumulator, group) => {
-        accumulator[group.id] = group;
-        return accumulator;
-      }, {});
-      const groupsById = action.response.groups
-      .map(group => (group.id));
-      return {
-        groupsById,
-        groups
-      };
+      return action.response;
     }
     case CREATE_GROUP_SUCCESS: {
       const group = action.response.group;

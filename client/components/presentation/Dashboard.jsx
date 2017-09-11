@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Header from '../presentation/Header/Index.jsx';
-import ExploreGroup from '../container/ExploreGroup.jsx';
-import PostMessage from '../container/PostMessage.jsx';
-import CreateGroup from '../container/CreateGroup.jsx';
-import ShowPreloader from '../container/ShowPreloader.jsx';
-import UpdateProfilePicture from '../container/UpdateProfilePicture.jsx';
+import Header from '../presentation/Header';
+import ExploreGroup from '../container/ExploreGroup';
+import PostMessage from '../container/PostMessage';
+import CreateGroup from '../container/CreateGroup';
+import ShowPreloader from '../container/ShowPreloader';
+import UpdateProfilePicture from '../container/UpdateProfilePicture';
 
 /**
  * @class DashboardView
@@ -13,26 +13,24 @@ import UpdateProfilePicture from '../container/UpdateProfilePicture.jsx';
  */
 class Dashboard extends React.Component {
   /**
-   * @constructor
-   * @extends React.Component
-   * @param {object} props
+   * dispatch actions that make requests to get all users,
+   * subscribe to message updates, fetch user groups, and
+   * get unread messages
+   * @method componentWillMount
+   * @memberof Dashboard
+   * @returns {void}
    */
-  constructor(props) {
-    super(props);
+  componentWillMount() {
     const {
-      isAuth,
       subscribeToMessages,
       getAllUsers,
       fetchUserGroups,
       getUnreadMessages
     } = this.props;
-    const token = window.localStorage.getItem('auth_token');
-    if (token && isAuth) {
-      getAllUsers();
-      subscribeToMessages();
-      fetchUserGroups();
-      getUnreadMessages();
-    }
+    getAllUsers();
+    subscribeToMessages();
+    fetchUserGroups();
+    getUnreadMessages();
   }
 
   /**

@@ -1,11 +1,12 @@
 import React from 'react';
 import axios from 'axios';
-import { Route, withRouter, Redirect } from 'react-router-dom';
+import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
 import PreloaderIcon, { ICON_TYPE } from 'react-preloader-icon';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import LoadDashboard from '../container/LoadDashboard.jsx';
-import AuthenticationPage from '../presentation/AuthenticationPage.jsx';
+import LoadDashboard from '../container/LoadDashboard';
+import AuthenticationPage from '../presentation/AuthenticationPage';
+import NotFound from '../presentation/Common/NotFound';
 import {
   validateUserToken as validateToken
 } from '../../actions/actionCreators/UserActions';
@@ -47,23 +48,26 @@ const Routes = (props) => {
   axios.defaults.headers.common.Authorization = token;
   return (
     <div>
-      <Route
-        path="/dashboard"
-        render={render({
-          token,
-          isAuthenticated,
-          validateUserToken
-        })}
-      />
-      <Route
-        exact
-        path="/"
-        render={() => (
-          (!token) ?
-            <AuthenticationPage />
-            : <Redirect to="/dashboard" />
-        )}
-      />
+      <Switch>
+        <Route
+          exact
+          path="/"
+          render={() => (
+            (!token) ?
+              <AuthenticationPage />
+              : <Redirect to="/dashboard" />
+          )}
+        />
+        <Route
+          path="/dashboard"
+          render={render({
+            token,
+            isAuthenticated,
+            validateUserToken
+          })}
+        />
+        <Route component={NotFound} />
+      </Switch>
     </div>
   );
 };

@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Group = ({ groupName, unreadCount, onClick }) => {
-  let unreadCountLabel = null;
+  let unreadCountBadge = null;
   if (unreadCount > 0) {
-    unreadCountLabel = <span className="badge">{unreadCount}</span>;
+    unreadCountBadge = <span className="badge">{unreadCount}</span>;
   }
   return (
     <li>
@@ -12,7 +12,7 @@ const Group = ({ groupName, unreadCount, onClick }) => {
         className="waves-effect"
         href="#!"
         onClick={onClick}
-      >{groupName}{unreadCountLabel}
+      >{groupName}{unreadCountBadge}
       </a>
     </li>
   );

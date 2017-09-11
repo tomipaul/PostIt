@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import CreateGroupModal from '../presentation/Modals/CreateGroupModal.jsx';
+import CreateGroupModal from '../presentation/Modals/CreateGroupModal';
 import { createGroup } from '../../actions/actionCreators/GroupActions';
 
 const CreateGroup = connect(

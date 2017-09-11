@@ -5,6 +5,15 @@ import { actions as notifActions } from 'redux-notifications';
 
 const { notifDismiss } = notifActions;
 
+/**
+ * @function Dialog
+ * @param {object} props properties of the component
+ * @param {function} dispatch store.dispatch to dispatch actions
+ * @param {string} id id of the notification
+ * @param {string} kind kind of notification; info, success or danger
+ * @param {string} message notification message
+ * @returns {object} message component if message is truthy else null
+ */
 const Dialog = ({ dispatch, id, kind, message }) => {
   const dialogClass = classnames({
     'error-dialog': true,

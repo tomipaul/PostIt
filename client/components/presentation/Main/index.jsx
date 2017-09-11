@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SideNav from './SideNav/Index.jsx';
-import GroupHeader from './GroupHeader/Index.jsx';
-import MessageBoard from './MessageBoard/Index.jsx';
-import ShowUsers from '../../container/ShowUsers.jsx';
+import SideNav from './SideNav';
+import GroupHeader from './GroupHeader';
+import MessageBoard from './MessageBoard';
+import ShowUsers from '../../container/ShowUsers';
 
 /**
  * @class Main
@@ -28,7 +28,7 @@ class Main extends React.Component {
 
   /**
    * select a default group on render and load group messages
-   * @method componentWillUpdate
+   * @method componentWillReceiveProps
    * @memberof Main
    * @param {object} nextProps
    * @returns {void}
@@ -40,6 +40,9 @@ class Main extends React.Component {
       exploreGroup,
       selectedGroup
     } = nextProps;
+    $('.button-collapse').sideNav({
+      closeOnClick: true
+    });
     const defaultGroupId = window.localStorage.getItem('last_viewed')
     || userGroups.groupsById[0];
     const groupsCount = Object.keys(userGroups.groups).length;

@@ -1,6 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * display input field and search button
+ * @function SearchBox
+ * @param {object} props
+ * @param {function} onChange
+ * @param {function} onKeyPress
+ * @param {function} onClick
+ * @return {object} SerachBox component
+ */
 const SearchBox = ({
   onChange,
   onKeyPress,

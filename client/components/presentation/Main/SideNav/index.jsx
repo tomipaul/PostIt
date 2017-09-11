@@ -1,9 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import UserView from './UserView.jsx';
-import GroupAdd from './GroupAdd.jsx';
-import Group from './Group.jsx';
+import UserView from './UserView';
+import GroupAdd from './CreateGroup';
+import Group from './Group';
 
+/**
+ * component that displays user image, username and groups
+ * @function SideNav
+ * @param {object} props
+ * @param {string} props.imageLink image URL of signed-in user
+ * @param {string} props.username username of signed-in user
+ * @param {object} props.groups groups of the signed-in user
+ * @param {object.array} props.unreadMessages an object that maps
+ * group Id to array of unread messages
+ * @return {object} component
+ */
 const SideNav = ({
   imageLink,
   username = '',

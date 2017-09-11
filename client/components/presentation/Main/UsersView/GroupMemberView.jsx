@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MemberListView from './MemberListView.jsx';
-import UserProfileView from './UserProfileView.jsx';
+import MemberListView from './MemberListView';
+import UserProfileView from './UserProfileView';
 
 /**
  * @class GroupMemberView

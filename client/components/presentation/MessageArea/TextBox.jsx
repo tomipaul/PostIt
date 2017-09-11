@@ -1,6 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * Textbox for typing message
+ * @param {object} props
+ * @param {string} props.message
+ * @param {function} props.changeMessage
+ * @param {function} props.onSubmitMessage
+ * @return {object} TextBox component
+ */
 const TextBox = ({
   message,
   changeMessage,

@@ -13,6 +13,7 @@ describe('unreadMessages reducer', () => {
    an undefined state`, () => {
     expect(reducer(undefined, {})).toEqual({});
   });
+  
   it(`should handle GET_UNREAD_MESSAGES_SUCCESS action by setting
   the state to include fetched unread messages`, () => {
     expect(
@@ -24,6 +25,7 @@ describe('unreadMessages reducer', () => {
       })
     ).toEqual({ second: ['5', '6'] });
   });
+  
   it(`should handle ADD_TO_UNREAD_MESSAGES action by setting the 
   state to include new unread message`, () => {
     expect(
@@ -37,6 +39,7 @@ describe('unreadMessages reducer', () => {
       second: ['4', '3', '6']
     });
   });
+
   it(`should handle GROUP_MESSAGES_READ action by setting 
   the value to null for the group`, () => {
     expect(

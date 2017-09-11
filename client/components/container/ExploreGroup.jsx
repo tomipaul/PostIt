@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Main from '../presentation/Main/Index.jsx';
+import Main from '../presentation/Main';
 import {
   selectGroup,
   getGroupMessages,
