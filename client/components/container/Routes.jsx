@@ -11,18 +11,46 @@ import {
   validateUserToken as validateToken
 } from '../../actions/actionCreators/UserActions';
 
-const render = ({
-  token,
-  isAuthenticated,
-  validateUserToken
-}) =>
-  (
-    () => {
+/**
+ * @class Routes
+ * @extends React.Component
+ */
+class Routes extends React.Component {
+  /**
+   * @constructor
+   * @param {object} props
+   */
+  constructor(props) {
+    super(props);
+    this.renderDashboard = this.renderDashboard.bind(this);
+  }
+  /**
+   * @method componentDidMount
+   * @memberof Routes
+   * @returns {void}
+   */
+  componentDidMount() {
+    const token = window.localStorage.getItem('auth_token');
+    const { isAuthenticated, validateUserToken } = this.props;
+    if (token && !isAuthenticated) {
+      validateUserToken();
+    }
+  }
+  /**
+   * @method renderDashboard
+   * @memberof Routes
+   * @return {object} component
+   */
+  renderDashboard() {
+    const {
+      isAuthenticated
+    } = this.props;
+    const token = window.localStorage.getItem('auth_token');
+    return () => {
       if (token) {
         if (isAuthenticated) {
           return <LoadDashboard />;
         }
-        validateUserToken();
         return (
           <span className="before-auth">
             <PreloaderIcon
@@ -36,41 +64,38 @@ const render = ({
         );
       }
       return <Redirect to="/" />;
-    }
-  );
-
-const Routes = (props) => {
-  const {
-    isAuthenticated,
-    validateUserToken
-  } = props;
-  const token = window.localStorage.getItem('auth_token');
-  axios.defaults.headers.common.Authorization = token;
-  return (
-    <div>
-      <Switch>
-        <Route
-          exact
-          path="/"
-          render={() => (
-            (!token) ?
-              <AuthenticationPage />
-              : <Redirect to="/dashboard" />
-          )}
-        />
-        <Route
-          path="/dashboard"
-          render={render({
-            token,
-            isAuthenticated,
-            validateUserToken
-          })}
-        />
-        <Route component={NotFound} />
-      </Switch>
-    </div>
-  );
-};
+    };
+  }
+  /**
+   * @method render
+   * @memberof Routes
+   * @return {object} component
+   */
+  render() {
+    const token = window.localStorage.getItem('auth_token');
+    axios.defaults.headers.common.Authorization = token;
+    return (
+      <div>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => (
+              (!token) ?
+                <AuthenticationPage />
+                : <Redirect to="/dashboard" />
+            )}
+          />
+          <Route
+            path="/dashboard"
+            render={this.renderDashboard()}
+          />
+          <Route component={NotFound} />
+        </Switch>
+      </div>
+    );
+  }
+}
 
 Routes.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,

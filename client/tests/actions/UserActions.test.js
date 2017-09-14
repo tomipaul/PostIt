@@ -46,7 +46,7 @@ describe('User synchronous actions', () => {
   });
 
   describe('action addToUnreadMessages', () => {
-    it('should create an action when a user logs out', () => {
+    it('should create an action when a new message comes in', () => {
       const expectedAction = {
         type: userActionTypes.ADD_TO_UNREAD_MESSAGES,
         groupId: '23',
