@@ -9,16 +9,21 @@ import UserView from './UserView';
  * @param {function} props.selectUser
  * @returns {object} MemberListview component
  */
-const MemberListView = ({ users, selectUser }) =>
+const MemberListView = ({ users, selectUser, isSearchUserView }) =>
   (
     <div>
       {
         (users) ? (users.map(user =>
-          (<UserView
-            key={user.username}
-            user={user}
-            selectUser={selectUser}
-          />)
+          (
+            <div>
+              <UserView
+                key={user.username}
+                user={user}
+                selectUser={selectUser}
+                isSearchUserView={isSearchUserView}
+              />
+            </div>
+          )
         )) : null
       }
     </div>
@@ -26,7 +31,12 @@ const MemberListView = ({ users, selectUser }) =>
 
 MemberListView.propTypes = {
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
-  selectUser: PropTypes.func.isRequired
+  selectUser: PropTypes.func.isRequired,
+  isSearchUserView: PropTypes.bool
+};
+
+MemberListView.defaultProps = {
+  isSearchUserView: false
 };
 
 export default MemberListView;

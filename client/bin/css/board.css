@@ -320,6 +320,7 @@ span[data-priority=critical] {
 }
 .userview-box {
   display: flex;
+  justify-content: space-between;
   height: 5%;
   width: 90%;
   margin: 0 auto;
@@ -516,6 +517,15 @@ span.badge {
   width: 100%;
   height: 100%;
   background: url("../images/error-404.png") no-repeat fixed center;
+}
+.user-div {
+  width: 80%;
+  margin-left: 3%;
+}
+.add {
+  margin-left: 10%;
+  color: #004d4d;
+  padding-top: 2%;
 }
 @media only screen and (max-width : 992px) {
   header, .board-body, footer {
