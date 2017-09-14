@@ -25,11 +25,6 @@ const MessageBoard = ({
       className="message-board"
       onScroll={onScroll}
     >
-      <span className="see-older">
-        <hr />
-        SEE OLDER MESSAGES
-        <hr />
-      </span>
       {
         messages.map((message) => {
           const { id } = message;

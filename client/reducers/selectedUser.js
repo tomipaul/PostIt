@@ -22,7 +22,7 @@ const selectedUser = (state = {}, action) => {
       if (username === state.username) {
         return {};
       }
-      break;
+      return state;
     }
     case UPDATE_USER_SUCCESS: {
       const updatedUser = action.response.user;

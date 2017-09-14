@@ -3,6 +3,7 @@ export const group = {
   name: 'first_group',
   description: 'This is the first group'
 };
+
 export const user = {
   username: 'tomipaul',
   email: 'tomi@paul.com',
@@ -10,10 +11,52 @@ export const user = {
   password: '123456',
   token: '12234432653553232'
 };
+
 export const message = {
   text: 'This is a message',
   priority: 'urgent'
 };
+
+export const savedMessage = {
+  id: '62abb38b-6ce9-4ce6-b9f1-e2bee5bb8550',
+  text: 'we are here',
+  priority: 'critical',
+  AuthorUsername: 'alienyi01',
+  GroupId: 'first',
+  updatedAt: '2017-09-10T09:25:50.316Z',
+  createdAt: '2017-09-10T09:25:50.316Z',
+  Author: {
+    photoURL: null
+  }
+};
+
+export const messages = [
+  {
+    id: '1',
+    text: 'This is a message',
+    priority: 'critical',
+    AuthorUsername: 'tomi',
+    GroupId: '1',
+    updatedAt: '2017-09-10T09:25:50.316Z',
+    createdAt: '2017-09-10T09:25:50.316Z',
+    Author: {
+      photoURL: null
+    }
+  },
+  {
+    id: '2',
+    text: 'This is another message',
+    priority: 'urgent',
+    AuthorUsername: 'paul',
+    GroupId: '2',
+    updatedAt: '2017-09-10T09:25:50.316Z',
+    createdAt: '2017-09-10T09:25:50.316Z',
+    Author: {
+      photoURL: null
+    }
+  }
+];
+
 export const usersThatHaveReadMessage = [
   {
     createdAt: '2017-08-28 12:30:00.377+01',
@@ -32,10 +75,12 @@ export const usersThatHaveReadMessage = [
     read: true
   }
 ];
+
 export const unreadMessages = {
   first: ['3', '4'],
   second: ['4', '3']
 };
+
 export const allUsers = [
   {
     username: 'tomipaul',
@@ -50,15 +95,19 @@ export const allUsers = [
     status: 'user'
   },
 ];
+
 export const state = {
+  usersWithMessageRead: { 1: usersThatHaveReadMessage },
   unreadMessages,
+  users: allUsers,
   auth: {
     isAuthenticated: true,
     user: {
       username: 'tomipaul',
       email: 'tomi@paul.com',
       phoneNo: '00009992992',
-      status: 'user'
+      status: 'user',
+      photoURL: '/images/silhouette.jpeg'
     }
   },
   activeGroup: 'first',
@@ -68,17 +117,6 @@ export const state = {
       second: { id: 'second', name: 'group24', description: 'this is group 24' }
     },
     groupsById: ['first', 'second']
-  }
-};
-export const savedMessage = {
-  id: '62abb38b-6ce9-4ce6-b9f1-e2bee5bb8550',
-  text: 'we are here',
-  priority: 'critical',
-  AuthorUsername: 'alienyi01',
-  GroupId: 'first',
-  updatedAt: '2017-09-10T09:25:50.316Z',
-  createdAt: '2017-09-10T09:25:50.316Z',
-  Author: {
-    photoURL: null
-  }
+  },
+  requestCount: 0
 };

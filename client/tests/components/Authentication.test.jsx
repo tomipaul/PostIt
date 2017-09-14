@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import Authentication from
-'../../components/presentation/Authentication/Index';
+'../../components/presentation/Authentication';
 
 const setup = () => {
   const props = {
