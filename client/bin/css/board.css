@@ -320,7 +320,6 @@ span[data-priority=critical] {
 }
 .userview-box {
   display: flex;
-  justify-content: space-between;
   height: 5%;
   width: 90%;
   margin: 0 auto;
@@ -519,6 +518,7 @@ span.badge {
   background: url("../images/error-404.png") no-repeat fixed center;
 }
 .user-div {
+  justify-content: space-between;
   width: 80%;
   margin-left: 3%;
 }
