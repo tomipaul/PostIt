@@ -241,6 +241,7 @@ class Main extends React.Component {
           nodeRef={this.getMessageBoardNodeRef}
           messages={this.filterUnreadMessages()}
           onScroll={this.readUnreadGroupMessages}
+          hasGroups={userGroups.groupsById.length > 0}
         />
         {
           (this.state.rightBar) ?

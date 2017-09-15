@@ -515,7 +515,12 @@ span.badge {
   position: fixed;
   width: 100%;
   height: 100%;
-  background: url("../images/error-404.png") no-repeat fixed center;
+  background: url("/images/error-404.png") no-repeat fixed center;
+}
+.no-group {
+  background: url("/images/welcome.png") no-repeat fixed center;
+  background-size: 60% 60%;
+  background-position: top center;
 }
 .user-div {
   justify-content: space-between;
@@ -542,6 +547,10 @@ span.badge {
   }
   .header-flex > .fa-bars {
     margin-top: 2.7%;
+  }
+  .no-group {
+    background: url("/images/welcome.png") no-repeat fixed center;
+    background-size: 120% 70%;
   }
 }
 @media only screen and (max-width : 992px) {

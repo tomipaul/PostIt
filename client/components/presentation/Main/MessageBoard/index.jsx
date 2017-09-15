@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import MessageBox from './MessageBox';
-
 
 /**
  * MessageBoard component; displays a message and its metadata
@@ -17,19 +17,19 @@ import MessageBox from './MessageBox';
 const MessageBoard = ({
   messages,
   onScroll,
-  nodeRef
-}) =>
-  (
+  nodeRef,
+  hasGroups
+}) => {
+  const messageBoardClasses = classNames({
+    'message-board': true,
+    'no-group': !hasGroups
+  });
+  return (
     <div
       ref={nodeRef}
-      className="message-board"
+      className={messageBoardClasses}
       onScroll={onScroll}
     >
-      <span className="see-older">
-        <hr />
-        SEE OLDER MESSAGES
-        <hr />
-      </span>
       {
         messages.map((message) => {
           const { id } = message;
@@ -43,6 +43,7 @@ const MessageBoard = ({
       }
     </div>
   );
+};
 
 MessageBoard.propTypes = {
   messages: PropTypes.arrayOf(PropTypes.shape({
@@ -51,7 +52,8 @@ MessageBoard.propTypes = {
     priority: PropTypes.string.isRequired
   }).isRequired).isRequired,
   onScroll: PropTypes.func.isRequired,
-  nodeRef: PropTypes.func.isRequired
+  nodeRef: PropTypes.func.isRequired,
+  hasGroups: PropTypes.bool.isRequired
 };
 
 export default MessageBoard;
