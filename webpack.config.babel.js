@@ -46,7 +46,7 @@ const webpackConfig = {
     extensions: ['.js', '.json', '.jsx', '.scss', '.css'],
   },
   devtool: (NODE_ENV === 'development') ?
-  'cheap-module-eval-source-map' : 'cheap-module-source-map',
+  'cheap-module-eval-source-map' : '(none)',
   target: 'web',
   stats: 'errors-only',
   devServer: (NODE_ENV === 'development') ? {

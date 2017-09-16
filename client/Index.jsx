@@ -5,8 +5,8 @@ import 'firebase/storage';
 import 'redux-notifications/lib/styles.css';
 import 'materialize-css/dist/js/materialize.js';
 import 'materialize-css/dist/css/materialize.min.css';
-import './bin/css/signup-login.css';
-import './bin/css/board.css';
+import './bin/scss/signup-login.scss';
+import './bin/scss/board.scss';
 import Root from './components/container/Root';
 
 const config = {
