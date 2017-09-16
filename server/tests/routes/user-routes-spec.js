@@ -20,14 +20,14 @@ const {
   emptyPhoneNo,
 } = dummyData.Users;
 
-describe('/api/user/signup', () => {
+describe('/api/v0/user/signup', () => {
   before(() => {
     return models.sequelize.truncate({ cascade: true });
   });
   it(`should take username, password, email and phoneNo and
   create a user`, (done) => {
     chai.request(server)
-    .post('/api/user/signup')
+    .post('/api/v0/user/signup')
     .send(validUser)
     .end((err, res) => {
       expect(res).to.have.status(200);
@@ -42,7 +42,7 @@ describe('/api/user/signup', () => {
   });
   it('should return validation error if a field is missing', (done) => {
     chai.request(server)
-    .post('/api/user/signup')
+    .post('/api/v0/user/signup')
     .send(incompleteUser)
     .end((err, res) => {
       expect(res).to.have.status(400);
@@ -54,7 +54,7 @@ describe('/api/user/signup', () => {
   });
   it('should return validation error if username exists', (done) => {
     chai.request(server)
-    .post('/api/user/signup')
+    .post('/api/v0/user/signup')
     .send(validUser)
     .end((err, res) => {
       expect(res).to.have.status(400);
@@ -65,7 +65,7 @@ describe('/api/user/signup', () => {
   });
   it('should return validation error if email exists', (done) => {
     chai.request(server)
-    .post('/api/user/signup')
+    .post('/api/v0/user/signup')
     .send({ ...validUser, username: 'emailexists' })
     .end((err, res) => {
       expect(res).to.have.status(400);
@@ -77,7 +77,7 @@ describe('/api/user/signup', () => {
   it('should return validation error if username is empty',
   (done) => {
     chai.request(server)
-    .post('/api/user/signup')
+    .post('/api/v0/user/signup')
     .send(emptyUsername)
     .end((err, res) => {
       expect(res).to.have.status(400);
@@ -94,7 +94,7 @@ describe('/api/user/signup', () => {
   it('should return validation error if email is empty',
   (done) => {
     chai.request(server)
-    .post('/api/user/signup')
+    .post('/api/v0/user/signup')
     .send(emptyEmail)
     .end((err, res) => {
       expect(res).to.have.status(400);
@@ -109,7 +109,7 @@ describe('/api/user/signup', () => {
   it('should return validation error if password is empty',
   (done) => {
     chai.request(server)
-    .post('/api/user/signup')
+    .post('/api/v0/user/signup')
     .send(emptyPassword)
     .end((err, res) => {
       expect(res).to.have.status(400);
@@ -122,7 +122,7 @@ describe('/api/user/signup', () => {
   it('should return validation error if phoneNo is empty',
   (done) => {
     chai.request(server)
-    .post('/api/user/signup')
+    .post('/api/v0/user/signup')
     .send(emptyPhoneNo)
     .end((err, res) => {
       expect(res).to.have.status(400);
@@ -136,11 +136,11 @@ describe('/api/user/signup', () => {
   });
 });
 
-describe('/api/user/signin', () => {
+describe('/api/v0/user/signin', () => {
   it('should sign in a user and return a token',
   (done) => {
     chai.request(server)
-    .post('/api/user/signin')
+    .post('/api/v0/user/signin')
     .send({
       username: validUser.username,
       password: validUser.password
@@ -158,7 +158,7 @@ describe('/api/user/signin', () => {
   it('should return error message if request method not `POST`',
   (done) => {
     chai.request(server)
-    .put('/api/user/signin')
+    .put('/api/v0/user/signin')
     .send({
       username: 'getrofili',
       password: '1234567'
@@ -174,7 +174,7 @@ describe('/api/user/signin', () => {
   it('should return error message if password is empty',
   (done) => {
     chai.request(server)
-    .post('/api/user/signin')
+    .post('/api/v0/user/signin')
     .send({
       username: 'getrofili',
       password: ''
@@ -190,7 +190,7 @@ describe('/api/user/signin', () => {
   it('should return error message if username is empty',
   (done) => {
     chai.request(server)
-    .post('/api/user/signin')
+    .post('/api/v0/user/signin')
     .send({
       username: '',
       password: '123456'
@@ -206,7 +206,7 @@ describe('/api/user/signin', () => {
   it('should return error message if user does not exist',
   (done) => {
     chai.request(server)
-    .post('/api/user/signin')
+    .post('/api/v0/user/signin')
     .send({
       username: 'fred',
       password: '123456'
@@ -222,7 +222,7 @@ describe('/api/user/signin', () => {
   it('should return error message if password is wrong',
   (done) => {
     chai.request(server)
-    .post('/api/user/signin')
+    .post('/api/v0/user/signin')
     .send({
       username: validUser.username,
       password: '1234fggggr'
@@ -237,10 +237,10 @@ describe('/api/user/signin', () => {
   });
 });
 
-describe('/api/user/:username', () => {
+describe('/api/v0/user/:username', () => {
   it('should get an existing user', (done) => {
     chai.request(server)
-    .get(`/api/user/${validUser.username}`)
+    .get(`/api/v0/user/${validUser.username}`)
     .set('Authorization', `Bearer ${userToken}`)
     .end((err, res) => {
       expect(res).to.have.status(200);
@@ -255,7 +255,7 @@ describe('/api/user/:username', () => {
   });
   it('should return error if no matching username', (done) => {
     chai.request(server)
-    .get('/api/user/dende05')
+    .get('/api/v0/user/dende05')
     .set('Authorization', `Bearer ${userToken}`)
     .end((err, res) => {
       expect(res).to.have.status(404);
@@ -266,7 +266,7 @@ describe('/api/user/:username', () => {
   });
   it('should return error if no token', (done) => {
     chai.request(server)
-    .get(`/api/user/${validUser.username}`)
+    .get(`/api/v0/user/${validUser.username}`)
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
@@ -276,7 +276,7 @@ describe('/api/user/:username', () => {
   });
   it('should return error message if invalid token', (done) => {
     chai.request(server)
-    .get(`/api/user/${validUser.username}`)
+    .get(`/api/v0/user/${validUser.username}`)
     .set('Authorization', 'Bearer abcdefeighhth12332444200999')
     .end((err, res) => {
       expect(res).to.have.status(401);
@@ -287,7 +287,7 @@ describe('/api/user/:username', () => {
   });
 });
 
-describe('/api/user/groups', () => {
+describe('/api/v0/user/groups', () => {
   before(() => {
     return models.Group.bulkCreate([
       dummyData.Groups.validGroup,
@@ -306,7 +306,7 @@ describe('/api/user/groups', () => {
   it('should return all the groups a user belong to',
   (done) => {
     chai.request(server)
-    .get('/api/user/groups')
+    .get('/api/v0/user/groups')
     .set('Authorization', `Bearer ${userToken}`)
     .end((err, res) => {
       expect(res).to.have.status(200);
@@ -319,7 +319,7 @@ describe('/api/user/groups', () => {
   it('should return error message if request has no token',
   (done) => {
     chai.request(server)
-    .get('/api/user/groups')
+    .get('/api/v0/user/groups')
     .end((err, res) => {
       expect(res).to.have.status(400);
       expect(res).to.be.json;
@@ -331,7 +331,7 @@ describe('/api/user/groups', () => {
     const stub = sinon.stub(models.User.prototype, 'getGroups');
     stub.rejects();
     chai.request(server)
-    .get('/api/user/groups')
+    .get('/api/v0/user/groups')
     .set('Authorization', `Bearer ${userToken}`)
     .end((err, res) => {
       stub.restore();
@@ -343,7 +343,7 @@ describe('/api/user/groups', () => {
   });
 });
 
-describe('/api/user/:username', () => {
+describe('/api/v0/user/:username', () => {
   let adminToken;
   before(() => {
     return models.User.bulkCreate([
@@ -355,7 +355,7 @@ describe('/api/user/:username', () => {
     })
     .then(() => {
       return chai.request(server)
-      .post('/api/user/signin')
+      .post('/api/v0/user/signin')
       .send({
         username: adminUser.username,
         password: adminUser.password
@@ -371,7 +371,7 @@ describe('/api/user/:username', () => {
   it('should return error message if request has no token',
   (done) => {
     chai.request(server)
-    .put(`/api/user/${anotherValidUser.username}`)
+    .put(`/api/v0/user/${anotherValidUser.username}`)
     .send({
       email: 'updateduser@andela.com'
     })
@@ -385,7 +385,7 @@ describe('/api/user/:username', () => {
   it('should return error message if request has no token',
   (done) => {
     chai.request(server)
-    .delete(`/api/user/${anotherValidUser.username}`)
+    .delete(`/api/v0/user/${anotherValidUser.username}`)
     .send({
       email: 'updateduser@andela.com'
     })
@@ -399,7 +399,7 @@ describe('/api/user/:username', () => {
   it('should update user if request is by owner',
   (done) => {
     chai.request(server)
-    .put(`/api/user/${validUser.username}`)
+    .put(`/api/v0/user/${validUser.username}`)
     .send({
       token: userToken,
       email: 'updateduser@andela.com'
@@ -416,7 +416,7 @@ describe('/api/user/:username', () => {
   it('should update user if request is by admin',
   (done) => {
     chai.request(server)
-    .put(`/api/user/${validUser.username}`)
+    .put(`/api/v0/user/${validUser.username}`)
     .send({
       token: adminToken,
       email: 'updatedByAdmin@andela.com'
@@ -433,7 +433,7 @@ describe('/api/user/:username', () => {
   it('should return error if update request is not by owner or admin',
   (done) => {
     chai.request(server)
-    .put(`/api/user/${anotherValidUser.username}`)
+    .put(`/api/v0/user/${anotherValidUser.username}`)
     .send({
       token: userToken,
       email: 'updatedByAnother@andela.com'
@@ -449,7 +449,7 @@ describe('/api/user/:username', () => {
   it('should return error if delete request is not by admin',
   (done) => {
     chai.request(server)
-    .delete(`/api/user/${anotherValidUser.username}`)
+    .delete(`/api/v0/user/${anotherValidUser.username}`)
     .send({
       token: userToken,
       email: 'updatedByAnother@andela.com'
@@ -465,7 +465,7 @@ describe('/api/user/:username', () => {
   it('should delete user if request is by admin',
   (done) => {
     chai.request(server)
-    .delete(`/api/user/${anotherValidUser.username}`)
+    .delete(`/api/v0/user/${anotherValidUser.username}`)
     .send({
       token: adminToken
     })
@@ -478,7 +478,7 @@ describe('/api/user/:username', () => {
     const stub = sinon.stub(models.User.prototype, 'update');
     stub.rejects();
     chai.request(server)
-    .put(`/api/user/${validUser.username}`)
+    .put(`/api/v0/user/${validUser.username}`)
     .set('Authorization', `Bearer ${userToken}`)
     .send({
       email: 'updateduser@andela.com'
@@ -495,7 +495,7 @@ describe('/api/user/:username', () => {
     const stub = sinon.stub(models.User.prototype, 'destroy');
     stub.rejects();
     chai.request(server)
-    .delete(`/api/user/${validUser.username}`)
+    .delete(`/api/v0/user/${validUser.username}`)
     .set('Authorization', `Bearer ${adminToken}`)
     .send({
       email: 'updateduser@andela.com'

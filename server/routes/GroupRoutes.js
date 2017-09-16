@@ -3,10 +3,10 @@ import GroupController from '../controllers/GroupController';
 import { sendNotifications } from '../controllers/otherControllers';
 
 const router = express.Router();
-router.post('/api/group',
+router.post('/api/v0/group',
   GroupController.createGroup()
 );
-router.route('/api/group/:groupId/user')
+router.route('/api/v0/group/:groupId/user')
 .post(
   GroupController.permitOnlyGroupMembers(),
   GroupController.addUserToGroup()
@@ -15,27 +15,27 @@ router.route('/api/group/:groupId/user')
   GroupController.permitOnlyGroupOwner(),
   GroupController.removeUserFromGroup()
 );
-router.post('/api/group/:groupId/message',
+router.post('/api/v0/group/:groupId/message',
   GroupController.permitOnlyGroupMembers(),
   GroupController.addMessageToGroup(),
   sendNotifications
 );
-router.get('/api/group/:groupId/messages',
+router.get('/api/v0/group/:groupId/messages',
   GroupController.permitOnlyGroupMembers(),
   GroupController.getGroupMessages()
 );
-router.post('/api/group/:groupId/messages/read',
+router.post('/api/v0/group/:groupId/messages/read',
   GroupController.permitOnlyGroupMembers(),
   GroupController.readGroupMessages()
 );
-router.get('/api/group/:groupId/message/:messageId/users',
+router.get('/api/v0/group/:groupId/message/:messageId/users',
   GroupController.permitOnlyGroupMembers(),
   GroupController.getUsersWithMessageRead()
 );
-router.get('/api/group/:groupId/users',
+router.get('/api/v0/group/:groupId/users',
   GroupController.permitOnlyGroupMembers(),
   GroupController.getGroupUsers()
 );
-router.use('/api/group', GroupController.sendResponse());
+router.use('/api/v0/group', GroupController.sendResponse());
 
 export default router;
