@@ -15,14 +15,12 @@ const MemberListView = ({ users, selectUser, isSearchUserView }) =>
       {
         (users) ? (users.map(user =>
           (
-            <div>
-              <UserView
-                key={user.username}
-                user={user}
-                selectUser={selectUser}
-                isSearchUserView={isSearchUserView}
-              />
-            </div>
+            <UserView
+              key={user.username}
+              user={user}
+              selectUser={selectUser}
+              isSearchUserView={isSearchUserView}
+            />
           )
         )) : null
       }

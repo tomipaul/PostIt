@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
  * @return {object} SerachBox component
  */
 const SearchBox = ({
+  value,
   onChange,
   onKeyPress,
   onClick
@@ -21,6 +22,7 @@ const SearchBox = ({
         className="browser-default"
         id="search-user"
         type="text"
+        value={value}
         onChange={onChange}
         onKeyPress={onKeyPress}
         placeholder="Enter username"

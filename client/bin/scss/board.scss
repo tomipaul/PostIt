@@ -342,16 +342,10 @@ photo {
   }
 }
 .userview-box {
-  display: flex;
   height: 5%;
-  width: 90%;
   margin: 0 auto;
   margin-top: 3%;
-  cursor: pointer;
   outline: none;
-  &:hover {
-    background-color: #F5F5F5;
-  }
 }
 #search-user {
   display: inline-block;
@@ -505,14 +499,12 @@ close-back {
     padding-left: 10%;
   }
 }
-span {
-  .badge {
-    font-size: 0.9em;
-    color: white;
-    background-color: teal;
-    border-radius: 10px;
-    min-width: 2rem;
-  }
+span.badge {
+  font-size: 0.9em;
+  color: white;
+  background-color: teal;
+  border-radius: 10px;
+  min-width: 2rem;
 }
 .extra {
   text-align: center;
@@ -556,15 +548,27 @@ span {
   background-size: 60% 60%;
   background-position: top center;
 }
-.user-div {
-  justify-content: space-between;
-  width: 80%;
+.search-view {
+  @extend .userview-box;
+  display: inline-flex;
+  width: 70%;
   margin-left: 3%;
 }
+.member-view {
+  @extend .userview-box;
+  display: flex;
+  width: 90%;
+  cursor: pointer;
+  &:hover {
+    background-color: #F5F5F5;
+  }
+}
 .add {
-  margin-left: 10%;
+  display: inline-block;
+  margin-left: 5%;
   color: $primary-color;
   padding-top: 2%;
+  cursor: pointer;
 }
 
 @media only screen and (max-width : 992px) {

@@ -42,7 +42,13 @@ class SearchUserView extends React.Component {
    * @return {void}
    */
   componentWillReceiveProps(nextProps) {
-    const { groupMembers } = nextProps;
+    const { groupMembers, group } = nextProps;
+    if (group !== this.props.group) {
+      return this.setState({
+        searchString: '',
+        matchedUsers: []
+      });
+    }
     if (groupMembers.length !== this.props.groupMembers.length) {
       const newUser = groupMembers[groupMembers.length - 1];
       const newMatchedUsers = this.state.matchedUsers
@@ -122,6 +128,7 @@ class SearchUserView extends React.Component {
     return (
       <div>
         <SearchBox
+          value={this.state.searchString}
           onChange={this.onInputChange}
           onKeyPress={this.onKeyPressEnterSearch}
           onClick={this.onClickSearch}
@@ -141,7 +148,8 @@ SearchUserView.propTypes = {
   addUserToGroup: PropTypes.func.isRequired,
   clearSelectedUser: PropTypes.func.isRequired,
   allUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
-  groupMembers: PropTypes.arrayOf(PropTypes.object).isRequired
+  groupMembers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  group: PropTypes.string.isRequired
 };
 
 export default SearchUserView;

@@ -48,6 +48,7 @@ class UsersView extends React.Component {
           (this.props.showSearchUserView) ? (
             <SearchUserView
               user={this.props.user}
+              group={this.props.activeGroup}
               groupMembers={this.props.users}
               allUsers={this.props.allUsers}
               addUserToGroup={this.addUserToGroup}
@@ -83,7 +84,8 @@ UsersView.propTypes = {
     username: PropTypes.string
   }).isRequired,
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
-  allUsers: PropTypes.arrayOf(PropTypes.object).isRequired
+  allUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  activeGroup: PropTypes.string.isRequired
 };
 
 export default UsersView;

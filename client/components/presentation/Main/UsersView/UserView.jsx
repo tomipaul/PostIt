@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import ReactTooltip from 'react-tooltip';
 
 /**
  * display a user's image and username
@@ -12,32 +13,45 @@ import classNames from 'classnames';
  */
 const UserView = ({ user, selectUser, isSearchUserView }) => {
   const userViewClass = classNames({
-    'user-div': isSearchUserView,
+    'search-view': isSearchUserView,
+    'member-view': !isSearchUserView,
     'z-depth-1': true,
     'userview-box': true
   });
   return (Object.keys(user).length) ? (
-    <div
-      className={userViewClass}
-      role="button"
-      tabIndex="-1"
-      onClick={() => {
-        selectUser(user);
-      }}
-    >
-      <img
-        className="userview-thumbnail circle"
-        src={
-          user.photoURL || '/images/silhouette.jpeg'
+    <div>
+      <div
+        className={userViewClass}
+        role="button"
+        tabIndex="-1"
+        onClick={() =>
+          (
+            !isSearchUserView ?
+            selectUser(user) : null
+          )
         }
-        alt={user.username}
-      />
-      <span
-        className="userview-username"
-      >{user.username}</span>
+      >
+        <img
+          className="userview-thumbnail circle"
+          src={
+            user.photoURL || '/images/silhouette.jpeg'
+          }
+          alt={user.username}
+        />
+        <span
+          className="userview-username"
+        >{user.username}</span>
+      </div>
+      <ReactTooltip place="bottom" type="dark" effect="float" />
       {
         isSearchUserView ?
-          <i className="fa fa-plus-square-o add fa-2x" />
+          <i
+            className="fa fa-plus-square-o add fa-2x"
+            role="button"
+            tabIndex="-1"
+            data-tip={`Add ${user.username} to group`}
+            onClick={() => selectUser(user)}
+          />
           : null
       }
     </div>

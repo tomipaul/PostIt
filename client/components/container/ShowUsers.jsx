@@ -15,7 +15,8 @@ const mapStateToProps = (state, ownProps) =>
     ...ownProps,
     user: state.selectedUser,
     users: state.activeGroupUsers,
-    allUsers: state.users
+    allUsers: state.users,
+    activeGroup: state.activeGroup
   });
 
 const ShowUsers = connect(
