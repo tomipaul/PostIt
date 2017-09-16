@@ -149,7 +149,7 @@ export function createGroup(name, description) {
   return (dispatch) => {
     const token = window.localStorage.getItem('auth_token');
     dispatch(sendRequest());
-    return axios.post('/api/group', {
+    return axios.post('/api/v0/group', {
       name,
       description
     }, {
@@ -177,7 +177,7 @@ export function addUserToGroup(username) {
     const token = window.localStorage.getItem('auth_token');
     const groupId = state.activeGroup;
     dispatch(sendRequest());
-    return axios.post(`/api/group/${groupId}/user`, {
+    return axios.post(`/api/v0/group/${groupId}/user`, {
       username
     }, {
       headers: { Authorization: `Bearer ${token}` }
@@ -204,7 +204,7 @@ export function addMessageToGroup(message) {
     const token = window.localStorage.getItem('auth_token');
     const groupId = state.activeGroup;
     dispatch(sendRequest());
-    return axios.post(`/api/group/${groupId}/message`, message, {
+    return axios.post(`/api/v0/group/${groupId}/message`, message, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then((response) => {
@@ -228,7 +228,7 @@ export function removeUserFromGroup(username) {
     const token = window.localStorage.getItem('auth_token');
     const groupId = state.activeGroup;
     dispatch(sendRequest());
-    return axios.delete(`/api/group/${groupId}/user/${username}`, {
+    return axios.delete(`/api/v0/group/${groupId}/user/${username}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then((response) => {
@@ -252,7 +252,7 @@ export function getGroupUsers() {
     const token = window.localStorage.getItem('auth_token');
     const groupId = state.activeGroup;
     dispatch(sendRequest());
-    return axios.get(`/api/group/${groupId}/users`, {
+    return axios.get(`/api/v0/group/${groupId}/users`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then((response) => {
@@ -275,7 +275,7 @@ export function getGroupMessages() {
     const token = window.localStorage.getItem('auth_token');
     const groupId = state.activeGroup;
     dispatch(sendRequest());
-    return axios.get(`/api/group/${groupId}/messages`, {
+    return axios.get(`/api/v0/group/${groupId}/messages`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then((response) => {
@@ -300,7 +300,7 @@ export function readUnreadGroupMessages() {
       unreadMessages
     } = state;
     const unreadMessagesArray = unreadMessages[activeGroup];
-    return axios.post(`/api/group/${activeGroup}/messages/read`,
+    return axios.post(`/api/v0/group/${activeGroup}/messages/read`,
       { messages: unreadMessagesArray }
     )
     .then(() => {
@@ -323,7 +323,7 @@ export function getUsersWithMessageRead(messageId) {
   return (dispatch, getState) => {
     const state = getState();
     const groupId = state.activeGroup;
-    return axios.get(`/api/group/${groupId}/message/${messageId}/users`)
+    return axios.get(`/api/v0/group/${groupId}/message/${messageId}/users`)
     .then((response) => {
       dispatch(getUsersWithMessageReadSuccess(response.data, messageId));
     })
