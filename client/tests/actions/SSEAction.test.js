@@ -63,7 +63,7 @@ describe('sse async action', () => {
     user is a member of the group to which the message is posted 
     and the group is the active group`, () => {
       nock('http://localhost')
-      .post('/api/group/first/messages/read')
+      .post('/api/v0/group/first/messages/read')
       .reply(200);
       const expectedAction = [
         sendRequest,

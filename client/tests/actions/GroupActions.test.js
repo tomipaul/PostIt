@@ -38,7 +38,7 @@ describe('Group async actions', () => {
     () => {
       const { name, description } = group;
       nock('http://localhost')
-      .post('/api/group')
+      .post('/api/v0/group')
       .reply(200, {
         group
       });
@@ -68,7 +68,7 @@ describe('Group async actions', () => {
     () => {
       const { name, description } = group;
       nock('http://localhost')
-      .post('/api/group')
+      .post('/api/v0/group')
       .reply(400, {
         error: 'Invalid Group name'
       });
@@ -93,7 +93,7 @@ describe('Group async actions', () => {
     it('creates ADD_USER_TO_GROUP_SUCCESS when user is added to group',
     () => {
       nock('http://localhost')
-      .post('/api/group/23/user')
+      .post('/api/v0/group/23/user')
       .reply(200, {
         group
       });
@@ -119,7 +119,7 @@ describe('Group async actions', () => {
     it('creates NOTIF_SEND when adding a user to a group fails',
     () => {
       nock('http://localhost')
-      .post('/api/group/23/user')
+      .post('/api/v0/group/23/user')
       .reply(400, {
         error: 'User cannot be added to group'
       });
@@ -144,7 +144,7 @@ describe('Group async actions', () => {
     it(`does not create ADD_MESSAGE_TO_GROUP_SUCCESS 
     when message is added to group`, () => {
       nock('http://localhost')
-      .post('/api/group/23/message')
+      .post('/api/v0/group/23/message')
       .reply(200, {
         createdMessage: message
       });
@@ -164,7 +164,7 @@ describe('Group async actions', () => {
     it('creates NOTIF_SEND when adding a message to a group fails',
     () => {
       nock('http://localhost')
-      .post('/api/group/23/message')
+      .post('/api/v0/group/23/message')
       .reply(400, {
         error: 'Message cannot be added to group'
       });
@@ -189,7 +189,7 @@ describe('Group async actions', () => {
     it(`creates REMOVE_USER_FROM_GROUP_SUCCESS when 
     user is removed from group`, () => {
       nock('http://localhost')
-      .delete('/api/group/23/user/tomipaul')
+      .delete('/api/v0/group/23/user/tomipaul')
       .reply(200, {
         username: user.username
       });
@@ -215,7 +215,7 @@ describe('Group async actions', () => {
     it('creates NOTIF_SEND when removing a user from a group fails',
     () => {
       nock('http://localhost')
-      .delete('/api/group/23/user/tomipaul')
+      .delete('/api/v0/group/23/user/tomipaul')
       .reply(400, {
         error: 'User cannot be removed from group'
       });
@@ -240,7 +240,7 @@ describe('Group async actions', () => {
     it('creates GET_GROUP_USERS_SUCCESS when users of a group are fetched',
     () => {
       nock('http://localhost')
-      .get('/api/group/23/users')
+      .get('/api/v0/group/23/users')
       .reply(200, {
         users: [user]
       });
@@ -265,7 +265,7 @@ describe('Group async actions', () => {
     it('creates NOTIF_SEND when fetching group users fail',
     () => {
       nock('http://localhost')
-      .get('/api/group/23/users')
+      .get('/api/v0/group/23/users')
       .reply(500, {
         error: 'Cannot get group users'
       });
@@ -290,7 +290,7 @@ describe('Group async actions', () => {
     it(`creates GET_GROUP_MESSAGES_SUCCESS when messages
     of a group are fetched`, () => {
       nock('http://localhost')
-      .get('/api/group/23/messages')
+      .get('/api/v0/group/23/messages')
       .reply(200, {
         messages: [message]
       });
@@ -315,7 +315,7 @@ describe('Group async actions', () => {
     it('creates NOTIF_SEND when fetching group messages fail',
     () => {
       nock('http://localhost')
-      .get('/api/group/23/messages')
+      .get('/api/v0/group/23/messages')
       .reply(500, {
         error: 'Cannot get group messages'
       });
@@ -340,7 +340,7 @@ describe('Group async actions', () => {
     it(`creates GROUP_MESSAGES_READ when user reads 
     unread messages of a group`, () => {
       nock('http://localhost')
-      .post('/api/group/23/messages/read')
+      .post('/api/v0/group/23/messages/read')
       .reply(200);
       const expectedActions = [
         {
@@ -365,7 +365,7 @@ describe('Group async actions', () => {
     it('creates NOTIF_SEND when reading group messages fail',
     () => {
       nock('http://localhost')
-      .post('/api/group/23/messages/read')
+      .post('/api/v0/group/23/messages/read')
       .reply(500);
       const expectedActions = [
         notifSend('danger', 'Request errored out, Please try again')
@@ -392,7 +392,7 @@ describe('Group async actions', () => {
     it(`creates GET_USERS_WITH_MESSAGE_READ_SUCCESS when users 
     that have read a particular message are fetched`, () => {
       nock('http://localhost')
-      .get('/api/group/23/message/23/users')
+      .get('/api/v0/group/23/message/23/users')
       .reply(200, {
         users: usersThatHaveReadMessage
       });
@@ -415,7 +415,7 @@ describe('Group async actions', () => {
     it(`creates NOTIF_SEND when getting users that have read 
     a message fails`, () => {
       nock('http://localhost')
-      .get('/api/group/23/message/23/users')
+      .get('/api/v0/group/23/message/23/users')
       .reply(500);
       const expectedActions = [
         notifSend('danger', 'Request failed, Please try again')
