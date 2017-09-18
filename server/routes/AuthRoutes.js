@@ -2,7 +2,8 @@ import express from 'express';
 import UserController from '../controllers/UserController';
 
 const authRouter = express.Router();
-authRouter.post('/api/v0/user/password/reset', UserController.resetPassword());
+authRouter.post('/api/v0/password/mail',
+UserController.sendResetPasswordMail());
 authRouter.post('/api/v0/user/signup', [
   UserController.createUser(),
   UserController.authenticateUser()
@@ -15,5 +16,7 @@ authRouter.use('/api/v0', [
   UserController.authorizeUser()
 ]);
 authRouter.get('/api/v0/user/authorize', UserController.getUser());
+authRouter.post('/api/v0/user/password/reset',
+UserController.updateUser());
 
 export default authRouter;

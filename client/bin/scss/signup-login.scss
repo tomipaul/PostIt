@@ -48,6 +48,9 @@ header {
   margin: auto;
   margin-top: 6%;
   font-family: Tahoma;
+  a:hover {
+    color: darkred;
+  }
 }
 #log-in {
   height: 60%;
@@ -86,7 +89,7 @@ form {
   top: 15%;
   left: 65%;
   color: black;
-  font-size: 1em;
+  font-size: 0.9em;
   z-index: 10;
   width: 30%;
   min-height: 8%;

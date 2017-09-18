@@ -2,7 +2,8 @@ import axios from 'axios';
 import * as firebase from 'firebase';
 import {
   showErrorNotification,
-  showSuccessNotification
+  showSuccessNotification,
+  showInfoNotification
 } from './helpers';
 import sendRequest from './requestAction';
 import {
@@ -326,6 +327,58 @@ export function updateUser(newCredentials) {
       dispatch(showErrorNotification({ error }));
     });
   };
+}
+/**
+ * async helper function: send reset password mail to a user
+ * @function sendPasswordResetMail
+ * @param {string} email user email address
+ * @returns {function} asynchronous action
+ */
+export function sendPasswordResetMail(email) {
+  return (dispatch =>
+    axios.post('/api/v0/password/mail', {
+      recipient: email
+    })
+    .then(() => {
+      dispatch(showInfoNotification({
+        message: 'A message has been sent to your mail'
+      }));
+    })
+    .catch((error) => {
+      (error.response.data.error === 'Error! User does not exist')
+      ? dispatch(showErrorNotification({
+        message: 'No matching user found for the provided mail'
+      }))
+      : dispatch(showErrorNotification({
+        message: 'Something went wrong!'
+      }));
+    })
+  );
+}
+/**
+ * async helper function: reset user password
+ * @function resetPassword
+ * @param {string} newPassword
+ * @returns {function} asynchronous action
+ */
+export function resetPassword({ password, token }) {
+  return (dispatch =>
+    axios.post('/api/v0/user/password/reset', {
+      password
+    }, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(() => {
+      dispatch(showSuccessNotification({
+        message: 'Password reset successful'
+      }));
+    })
+    .catch(() => {
+      dispatch(showErrorNotification({
+        message: 'Something went wrong!'
+      }));
+    })
+  );
 }
 /**
  * async helper function: delete a user account
