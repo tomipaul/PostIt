@@ -22,7 +22,7 @@ const Header = ({ isDashboard, logOut }) =>
         />
         <img
           className="responsive-img"
-          src="../images/postit-icon.png"
+          src="/images/postit-icon.png"
           alt=""
         />
         <i
@@ -39,7 +39,7 @@ const Header = ({ isDashboard, logOut }) =>
     <header className="header-home">
       <img
         className="responsive-img"
-        src="../images/postit-icon.png"
+        src="/images/postit-icon.png"
         alt=""
       />
     </header>

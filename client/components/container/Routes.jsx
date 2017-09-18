@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import LoadDashboard from '../container/LoadDashboard';
 import AuthenticationPage from '../presentation/AuthenticationPage';
+import ForgotPasswordPage from '../presentation/ForgotPassword';
+import ResetPasswordPage from '../presentation/ResetPassword';
 import NotFound from '../presentation/Common/NotFound';
 import {
   validateUserToken as validateToken
@@ -90,6 +92,8 @@ class Routes extends React.Component {
             path="/dashboard"
             render={this.renderDashboard()}
           />
+          <Route exact path="/password/reset" component={ForgotPasswordPage} />
+          <Route path="/password/reset/:token" component={ResetPasswordPage} />
           <Route component={NotFound} />
         </Switch>
       </div>

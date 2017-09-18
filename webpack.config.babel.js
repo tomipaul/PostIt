@@ -54,7 +54,9 @@ const webpackConfig = {
       '/api': 'http://localhost:5000'
     },
     contentBase: path.join(__dirname, '/client/bin/'),
-    historyApiFallback: true,
+    historyApiFallback: {
+      disableDotRule: true
+    },
     hot: true,
     https: false,
     noInfo: false,

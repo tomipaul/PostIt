@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 import axios from 'axios';
+import fs from 'fs';
 
 /**
  * @class NotificationService
@@ -48,6 +49,24 @@ class NotificationService {
     };
   }
   /**
+   * read from html template and replace placeholders
+   * @method readFromTemplate
+   * @param {string} dir file path of html template
+   * @param {object} options values of placeholders
+   * @return {Promise} rejects on failure, resolves on success
+   */
+  static readFromTemplate({ dir, options }) {
+    return new Promise((resolve, reject) => {
+      return fs.readFile(dir, 'utf8', (err, data) => {
+        if (err) reject(err);
+        const regex = /{{(\w+)}}/gi;
+        resolve(data.replace(regex, (match, p) => {
+          return options[p];
+        }));
+      });
+    });
+  }
+  /**
    * send mail notification to members of a group
    * when a message is posted to the group
    * @method sendMailNotification
@@ -92,6 +111,33 @@ class NotificationService {
     })
     .then(() => {
       return 'Message sent successfully';
+    })
+    .catch((error) => {
+      throw error;
+    });
+  }
+  /**
+   * send reset password mail to user
+   * @method sendResetPasswordMail
+   * @memberof NotificationService
+   * @param {object} options recipient info and action url
+   * @returns {void}
+   */
+  sendResetPasswordMail(options) {
+    return NotificationService.readFromTemplate({
+      dir: 'server/services/mailTemplates/resetPassword.html',
+      options
+    })
+    .then((message) => {
+      const mailOptions = NotificationService.setMailOptions({
+        recipient: options,
+        messageBody: message,
+        subject: 'Set up a new password for PostIt account'
+      });
+      return this.mailTransporter.sendMail(mailOptions)
+      .then(() => {
+        return 'Message sent successfully';
+      });
     })
     .catch((error) => {
       throw error;

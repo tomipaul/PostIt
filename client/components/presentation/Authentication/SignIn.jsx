@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 /**
  * @class SignUp
@@ -87,6 +88,7 @@ class SignIn extends React.Component {
           onClick={this.props.showSignup}
         >Signup</a>
         </div>
+        <Link to="/password/reset">Forgot Password</Link>
       </form>
     );
   }

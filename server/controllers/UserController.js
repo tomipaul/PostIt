@@ -243,7 +243,7 @@ class UserController {
   static updateUser() {
     return (req, res, next) => {
       ModelService.updateModelInstance(userModel, {
-        username: req.params.username
+        username: req.params.username || req.username
       }, req.body)
       .then((user) => {
         const userInfo = UserController.extractFromUserObject(user);
@@ -337,12 +337,31 @@ class UserController {
    * @returns {function} Express middleware function which sends
    * a password reset mail to user
    */
-  static resetPassword() {
+  static sendResetPasswordMail() {
     return (req, res, next) => {
       const { recipient } = req.body;
-      return NotificationService.sendResetPasswordMail(recipient)
-      .then((message) => {
-        return res.status(200).json({ message });
+      ModelService.getModelInstance(userModel, {
+        email: recipient
+      })
+      .then((userObject) => {
+        const rsaKey = process.env.PRIVATE_KEY;
+        return AuthService.generateToken(userObject, rsaKey, '12h')
+        .then((token) => {
+          const url = (process.env.NODE_ENV === 'production') ?
+          process.env.PROD_URL : process.env.LOCAL_URL;
+          const actionUrl = `${url}/password/reset/${token}`;
+          return {
+            username: userObject.username,
+            email: recipient,
+            action_url: actionUrl
+          };
+        });
+      })
+      .then((options) => {
+        return new NotificationService().sendResetPasswordMail(options)
+        .then((message) => {
+          return res.status(200).json({ message });
+        });
       })
       .catch((err) => {
         return next(err);
