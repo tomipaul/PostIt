@@ -17,7 +17,7 @@
     "frontend:test": "NODE_ENV=jest jest --coverage --collectCoverageFrom=client/**/*.{js,jsx}",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build:dev": "NODE_ENV=development webpack-dev-server",
-    "build": "NODE_ENV=production webpack",
+    "build": "webpack -p",
     "test": "NODE_ENV=test nyc mocha server/tests/**/*.js --timeout 10000"
   },
   "repository": {
