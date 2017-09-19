@@ -29,6 +29,10 @@ app.use((req, res, next) => {
   next();
 });
 app.use(express.static(path.resolve(__dirname, '../client/bin')));
+app.get('/api/doc', (req, res) => {
+  res.sendFile(path.resolve(__dirname,
+  '../client/bin/build/index.html'));
+});
 app.use(cookieParser());
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));

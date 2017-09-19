@@ -1,0 +1,1020 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>API Reference for PostIt</title>
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .cd {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+    </style>
+    <link href="/build/stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="/build/stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="/build/javascripts/all.js"></script>
+  </head>
+
+  <body class="index" data-languages="[]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="/build/images/navbar.png" alt="Navbar" />
+      </span>
+    </a>
+    <div class="toc-wrapper">
+      <img src="/build/images/logo.png" class="logo" alt="Logo" />
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc" class="toc-list-h1">
+          <li>
+            <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#sign-up-user" class="toc-h2 toc-link" data-title="Authentication">Sign Up User</a>
+                  </li>
+                  <li>
+                    <a href="#sign-in-user" class="toc-h2 toc-link" data-title="Authentication">Sign In User</a>
+                  </li>
+                  <li>
+                    <a href="#send-password-reset-mail" class="toc-h2 toc-link" data-title="Authentication">Send password reset mail</a>
+                  </li>
+                  <li>
+                    <a href="#reset-password" class="toc-h2 toc-link" data-title="Authentication">Reset password</a>
+                  </li>
+                  <li>
+                    <a href="#validate-user-token" class="toc-h2 toc-link" data-title="Authentication">Validate user token</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#group" class="toc-h1 toc-link" data-title="Group">Group</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#create-a-group" class="toc-h2 toc-link" data-title="Group">Create a group</a>
+                  </li>
+                  <li>
+                    <a href="#add-user-to-group" class="toc-h2 toc-link" data-title="Group">Add User to Group</a>
+                  </li>
+                  <li>
+                    <a href="#post-message-to-group" class="toc-h2 toc-link" data-title="Group">Post message to Group</a>
+                  </li>
+                  <li>
+                    <a href="#get-group-messages" class="toc-h2 toc-link" data-title="Group">Get group messages</a>
+                  </li>
+                  <li>
+                    <a href="#get-group-users" class="toc-h2 toc-link" data-title="Group">Get group users</a>
+                  </li>
+                  <li>
+                    <a href="#read-group-messages" class="toc-h2 toc-link" data-title="Group">Read group messages</a>
+                  </li>
+                  <li>
+                    <a href="#get-users-that-read-message" class="toc-h2 toc-link" data-title="Group">Get users that read message</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#user" class="toc-h1 toc-link" data-title="User">User</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-a-user" class="toc-h2 toc-link" data-title="User">Get a user</a>
+                  </li>
+                  <li>
+                    <a href="#update-a-user" class="toc-h2 toc-link" data-title="User">Update a user</a>
+                  </li>
+                  <li>
+                    <a href="#get-user-groups" class="toc-h2 toc-link" data-title="User">Get user groups</a>
+                  </li>
+                  <li>
+                    <a href="#get-all-users" class="toc-h2 toc-link" data-title="User">Get all users</a>
+                  </li>
+                  <li>
+                    <a href="#get-unread-messages" class="toc-h2 toc-link" data-title="User">Get unread messages</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
+          </li>
+      </div>
+        <ul class="toc-footer">
+            <li><a href='https://app-postit.herokuapp.com'>Go to PostIt</a></li>
+            <li><a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id='introduction'>Introduction</h1>
+<p><strong>Welcome to the PostIt API</strong>!</p>
+
+<p>PostIt is a simple application that implements a distributed messaging system. It allows friends and colleagues create groups for messages and notifications.
+You can use our API to access PostIt API endpoints, which serves different functions which includes creating groups, adding user to groups, posting messages to groups and much more.</p>
+<h1 id='authentication'>Authentication</h1>
+<p>PostIt uses email and password authentication to allow access to the API. You can register through the signup endpoint and login through the signin endpoint. Each returns a json web token in response</p>
+
+<p>PostIt expects for the JSON web token to be included in all subsequent API requests to the server</p>
+
+<p>Tokens can be embedded in the following ways:</p>
+
+<ul>
+<li>request body: As part of the data sent in the request body via key token</li>
+</ul>
+<pre class="highlight plaintext"><code>{
+  ...
+  "token": "abcdef123456"
+}
+</code></pre>
+<ul>
+<li>request header: As part of the metadata sent in request headers via key Authorization</li>
+</ul>
+<pre class="highlight plaintext"><code>Authorization: "Bearer abcdef123456"
+
+</code></pre>
+<ul>
+<li>request query: As part of the query string in request url</li>
+</ul>
+<pre class="highlight plaintext"><code>https://app-postit.herokuapp.com/?token=abcdef123456
+
+</code></pre>
+<ul>
+<li>request cookie: It can be set as a cookie on the client so that it is sent with every request to the api</li>
+</ul>
+<h2 id='sign-up-user'>Sign Up User</h2>
+<p>This endpoint creates a user account</p>
+
+<blockquote>
+<p>Request Payload:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"username"</span><span class="w">
+  </span><span class="s2">"email"</span><span class="w">
+  </span><span class="s2">"phoneNo"</span><span class="w"> 
+  </span><span class="s2">"password"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"username"</span><span class="w">
+    </span><span class="s2">"email"</span><span class="w">
+    </span><span class="s2">"phoneNo"</span><span class="w">
+    </span><span class="s2">"status"</span><span class="w">
+    </span><span class="s2">"photoURL"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"token"</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Authentication Successful"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre><h3 id='http-request'>HTTP Request</h3>
+<p><code>POST https://app-postit.herokuapp.com/api/v0/user/signup</code></p>
+<h3 id='request-payload'>Request Payload</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>required/optional</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>username</td>
+<td>required</td>
+<td>a string which represents the name of the user in the application</td>
+</tr>
+<tr>
+<td>password</td>
+<td>required</td>
+<td>a string which represents the user password</td>
+</tr>
+<tr>
+<td>email</td>
+<td>required</td>
+<td>a string which represents the email address of the user</td>
+</tr>
+<tr>
+<td>phoneNo</td>
+<td>required</td>
+<td>a string which respresents the mobile number of the user</td>
+</tr>
+</tbody></table>
+<h2 id='sign-in-user'>Sign In User</h2>
+<p>This endpoint signs in a user</p>
+
+<blockquote>
+<p>Request Payload:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"username"</span><span class="w">
+  </span><span class="s2">"password"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"username"</span><span class="w">
+    </span><span class="s2">"email"</span><span class="w">
+    </span><span class="s2">"phoneNo"</span><span class="w">
+    </span><span class="s2">"status"</span><span class="w">
+    </span><span class="s2">"photoURL"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"token"</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Authentication Successful"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre><h3 id='http-request-2'>HTTP Request</h3>
+<p><code>POST https://app-postit.herokuapp.com/api/v0/user/signin</code></p>
+<h3 id='request-payload-2'>Request Payload</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>required/optional</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>username</td>
+<td>required</td>
+<td>a string which represents the name of the user in the application</td>
+</tr>
+<tr>
+<td>password</td>
+<td>required</td>
+<td>a string which represents the user password</td>
+</tr>
+</tbody></table>
+<h2 id='send-password-reset-mail'>Send password reset mail</h2>
+<p>This endpoint sends a password reset link to a user&#39;s email address</p>
+
+<blockquote>
+<p>Request Payload:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"recipient"</span><span class="p">:</span><span class="w"> </span><span class="s2">"email"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"message"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre><h3 id='http-request-3'>HTTP Request</h3>
+<p><code>POST https://app-postit.herokuapp.com/api/v0/password/mail</code></p>
+<h3 id='request-payload-3'>Request Payload</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>required/optional</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>recipient</td>
+<td>required</td>
+<td>email address of user</td>
+</tr>
+</tbody></table>
+
+<aside class="success"> This endpoint does not require auth token
+</aside>
+<h2 id='reset-password'>Reset password</h2>
+<p>This endpoint updates user account with a new password</p>
+
+<blockquote>
+<p>Request Payload:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"password"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"username"</span><span class="w">
+    </span><span class="s2">"phoneNo"</span><span class="w">
+    </span><span class="s2">"email"</span><span class="w">
+    </span><span class="s2">"status"</span><span class="w">
+    </span><span class="s2">"photoURL"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User account updated"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre><h3 id='http-request-4'>HTTP Request</h3>
+<p><code>POST https://app-postit.herokuapp.com/api/v0/user/password/reset</code></p>
+<h3 id='request-payload-4'>Request Payload</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>required/optional</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>password</td>
+<td>required</td>
+<td>new password provided by user</td>
+</tr>
+</tbody></table>
+
+<aside class="success"> This endpoint requires the embedded token in the action url sent to user's email
+</aside>
+<h2 id='validate-user-token'>Validate user token</h2>
+<p>This endpoint validates user token</p>
+
+<p>It takes no payload. The token should be sent with the request in one of the ways listed above</p>
+<h1 id='group'>Group</h1><h2 id='create-a-group'>Create a group</h2>
+<p>This endpoint creates a group.</p>
+
+<blockquote>
+<p>Request Payload:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"name"</span><span class="w">
+  </span><span class="s2">"description"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<blockquote>
+<p>description can be null or empty, this is also valid</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"name"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Group created"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre><h3 id='http-request-5'>HTTP Request</h3>
+<p><code>POST https://app-postit.herokuapp.com/api/v0/group</code></p>
+<h3 id='request-payload-5'>Request Payload</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>required/optional</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>required</td>
+<td>the title of the group</td>
+</tr>
+<tr>
+<td>description</td>
+<td>optional</td>
+<td>a short description of the group</td>
+</tr>
+</tbody></table>
+<h2 id='add-user-to-group'>Add User to Group</h2>
+<p>This endpoint takes username of a user and add user to group specified by groupId.
+groupId is part of the response returned when a group is created</p>
+
+<blockquote>
+<p>Request Payload:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"username"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"username"</span><span class="w">
+    </span><span class="s2">"phoneNo"</span><span class="w">
+    </span><span class="s2">"email"</span><span class="w">
+    </span><span class="s2">"status"</span><span class="w">
+    </span><span class="s2">"photoURL"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User `username` added to group"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre><h3 id='http-request-6'>HTTP Request</h3>
+<p><code>POST https://app-postit.herokuapp.com/api/v0/group/:groupId/user</code></p>
+<h3 id='url-parameters'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>groupId</td>
+<td>The ID of the group to which a user is to be added</td>
+</tr>
+</tbody></table>
+<h3 id='request-payload-6'>Request payload</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>username</td>
+<td>The username of the user to be added</td>
+</tr>
+</tbody></table>
+<h2 id='post-message-to-group'>Post message to Group</h2>
+<p>This endpoint posts a message to a group</p>
+
+<blockquote>
+<p>Request Payload:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"text"</span><span class="w">
+  </span><span class="s2">"priority"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"createdMessage"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="w">
+    </span><span class="s2">"text"</span><span class="w">
+    </span><span class="s2">"priority"</span><span class="w">
+    </span><span class="s2">"createdAt"</span><span class="w">
+    </span><span class="s2">"updatedAt"</span><span class="w">
+    </span><span class="s2">"AuthorUsername"</span><span class="w">
+    </span><span class="s2">"GroupId"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Message posted to group"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre><h3 id='http-request-7'>HTTP Request</h3>
+<p><code>POST https://app-postit.herokuapp.com/api/v0/group/:groupId/message</code></p>
+<h3 id='url-parameters-2'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>groupId</td>
+<td>The ID of the group to which a message is to be added</td>
+</tr>
+</tbody></table>
+<h3 id='request-payload-7'>Request payload</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>required/optional</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>text</td>
+<td>required</td>
+<td>message</td>
+</tr>
+<tr>
+<td>priority</td>
+<td>optional</td>
+<td>normal, urgent or critical</td>
+</tr>
+</tbody></table>
+
+<aside class="success"> Priority defaults to normal
+</aside>
+<h2 id='get-group-messages'>Get group messages</h2>
+<p>This endpoint gets all messages of a group</p>
+
+<blockquote>
+<p>Response: Array of objects</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="w">
+    </span><span class="s2">"text"</span><span class="w">
+    </span><span class="s2">"priority"</span><span class="w">
+    </span><span class="s2">"createdAt"</span><span class="w">
+    </span><span class="s2">"updatedAt"</span><span class="w">
+    </span><span class="s2">"AuthorUsername"</span><span class="w">
+    </span><span class="s2">"GroupId"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+
+</span></code></pre><h3 id='http-request-8'>HTTP Request</h3>
+<p><code>GET https://app-postit.herokuapp.com/api/v0/group/:groupId/messages</code></p>
+<h3 id='url-parameters-3'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>groupId</td>
+<td>The ID of the group</td>
+</tr>
+</tbody></table>
+<h2 id='get-group-users'>Get group users</h2>
+<p>This endpoint gets all members of a group</p>
+
+<blockquote>
+<p>Response: Array of objects</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"username"</span><span class="w">
+    </span><span class="s2">"phoneNo"</span><span class="w">
+    </span><span class="s2">"email"</span><span class="w">
+    </span><span class="s2">"status"</span><span class="w">
+    </span><span class="s2">"photoURL"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+
+</span></code></pre><h3 id='http-request-9'>HTTP Request</h3>
+<p><code>GET https://app-postit.herokuapp.com/api/v0/group/:groupId/users</code></p>
+<h3 id='url-parameters-4'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>groupId</td>
+<td>The ID of the group</td>
+</tr>
+</tbody></table>
+<h2 id='read-group-messages'>Read group messages</h2>
+<p>This endpoint reads one or more messages posted to a group</p>
+
+<blockquote>
+<p>Request Payload:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"messages"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"message1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"message2"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hi `username`, you read one or more messages"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre><h3 id='http-request-10'>HTTP Request</h3>
+<p><code>POST https://app-postit.herokuapp.com/api/v0/group/:groupId/messages/read</code></p>
+<h3 id='url-parameters-5'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>groupId</td>
+<td>The ID of the group</td>
+</tr>
+</tbody></table>
+<h3 id='request-payload-8'>Request payload</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>required/optional</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>messages</td>
+<td>required</td>
+<td>an array of message ids</td>
+</tr>
+</tbody></table>
+<h2 id='get-users-that-read-message'>Get users that read message</h2>
+<p>This endpoint gets all users that have read a particular message</p>
+
+<blockquote>
+<p>Response: Array of objects</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"createdAt"</span><span class="w">
+    </span><span class="s2">"updatedAt"</span><span class="w">
+    </span><span class="s2">"MessageId"</span><span class="w">
+    </span><span class="s2">"UserUsername"</span><span class="w">
+    </span><span class="s2">"GroupId"</span><span class="w">
+    </span><span class="s2">"read"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+
+</span></code></pre><h3 id='http-request-11'>HTTP Request</h3>
+<p><code>GET https://app-postit.herokuapp.com/api/v0/group/:groupId/message/:messageId/users</code></p>
+<h3 id='url-parameters-6'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>groupId</td>
+<td>The ID of the group to which the message belongs</td>
+</tr>
+<tr>
+<td>messageId</td>
+<td>The ID of the message</td>
+</tr>
+</tbody></table>
+<h1 id='user'>User</h1><h2 id='get-a-user'>Get a user</h2>
+<p>This endpoint gets a user&#39;s profile</p>
+
+<blockquote>
+<p>Response: Object</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"username"</span><span class="w">
+    </span><span class="s2">"phoneNo"</span><span class="w">
+    </span><span class="s2">"email"</span><span class="w">
+    </span><span class="s2">"status"</span><span class="w">
+    </span><span class="s2">"photoURL"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre><h3 id='http-request-12'>HTTP Request</h3>
+<p><code>GET https://app-postit.herokuapp.com/api/v0/user/:username</code></p>
+<h3 id='url-parameters-7'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>username</td>
+<td>The username of the user to fetch</td>
+</tr>
+</tbody></table>
+<h2 id='update-a-user'>Update a user</h2>
+<p>This endpoint updates a user&#39;s profile</p>
+
+<blockquote>
+<p>Request Payload:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"username"</span><span class="w">
+  </span><span class="s2">"phoneNo"</span><span class="w">
+  </span><span class="s2">"email"</span><span class="w">
+  </span><span class="s2">"status"</span><span class="w">
+  </span><span class="s2">"photoURL"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"username"</span><span class="w">
+    </span><span class="s2">"phoneNo"</span><span class="w">
+    </span><span class="s2">"email"</span><span class="w">
+    </span><span class="s2">"status"</span><span class="w">
+    </span><span class="s2">"photoURL"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User updated"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre><h3 id='http-request-13'>HTTP Request</h3>
+<p><code>PUT https://app-postit.herokuapp.com/api/v0/user/:username</code></p>
+<h3 id='url-parameters-8'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>username</td>
+<td>The username of the user</td>
+</tr>
+</tbody></table>
+<h3 id='request-payload-9'>Request payload</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>required/optional</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>email</td>
+<td>optional</td>
+<td>user email address</td>
+</tr>
+<tr>
+<td>password</td>
+<td>optional</td>
+<td>user password</td>
+</tr>
+<tr>
+<td>phoneNo</td>
+<td>optional</td>
+<td>mobile number</td>
+</tr>
+<tr>
+<td>photoURL</td>
+<td>optional</td>
+<td>link to the uploaded profile picture of user</td>
+</tr>
+</tbody></table>
+
+<aside class="success"> You can provide one or more user properties to be updated
+</aside>
+<h2 id='get-user-groups'>Get user groups</h2>
+<p>This endpoint gets all the groups a user belongs to</p>
+
+<blockquote>
+<p>Response: Array of objects</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="w">
+    </span><span class="s2">"name"</span><span class="w">
+    </span><span class="s2">"description"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+
+</span></code></pre><h3 id='http-request-14'>HTTP Request</h3>
+<p><code>GET https://app-postit.herokuapp.com/api/v0/user/groups</code></p>
+<h2 id='get-all-users'>Get all users</h2>
+<p>This endpoint gets all users in the application</p>
+
+<blockquote>
+<p>Response: Array of objects</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"username"</span><span class="w">
+    </span><span class="s2">"phoneNo"</span><span class="w">
+    </span><span class="s2">"email"</span><span class="w">
+    </span><span class="s2">"status"</span><span class="w">
+    </span><span class="s2">"photoURL"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+
+</span></code></pre><h3 id='http-request-15'>HTTP Request</h3>
+<p><code>GET https://app-postit.herokuapp.com/api/v0/users</code></p>
+<h2 id='get-unread-messages'>Get unread messages</h2>
+<p>This endpoint gets all the unread messages of a user. The messages are organized according to groups.</p>
+
+<blockquote>
+<p>Response: Object that maps group id to an array of unread message id</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"groupId"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"messageId"</span><span class="err">...</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre><h3 id='http-request-16'>HTTP Request</h3>
+<p><code>GET https://app-postit.herokuapp.com/api/v0/messages/unread</code></p>
+<h1 id='errors'>Errors</h1>
+<p>The PostIt API uses the following error codes:</p>
+
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>Bad Request -- You sent invalid url parameters or request payload</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized -- You are not authenticated or authentication fails</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden -- You are not a member of the group you are trying to access or you tried to perform an operation that can only be done by the creator of the group</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found -- The specified User or Group could not be found.</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error -- We had a problem with our server. Try again later.</td>
+</tr>
+</tbody></table>
+
+      </div>
+      <div class="dark-box">
+      </div>
+    </div>
+  </body>
+</html>
