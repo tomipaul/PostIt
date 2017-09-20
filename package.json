@@ -6,7 +6,10 @@
   "jest": {
     "verbose": true,
     "testURL": "http://localhost",
-    "setupFiles": ["<rootDir>/client/tests/test-env.js"]
+    "setupFiles": ["<rootDir>/client/tests/test-env.js"],
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/client/bin"
+    ]
   },
   "scripts": {
     "postinstall": "npm run transpile && npm run build",
