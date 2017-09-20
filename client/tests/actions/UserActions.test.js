@@ -92,7 +92,7 @@ describe('User async actions', () => {
       });
     });
 
-    it('creates NOTIFY_SEND when user signup fails',
+    it('creates NOTIF_SEND when user signup fails',
     () => {
       const { username, email, phoneNo, password } = user;
       nock('http://localhost')
@@ -145,7 +145,7 @@ describe('User async actions', () => {
       });
     });
 
-    it('creates NOTIFY_SEND when user signin fails',
+    it('creates NOTIF_SEND when user signin fails',
     () => {
       const { username, password } = user;
       nock('http://localhost')
@@ -196,7 +196,7 @@ describe('User async actions', () => {
       });
     });
 
-    it('creates NOTIFY_SEND when token validation fails',
+    it('creates NOTIF_SEND when token validation fails',
     () => {
       nock('http://localhost')
       .get('/api/v0/user/authorize')
@@ -243,7 +243,7 @@ describe('User async actions', () => {
       });
     });
 
-    it('creates NOTIFY_SEND when fetching groups fail',
+    it('creates NOTIF_SEND when fetching groups fail',
     () => {
       nock('http://localhost')
       .get('/api/v0/user/groups')
@@ -289,7 +289,7 @@ describe('User async actions', () => {
       });
     });
 
-    it('creates NOTIFY_SEND when getting a user fails',
+    it('creates NOTIF_SEND when getting a user fails',
     () => {
       nock('http://localhost')
       .get('/api/v0/user/thhgghg')
@@ -338,7 +338,7 @@ describe('User async actions', () => {
       });
     });
 
-    it('creates NOTIFY_SEND when updating a user fails',
+    it('creates NOTIF_SEND when updating a user fails',
     () => {
       nock('http://localhost')
       .put('/api/v0/user/tomipaul')
@@ -388,7 +388,7 @@ describe('User async actions', () => {
       });
     });
 
-    it('creates NOTIFY_SEND when deleting a user fails',
+    it('creates NOTIF_SEND when deleting a user fails',
     () => {
       nock('http://localhost')
       .delete('/api/v0/user/tomipaul')
@@ -436,7 +436,7 @@ describe('User async actions', () => {
       });
     });
 
-    it('creates NOTIFY_SEND when getting unread messages fails',
+    it('creates NOTIF_SEND when getting unread messages fails',
     () => {
       nock('http://localhost')
       .get('/api/v0/messages/unread')
@@ -480,7 +480,7 @@ describe('User async actions', () => {
       });
     });
 
-    it('creates NOTIFY_SEND when getting all users fail',
+    it('creates NOTIF_SEND when getting all users fail',
     () => {
       nock('http://localhost')
       .get('/api/v0/users')
@@ -513,6 +513,107 @@ describe('User async actions', () => {
       const store = mockStore({});
       store.dispatch(actions.logOutUser());
       expect(store.getActions()).toMatchObject(expectedActions);
+    });
+  });
+
+  describe('async action sendPasswordResetMail', () => {
+    afterEach(() => {
+      nock.cleanAll();
+    });
+    it('dispatches success notification if mail is successfully sent',
+    () => {
+      nock('http://localhost')
+      .post('/api/v0/password/mail')
+      .reply(200);
+      const expectedAction = [
+        notifSend('info', 'A message has been sent to your mail')
+      ];
+      const store = mockStore({});
+      return store.dispatch(actions
+      .sendPasswordResetMail('titty@tatty.co'))
+      .then(() => {
+        expect(store.getActions()).toMatchObject(expectedAction);
+      });
+    });
+
+    it(`dispatches error notification if mail sending fails 
+    because no matching user exists`,
+    () => {
+      nock('http://localhost')
+      .post('/api/v0/password/mail')
+      .reply(400, {
+        error: 'Error! User does not exist'
+      });
+      const expectedActions = [
+        notifSend('danger', 'No matching user found for the provided mail')
+      ];
+      const store = mockStore({});
+      return store.dispatch(actions
+      .sendPasswordResetMail('titty@tatty.co'))
+      .then(() => {
+        expect(store.getActions()).toMatchObject(expectedActions);
+      });
+    });
+
+    it(`dispatches error notification if mail sending fails 
+    due to network errors `,
+    () => {
+      nock('http://localhost')
+      .post('/api/v0/password/mail')
+      .reply(500, {
+        error: 'Network error'
+      });
+      const expectedActions = [
+        notifSend('danger', 'Something went wrong!')
+      ];
+      const store = mockStore({});
+      return store.dispatch(actions
+      .sendPasswordResetMail('titty@tatty.co'))
+      .then(() => {
+        expect(store.getActions()).toMatchObject(expectedActions);
+      });
+    });
+  });
+
+  describe('async action resetPassword', () => {
+    afterEach(() => {
+      nock.cleanAll();
+    });
+    it('dispatches success notification if password reset is successful',
+    () => {
+      nock('http://localhost')
+      .post('/api/v0/user/password/reset')
+      .reply(200);
+      const expectedAction = [
+        notifSend('success', 'Password reset successful')
+      ];
+      const store = mockStore({});
+      return store.dispatch(actions
+      .resetPassword({
+        password: '121212',
+        token: 'werock'
+      }))
+      .then(() => {
+        expect(store.getActions()).toMatchObject(expectedAction);
+      });
+    });
+
+    it('dispatches error notification if password reset fails', () => {
+      nock('http://localhost')
+      .post('/api/v0/user/password/reset')
+      .reply(500);
+      const expectedActions = [
+        notifSend('danger', 'Something went wrong!')
+      ];
+      const store = mockStore({});
+      return store.dispatch(actions
+      .resetPassword({
+        password: '121212',
+        token: 'werock'
+      }))
+      .then(() => {
+        expect(store.getActions()).toMatchObject(expectedActions);
+      });
     });
   });
 });
