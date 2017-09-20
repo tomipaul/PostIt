@@ -28,6 +28,10 @@ describe('components', () => {
       expect(enzymeWrapper.find('MemberListView').exists()).toBe(true);
     });
 
+    it('should clear selected user', () => {
+      expect(props.clearSelectedUser.mock.calls.length).toBe(1);
+    });
+
     it('should have state with keys searchString and matchedUsers', () => {
       expect(enzymeWrapper.state('searchString')).toBe('');
       expect(enzymeWrapper.state('matchedUsers')).toEqual([]);
@@ -70,6 +74,22 @@ describe('components', () => {
       .simulate('change', { target: { value: 'to' } });
       expect(enzymeWrapper.state('searchString')).toBe('to');
       expect(enzymeWrapper.state('matchedUsers')).toHaveLength(0);
+    });
+
+    it('should reset state and clear input fields when active group changes',
+    () => {
+      enzymeWrapper.setProps({
+        groupMembers: []
+      });
+      enzymeWrapper.find('#search-user')
+      .simulate('change', { target: { value: 'to' } });
+      expect(enzymeWrapper.state('searchString')).toBe('to');
+      expect(enzymeWrapper.state('matchedUsers')).toHaveLength(1);
+      enzymeWrapper.setProps({
+        group: 'second'
+      });
+      expect(enzymeWrapper.state('searchString')).toBe('');
+      expect(enzymeWrapper.state('matchedUsers')).toEqual([]);
     });
   });
 });
