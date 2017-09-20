@@ -1,5 +1,6 @@
 {
   "exclude": [
+    "client",
     "server/tests",
     "server/migrations",
     "server/seeders"
