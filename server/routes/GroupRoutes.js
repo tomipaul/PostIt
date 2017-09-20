@@ -1,6 +1,6 @@
 import express from 'express';
 import GroupController from '../controllers/GroupController';
-import { sendNotifications } from '../controllers/otherControllers';
+import sendNotifications from '../controllers/otherControllers';
 
 const router = express.Router();
 router.post('/api/v0/group',

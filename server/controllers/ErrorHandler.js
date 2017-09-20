@@ -10,7 +10,6 @@ export default function errorHandler() {
   // error handlers must always take four arguments
   // eslint-disable-next-line
   return (err, req, res, next) => {
-    console.log(err);
     const sequelize = models.sequelize;
     if (!err.code || err.code > 499) {
       if (err instanceof sequelize.ValidationError) {

@@ -2,7 +2,7 @@ import NotificationService from '../services/NotificationService.js';
 
 const Notification = new NotificationService();
 
-export const sendNotifications = (req, res, next) => {
+const sendNotifications = (req, res, next) => {
   const createdMessage = req.res.data.createdMessage;
   req.group.getUsers({
     where: {
@@ -25,3 +25,5 @@ export const sendNotifications = (req, res, next) => {
     next(err);
   });
 };
+
+export default sendNotifications;
