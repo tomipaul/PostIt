@@ -9,6 +9,7 @@ const setup = () => {
     user: state.auth.user,
     users: state.users,
     allUsers: state.users,
+    activeGroup: state.activeGroup,
     selectUser: jest.fn(),
     getUser: jest.fn(),
     clearSelectedUser: jest.fn(),

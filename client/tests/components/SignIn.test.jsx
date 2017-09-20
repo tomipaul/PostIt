@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 import SignIn from
 '../../components/presentation/Authentication/SignIn';
 
+jest.mock('react-router-dom');
 const setup = () => {
   const props = {
     onSubmit: jest.fn(),
