@@ -8,7 +8,7 @@ import LoadDashboard from '../container/LoadDashboard';
 import AuthenticationPage from '../presentation/AuthenticationPage';
 import ForgotPasswordPage from '../presentation/ForgotPassword';
 import ResetPasswordPage from '../presentation/ResetPassword';
-import NotFound from '../presentation/Common/NotFound';
+import NotFoundPage from '../presentation/Common/NotFound';
 import {
   validateUserToken as validateToken
 } from '../../actions/actionCreators/UserActions';
@@ -89,12 +89,13 @@ class Routes extends React.Component {
             )}
           />
           <Route
+            exact
             path="/dashboard"
             render={this.renderDashboard()}
           />
           <Route exact path="/password/reset" component={ForgotPasswordPage} />
           <Route path="/password/reset/:token" component={ResetPasswordPage} />
-          <Route component={NotFound} />
+          <Route component={NotFoundPage} />
         </Switch>
       </div>
     );
