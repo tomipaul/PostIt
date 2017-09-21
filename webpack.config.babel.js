@@ -72,7 +72,7 @@ const webpackConfig = {
   },
   plugins: (NODE_ENV === 'development') ? (
   [
-    new Dotenv(),
+    new Dotenv({ systemvars: true }),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
@@ -90,7 +90,7 @@ const webpackConfig = {
     })
   ]) : (
   [
-    new Dotenv(),
+    new Dotenv({ systemvars: true }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
