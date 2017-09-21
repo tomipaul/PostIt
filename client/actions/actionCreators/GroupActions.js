@@ -148,6 +148,11 @@ export function getUsersWithMessageReadSuccess(response, messageId) {
 export function createGroup(name, description) {
   return (dispatch) => {
     const token = window.localStorage.getItem('auth_token');
+    if (!name) {
+      return dispatch(showErrorNotification({
+        message: 'Group cannot have an empty name'
+      }));
+    }
     dispatch(sendRequest());
     return axios.post('/api/v1/group', {
       name,
