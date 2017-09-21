@@ -14,9 +14,9 @@ class Priority extends React.Component {
    */
   //eslint-disable-next-line
   componentDidMount() {
-    $('.label').click((e) => {
+    $('.label').click((event) => {
       $('.label').removeAttr('data-priority');
-      const message = e.target;
+      const message = event.target;
       const priority = message.textContent;
       message.setAttribute('data-priority', priority);
     });

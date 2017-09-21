@@ -34,9 +34,9 @@ export function subscribeToMessages() {
     source.addEventListener('open', () => {
       dispatch(subscribeToMessagesSuccess());
     }, false);
-    source.addEventListener('message', (e) => {
+    source.addEventListener('message', (event) => {
       const state = getState();
-      const newMessage = JSON.parse(e.data);
+      const newMessage = JSON.parse(event.data);
       const author = newMessage.AuthorUsername;
       const recipientGroupId = newMessage.GroupId;
       const activeGroup = state.activeGroup;
@@ -67,8 +67,8 @@ export function subscribeToMessages() {
         }
       }
     }, false);
-    source.addEventListener('error', (e) => {
-      if (e.target.readyState === window.EventSource.CLOSED) {
+    source.addEventListener('error', (event) => {
+      if (event.target.readyState === window.EventSource.CLOSED) {
         eventSource(dispatch, getState);
       }
     }, false);
