@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactTooltip from 'react-tooltip';
 
 /**
  * a button that displays a dropdown menu when clicked
@@ -14,9 +15,12 @@ const GroupOptionsDisplayToggle = () => {
       <a
         className="dropdown-button"
         href="#!"
+        data-for="group-options"
+        data-tip="Group Options"
         data-activates="dropdown1"
-      ><i className="fa fa-ellipsis-h" aria-hidden="true" />
+      ><i className="fa fa-caret-down fa-2x" aria-hidden="true" />
       </a>
+      <ReactTooltip id="group-options" place="left" type="dark" effect="float" />
     </div>
   );
 };
