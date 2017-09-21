@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 /**
+ * SignUp component
  * @class SignUp
  * @extends React.Component
  */
@@ -50,7 +51,7 @@ class SignUp extends React.Component {
   }
 
   /**
-   * render component
+   * show signup form
    * @method render
    * @member SignUp
    * @returns {object} component

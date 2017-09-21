@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 /**
- * @class SignUp
+ * SignIn component
+ * @class SignIn
  * @extends React.Component
  */
 class SignIn extends React.Component {
@@ -45,7 +46,7 @@ class SignIn extends React.Component {
     this.props.onSubmit(username, password);
   }
   /**
-   * render component
+   * render login component
    * @method render
    * @member SignIn
    * @returns {object} component

@@ -4,6 +4,7 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 
 /**
+ * Authentication component
  * @class
  * @extends React.Component
  */
@@ -15,35 +16,24 @@ class Authentication extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showLogin: true,
-      showSignup: false
+      userAccess: true,
     };
-    this.showLogin = this.showLogin.bind(this);
-    this.showSignup = this.showSignup.bind(this);
+    this.toggleForm = this.toggleForm.bind(this);
   }
   /**
-   * @method showLogin
+   * Toggle display of signup and signin forms
+   * @method toggleForm
    * @memberof Authentication
    * @returns {void}
    */
-  showLogin() {
+  toggleForm() {
     this.setState({
-      showLogin: true,
-      showSignup: false
+      userAccess: !this.state.userAccess
     });
   }
+
   /**
-   * @method showSignup
-   * @memberof Authentication
-   * @returns {void}
-   */
-  showSignup() {
-    this.setState({
-      showLogin: false,
-      showSignup: true
-    });
-  }
-  /**
+   * display authentication form
    * @method render
    * @returns {object} authentication component
    */
@@ -53,19 +43,19 @@ class Authentication extends React.Component {
       <div className="form-div">
         {
           // eslint-disable-next-line
-          this.state.showLogin ?
+          this.state.userAccess ?
           (
             <SignIn
               onSubmit={signInUser}
-              showSignup={this.showSignup}
+              showSignup={this.toggleForm}
             />
-          ) : this.state.showSignup ?
+          ) :
           (
             <SignUp
               onSubmit={signUpUser}
-              showLogin={this.showLogin}
+              showLogin={this.toggleForm}
             />
-          ) : null
+          )
         }
       </div>
     );

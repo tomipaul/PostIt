@@ -9,6 +9,8 @@ import {
 } from '../../actions/actionCreators/UserActions';
 
 /**
+ * display email input field to enter email
+ * and a submit button to submit
  * @class ForgotPassword
  * @extends React.Component
  */

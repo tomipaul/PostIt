@@ -4,6 +4,7 @@ import AuthorImage from './AuthorImage';
 import Message from './Message';
 
 /**
+ * convert a datestring
  * @function convertDateTimeString
  * @param {string} date
  * @return {string} date localestring or time difference
@@ -25,6 +26,7 @@ const convertDateTimeString = (date) => {
 };
 
 /**
+ * component that displays message and messsage metadata
  * @function MessageBox
  * @param {object} props
  * @param {object.<object>} props.message

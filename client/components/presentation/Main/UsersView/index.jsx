@@ -4,6 +4,7 @@ import SearchUserView from './SearchUserView';
 import GroupMemberView from './GroupMemberView';
 
 /**
+ * display component for user search or group member view
  * @class UsersView
  * @extends React.Component
  */

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ShowPreloader from '../../container/ShowPreloader';
 /**
+ * display modal with a file input field and a submit button
  * @class UploadPictureModal
  * @extends CommonModal
  */

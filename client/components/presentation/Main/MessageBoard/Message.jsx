@@ -8,6 +8,7 @@ import {
 } from '../../../../actions/actionCreators/GroupActions';
 
 /**
+ * Message component
  * @class
  * @extends React.Component
  */

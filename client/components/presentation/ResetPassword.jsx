@@ -12,6 +12,8 @@ import {
 } from '../../actions/actionCreators/helpers';
 
 /**
+ * Display password input fields to enter new password
+ * and a submit button to submit new password
  * @class ResetPassword
  * @extends React.Component
  */

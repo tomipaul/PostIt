@@ -6,6 +6,7 @@ import { actions as notifActions } from 'redux-notifications';
 const { notifDismiss } = notifActions;
 
 /**
+ * Dialog component that displays notification messages
  * @function Dialog
  * @param {object} props properties of the component
  * @param {function} dispatch store.dispatch to dispatch actions

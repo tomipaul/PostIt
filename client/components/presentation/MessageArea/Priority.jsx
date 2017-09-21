@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 /**
+ * display a priority select button
  * @class Priority
  * @extends React.Component
  */

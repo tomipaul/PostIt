@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Priority from './Priority';
 
 /**
- * select a priority
+ * display priority select buttons
  * @param {object} props
  * @param {function} props.selectActivity
  * @param {string} props.activePriority

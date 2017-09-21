@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import UserView from './UserView';
 
 /**
- * display all members of a group
+ * display component that shows all members of a group
  * @param {object} props
  * @param {array} props.users
  * @param {function} props.selectUser

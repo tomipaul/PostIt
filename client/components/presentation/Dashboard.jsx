@@ -8,6 +8,7 @@ import ShowPreloader from '../container/ShowPreloader';
 import UpdateProfilePicture from '../container/UpdateProfilePicture';
 
 /**
+ * Show User Dashboard
  * @class DashboardView
  * @extends React.Component
  */

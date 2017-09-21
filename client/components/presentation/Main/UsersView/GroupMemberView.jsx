@@ -4,6 +4,8 @@ import MemberListView from './MemberListView';
 import UserProfileView from './UserProfileView';
 
 /**
+ * Display all group members or a member profile
+ * GroupMemberView component
  * @class GroupMemberView
  * @extends React.Component
  */

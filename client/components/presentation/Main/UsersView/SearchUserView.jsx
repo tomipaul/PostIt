@@ -4,6 +4,7 @@ import SearchBox from './SearchBox';
 import MemberListView from './MemberListView';
 
 /**
+ * Display search input and search results
  * @class SearchUserview
  * @extends React.Component
  */
