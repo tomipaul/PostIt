@@ -55,6 +55,7 @@ class MessageArea extends React.Component {
   onSubmitMessage() {
     const { activeGroup } = this.props;
     const { text, priority } = this.state[activeGroup];
+    if (!text) { return; }
     this.props.addMessageToGroup({
       text: marked(text),
       priority
