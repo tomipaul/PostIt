@@ -174,7 +174,7 @@ export function addToUnreadMessages({ groupId, messageId }) {
 export function signUpUser(username, password, email, phoneNo) {
   return (dispatch) => {
     dispatch(sendRequest());
-    return axios.post('/api/v0/user/signup', {
+    return axios.post('/api/v1/user/signup', {
       username,
       password,
       email,
@@ -199,7 +199,7 @@ export function signUpUser(username, password, email, phoneNo) {
 export function signInUser(username, password) {
   return (dispatch) => {
     dispatch(sendRequest());
-    return axios.post('/api/v0/user/signin', {
+    return axios.post('/api/v1/user/signin', {
       username,
       password
     })
@@ -220,7 +220,7 @@ export function signInUser(username, password) {
 export function validateUserToken() {
   return (dispatch) => {
     dispatch(sendRequest());
-    return axios.get('/api/v0/user/authorize')
+    return axios.get('/api/v1/user/authorize')
     .then((response) => {
       response.data.token = window.localStorage.getItem('auth_token');
       dispatch(authenticationSuccess(response.data));
@@ -256,7 +256,7 @@ export function logOutUser() {
 export function fetchUserGroups() {
   return (dispatch) => {
     dispatch(sendRequest());
-    return axios.get('/api/v0/user/groups')
+    return axios.get('/api/v1/user/groups')
     .then((response) => {
       const groups = response.data.groups
       .reduce((accumulator, group) => {
@@ -281,7 +281,7 @@ export function fetchUserGroups() {
 export function getUser(username) {
   return (dispatch) => {
     dispatch(sendRequest());
-    return axios.get(`/api/v0/user/${username}`)
+    return axios.get(`/api/v1/user/${username}`)
     .then((response) => {
       dispatch(getUserSuccess(response.data));
     })
@@ -298,7 +298,7 @@ export function getUser(username) {
 export function getAllUsers() {
   return (dispatch) => {
     dispatch(sendRequest());
-    return axios.get('/api/v0/users')
+    return axios.get('/api/v1/users')
     .then((response) => {
       dispatch(getAllUsersSuccess(response.data));
     })
@@ -317,7 +317,7 @@ export function updateUser(newCredentials) {
   return (dispatch, getState) => {
     const { auth } = getState();
     dispatch(sendRequest());
-    return axios.put(`/api/v0/user/${auth.user.username}`, {
+    return axios.put(`/api/v1/user/${auth.user.username}`, {
       ...newCredentials
     }).then((response) => {
       dispatch(updateUserSuccess(response.data));
@@ -336,7 +336,7 @@ export function updateUser(newCredentials) {
  */
 export function sendPasswordResetMail(email) {
   return (dispatch =>
-    axios.post('/api/v0/password/mail', {
+    axios.post('/api/v1/password/mail', {
       recipient: email
     })
     .then(() => {
@@ -363,7 +363,7 @@ export function sendPasswordResetMail(email) {
  */
 export function resetPassword({ password, token }) {
   return (dispatch =>
-    axios.post('/api/v0/user/password/reset', {
+    axios.post('/api/v1/user/password/reset', {
       password
     }, {
       headers: { Authorization: `Bearer ${token}` }
@@ -389,7 +389,7 @@ export function deleteUser() {
   return (dispatch, getState) => {
     const { auth } = getState();
     dispatch(sendRequest());
-    return axios.delete(`/api/v0/user/${auth.user.username}`)
+    return axios.delete(`/api/v1/user/${auth.user.username}`)
     .then((response) => {
       dispatch(deleteUserSuccess(response.data));
     })
@@ -406,7 +406,7 @@ export function deleteUser() {
 export function getUnreadMessages() {
   return (dispatch) => {
     dispatch(sendRequest());
-    return axios.get('/api/v0/messages/unread')
+    return axios.get('/api/v1/messages/unread')
     .then((response) => {
       dispatch(getUnreadMessagesSuccess(response.data));
     })
