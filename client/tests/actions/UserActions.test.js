@@ -68,7 +68,7 @@ describe('User async actions', () => {
     () => {
       const { username, email, phoneNo, password } = user;
       nock('http://localhost')
-      .post('/api/v0/user/signup')
+      .post('/api/v1/user/signup')
       .reply(200, {
         user: { username, email, phoneNo },
         token: '12234432653553232'
@@ -96,7 +96,7 @@ describe('User async actions', () => {
     () => {
       const { username, email, phoneNo, password } = user;
       nock('http://localhost')
-      .post('/api/v0/user/signup')
+      .post('/api/v1/user/signup')
       .reply(400, {
         error: 'Username can only contain letters and numbers'
       });
@@ -121,7 +121,7 @@ describe('User async actions', () => {
     () => {
       const { username, email, phoneNo, password } = user;
       nock('http://localhost')
-      .post('/api/v0/user/signin')
+      .post('/api/v1/user/signin')
       .reply(200, {
         user: { username, email, phoneNo },
         token: '12234432653553232'
@@ -149,7 +149,7 @@ describe('User async actions', () => {
     () => {
       const { username, password } = user;
       nock('http://localhost')
-      .post('/api/v0/user/signin')
+      .post('/api/v1/user/signin')
       .reply(400, {
         error: 'Invalid username'
       });
@@ -174,7 +174,7 @@ describe('User async actions', () => {
     () => {
       const { username, email, phoneNo, token } = user;
       nock('http://localhost')
-      .get('/api/v0/user/authorize')
+      .get('/api/v1/user/authorize')
       .reply(200, {
         auth: { username, email, phoneNo },
       });
@@ -199,7 +199,7 @@ describe('User async actions', () => {
     it('creates NOTIF_SEND when token validation fails',
     () => {
       nock('http://localhost')
-      .get('/api/v0/user/authorize')
+      .get('/api/v1/user/authorize')
       .reply(400);
       const expectedActions = [
         sendRequest,
@@ -221,7 +221,7 @@ describe('User async actions', () => {
     it('creates FETCH_USER_GROUPS_SUCCESS when groups are fetched',
     () => {
       nock('http://localhost')
-      .get('/api/v0/user/groups')
+      .get('/api/v1/user/groups')
       .reply(200, {
         groups: [group]
       });
@@ -246,7 +246,7 @@ describe('User async actions', () => {
     it('creates NOTIF_SEND when fetching groups fail',
     () => {
       nock('http://localhost')
-      .get('/api/v0/user/groups')
+      .get('/api/v1/user/groups')
       .reply(400, {
         error: 'Groups cannot be fetched'
       });
@@ -270,7 +270,7 @@ describe('User async actions', () => {
     it('creates GET_USER_SUCCESS when getting a user is done ',
     () => {
       nock('http://localhost')
-      .get('/api/v0/user/tomipaul')
+      .get('/api/v1/user/tomipaul')
       .reply(200, {
         user
       });
@@ -292,7 +292,7 @@ describe('User async actions', () => {
     it('creates NOTIF_SEND when getting a user fails',
     () => {
       nock('http://localhost')
-      .get('/api/v0/user/thhgghg')
+      .get('/api/v1/user/thhgghg')
       .reply(400, {
         error: 'User does not exist'
       });
@@ -316,7 +316,7 @@ describe('User async actions', () => {
     it('creates UPDATE_USER_SUCCESS when updating a user is done ',
     () => {
       nock('http://localhost')
-      .put('/api/v0/user/tomipaul')
+      .put('/api/v1/user/tomipaul')
       .reply(200, {
         user
       });
@@ -341,7 +341,7 @@ describe('User async actions', () => {
     it('creates NOTIF_SEND when updating a user fails',
     () => {
       nock('http://localhost')
-      .put('/api/v0/user/tomipaul')
+      .put('/api/v1/user/tomipaul')
       .reply(400, {
         error: 'User could not be updated'
       });
@@ -367,7 +367,7 @@ describe('User async actions', () => {
     it('creates DELETE_USER_SUCCESS when deleting a user is done ',
     () => {
       nock('http://localhost')
-      .delete('/api/v0/user/tomipaul')
+      .delete('/api/v1/user/tomipaul')
       .reply(200, {
         username: user.username
       });
@@ -391,7 +391,7 @@ describe('User async actions', () => {
     it('creates NOTIF_SEND when deleting a user fails',
     () => {
       nock('http://localhost')
-      .delete('/api/v0/user/tomipaul')
+      .delete('/api/v1/user/tomipaul')
       .reply(400, {
         error: 'User could not be deleted'
       });
@@ -417,7 +417,7 @@ describe('User async actions', () => {
     it(`creates GET_UNREAD_MESSAGES_SUCCESS when all 
     unread messages are fetched`, () => {
       nock('http://localhost')
-      .get('/api/v0/messages/unread')
+      .get('/api/v1/messages/unread')
       .reply(200, {
         ...unreadMessages
       });
@@ -439,7 +439,7 @@ describe('User async actions', () => {
     it('creates NOTIF_SEND when getting unread messages fails',
     () => {
       nock('http://localhost')
-      .get('/api/v0/messages/unread')
+      .get('/api/v1/messages/unread')
       .reply(500, {
         error: 'Operation failed'
       });
@@ -463,7 +463,7 @@ describe('User async actions', () => {
     it(`creates GET_ALL_USERS_SUCCESS when all 
     users are fetched`, () => {
       nock('http://localhost')
-      .get('/api/v0/users')
+      .get('/api/v1/users')
       .reply(200, allUsers);
       const expectedActions = [
         sendRequest,
@@ -483,7 +483,7 @@ describe('User async actions', () => {
     it('creates NOTIF_SEND when getting all users fail',
     () => {
       nock('http://localhost')
-      .get('/api/v0/users')
+      .get('/api/v1/users')
       .reply(500, {
         error: 'Operation failed'
       });
@@ -523,7 +523,7 @@ describe('User async actions', () => {
     it('dispatches success notification if mail is successfully sent',
     () => {
       nock('http://localhost')
-      .post('/api/v0/password/mail')
+      .post('/api/v1/password/mail')
       .reply(200);
       const expectedAction = [
         notifSend('info', 'A message has been sent to your mail')
@@ -540,7 +540,7 @@ describe('User async actions', () => {
     because no matching user exists`,
     () => {
       nock('http://localhost')
-      .post('/api/v0/password/mail')
+      .post('/api/v1/password/mail')
       .reply(400, {
         error: 'Error! User does not exist'
       });
@@ -559,7 +559,7 @@ describe('User async actions', () => {
     due to network errors `,
     () => {
       nock('http://localhost')
-      .post('/api/v0/password/mail')
+      .post('/api/v1/password/mail')
       .reply(500, {
         error: 'Network error'
       });
@@ -582,7 +582,7 @@ describe('User async actions', () => {
     it('dispatches success notification if password reset is successful',
     () => {
       nock('http://localhost')
-      .post('/api/v0/user/password/reset')
+      .post('/api/v1/user/password/reset')
       .reply(200);
       const expectedAction = [
         notifSend('success', 'Password reset successful')
@@ -600,7 +600,7 @@ describe('User async actions', () => {
 
     it('dispatches error notification if password reset fails', () => {
       nock('http://localhost')
-      .post('/api/v0/user/password/reset')
+      .post('/api/v1/user/password/reset')
       .reply(500);
       const expectedActions = [
         notifSend('danger', 'Something went wrong!')
