@@ -28,7 +28,7 @@ Technologies
 - The [Postgres](http://postgresql.com) database was used with [sequelize](http://sequelizejs.com) as the ORM
 
 #### Client
-The frontend was developed with [React](https://facebook.github.io/react/) and [Redux](http://redux.js.org/)
+- The frontend was developed with [React](https://facebook.github.io/react/) and [Redux](http://redux.js.org/)
 
 **Some other tools used include**:
 - [Babel](https://babeljs.io) to transpile ES6 to ES5
@@ -83,26 +83,32 @@ In addition:
 Frequently Asked Questions (FAQs)
 ---------------------------------
 - How do I see the groups I belong to?
-On succesful authentication, user is taken to the dashboard
-All the groups a user belongs to is listed on the left sidebar of the user's dashboard
+
+  On succesful authentication, user is taken to the dashboard.
+  All the groups a user belongs to is listed on the left sidebar of the user's dashboard
 
 - How do I see all groups?
-A user cannot see all groups.
-You can only see the groups you created and those you've been added to as a member 
 
-- How do I view a group's messages
-  On the dashboard, you can click on the intended group to view messages
+  A user cannot see all groups.
+  You can only see the groups you created and those you've been added to as a member 
 
-- How do I add a user to a group
-On the dashboard, there is a header where the group name and description is displayed.
-On the header is a caret-down icon which on click drops down a menu.
-Click on `Add User`; this brings out a search box where you can search for users
-For every searchstring input, users with username that match the searchstring are displayed with an add icon
-Click on the add icon to add the intended user
-On the dropdown menu, there's also the `Member List` option which on click shows a list of all the group members. You can click on any member in the list to view the member's profile.
+- How do I view a group's messages?
+
+  On the dashboard, you can click on the intended group to view messages.
+
+- How do I add a user to a group?
+
+  On the dashboard, there is a header where the group name and description is displayed.
+  On the header is a caret-down icon which on click drops down a menu.
+  Click on `Add User`; this brings out a search box where you can search for users.
+  For every searchstring input, users with username that match the searchstring are displayed with an add icon.
+  Click on the add icon to add the intended user.
+  
+  On the dropdown menu, there's also the `Member List` option which on click shows a list of all the group members. You can click on any member in the list to view the member's profile.
 
 - How can I see all members of a particular group?
-See above question `How do I add a user to a group?`
+
+  See above question `How do I add a user to a group?`
 
 License
 -------
