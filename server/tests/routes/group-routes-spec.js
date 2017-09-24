@@ -18,7 +18,7 @@ const {
   invalidName
 } = dummyData.Groups;
 
-describe('/api/v0/group', () => {
+describe('/api/v1/group', () => {
   const user = dummyData.Users.thirdValidUser;
   before(() => {
     return models.sequelize.truncate({ cascade: true })
@@ -26,7 +26,7 @@ describe('/api/v0/group', () => {
       return models.User.create(user)
       .then(() => {
         return chai.request(server)
-        .post('/api/v0/user/signin')
+        .post('/api/v1/user/signin')
         .send({
           username: user.username,
           password: user.password
@@ -45,7 +45,7 @@ describe('/api/v0/group', () => {
   it('should take an id, name and description and create a group',
   (done) => {
     chai.request(server)
-    .post('/api/v0/group')
+    .post('/api/v1/group')
     .set('Authorization', `Bearer ${token}`)
     .send(validGroup)
     .end((err, res) => {
@@ -59,7 +59,7 @@ describe('/api/v0/group', () => {
   });
   it('should define id if not passed in request', (done) => {
     chai.request(server)
-    .post('/api/v0/group')
+    .post('/api/v1/group')
     .set('Authorization', `Bearer ${token}`)
     .send(twitter)
     .end((err, res) => {
@@ -73,7 +73,7 @@ describe('/api/v0/group', () => {
   });
   it('should return validation error if id exists', (done) => {
     chai.request(server)
-    .post('/api/v0/group')
+    .post('/api/v1/group')
     .set('Authorization', `Bearer ${token}`)
     .send({
       id: validGroup.id,
@@ -88,7 +88,7 @@ describe('/api/v0/group', () => {
   });
   it('should return validation error if name exists', (done) => {
     chai.request(server)
-    .post('/api/v0/group')
+    .post('/api/v1/group')
     .set('Authorization', `Bearer ${token}`)
     .send({
       id: anotherValidGroup.id,
@@ -104,7 +104,7 @@ describe('/api/v0/group', () => {
   });
   it('should return validation error if name is empty', (done) => {
     chai.request(server)
-    .post('/api/v0/group')
+    .post('/api/v1/group')
     .set('Authorization', `Bearer ${token}`)
     .send(emptyName)
     .end((err, res) => {
@@ -119,7 +119,7 @@ describe('/api/v0/group', () => {
     const stub = sinon.stub(models.Group, 'create');
     stub.rejects();
     chai.request(server)
-    .post('/api/v0/group')
+    .post('/api/v1/group')
     .set('Authorization', `Bearer ${token}`)
     .send({
       name: 'errorOut',
@@ -135,7 +135,7 @@ describe('/api/v0/group', () => {
   });
 });
 
-describe('/api/v0/group/:groupId/user', () => {
+describe('/api/v1/group/:groupId/user', () => {
   const userToBeAdded = dummyData.Users.anotherValidUser;
   const anotherAuthUser = dummyData.Users.validUser;
   before(() => {
@@ -148,7 +148,7 @@ describe('/api/v0/group/:groupId/user', () => {
     })
     .then(() => {
       return chai.request(server)
-      .post('/api/v0/user/signin')
+      .post('/api/v1/user/signin')
       .send({
         username: anotherAuthUser.username,
         password: anotherAuthUser.password
@@ -165,7 +165,7 @@ describe('/api/v0/group/:groupId/user', () => {
   });
   it('should add a user to a group', (done) => {
     chai.request(server)
-    .post(`/api/v0/group/${validGroup.id}/user`)
+    .post(`/api/v1/group/${validGroup.id}/user`)
     .set('Authorization', `Bearer ${token}`)
     .send({
       username: userToBeAdded.username
@@ -179,7 +179,7 @@ describe('/api/v0/group/:groupId/user', () => {
     const stub = sinon.stub(AdhocModelService, 'returnModelInstance');
     stub.rejects();
     chai.request(server)
-    .post(`/api/v0/group/${validGroup.id}/user`)
+    .post(`/api/v1/group/${validGroup.id}/user`)
     .set('Authorization', `Bearer ${token}`)
     .send({
       username: userToBeAdded.username
@@ -194,7 +194,7 @@ describe('/api/v0/group/:groupId/user', () => {
   });
   it('should remove a user from a group', (done) => {
     chai.request(server)
-    .delete(`/api/v0/group/${validGroup.id}/user`)
+    .delete(`/api/v1/group/${validGroup.id}/user`)
     .set('Authorization', `Bearer ${token}`)
     .send({
       username: userToBeAdded.username
@@ -208,7 +208,7 @@ describe('/api/v0/group/:groupId/user', () => {
     const stub = sinon.stub(models.Group.prototype, 'removeUser');
     stub.rejects();
     chai.request(server)
-    .delete(`/api/v0/group/${validGroup.id}/user`)
+    .delete(`/api/v1/group/${validGroup.id}/user`)
     .set('Authorization', `Bearer ${token}`)
     .send({
       username: userToBeAdded.username
@@ -223,7 +223,7 @@ describe('/api/v0/group/:groupId/user', () => {
   });
   it('only a group member can add a user', (done) => {
     chai.request(server)
-    .post(`/api/v0/group/${validGroup.id}/user`)
+    .post(`/api/v1/group/${validGroup.id}/user`)
     .set('Authorization', `Bearer ${token2}`)
     .send({
       username: userToBeAdded.username
@@ -240,7 +240,7 @@ describe('/api/v0/group/:groupId/user', () => {
     const stub = sinon.stub(models.Group.prototype, 'hasUser');
     stub.rejects();
     chai.request(server)
-    .post(`/api/v0/group/${validGroup.id}/user`)
+    .post(`/api/v1/group/${validGroup.id}/user`)
     .set('Authorization', `Bearer ${token}`)
     .send({
       username: userToBeAdded.username
@@ -255,7 +255,7 @@ describe('/api/v0/group/:groupId/user', () => {
   });
   it('only a group owner can remove a user', (done) => {
     chai.request(server)
-    .delete(`/api/v0/group/${validGroup.id}/user`)
+    .delete(`/api/v1/group/${validGroup.id}/user`)
     .set('Authorization', `Bearer ${token2}`)
     .send({
       username: userToBeAdded.username
@@ -272,7 +272,7 @@ describe('/api/v0/group/:groupId/user', () => {
     const stub = sinon.stub(models.Group, 'findById');
     stub.rejects();
     chai.request(server)
-    .delete(`/api/v0/group/${validGroup.id}/user`)
+    .delete(`/api/v1/group/${validGroup.id}/user`)
     .set('Authorization', `Bearer ${token}`)
     .send({
       username: userToBeAdded.username
@@ -288,7 +288,7 @@ describe('/api/v0/group/:groupId/user', () => {
   it('should return error if group does not exist',
   (done) => {
     chai.request(server)
-    .post(`/api/v0/group/${anotherValidGroup.id}/user`)
+    .post(`/api/v1/group/${anotherValidGroup.id}/user`)
     .set('Authorization', `Bearer ${token}`)
     .send({
       username: userToBeAdded.username
@@ -301,11 +301,11 @@ describe('/api/v0/group/:groupId/user', () => {
   });
 });
 
-describe('/api/v0/group/:groupId/message', () => {
+describe('/api/v1/group/:groupId/message', () => {
   it('should add a message to a group', (done) => {
     const message = dummyData.Messages.anotherValidMessage;
     chai.request(server)
-    .post(`/api/v0/group/${validGroup.id}/message`)
+    .post(`/api/v1/group/${validGroup.id}/message`)
     .set('Authorization', `Bearer ${token}`)
     .send(message)
     .end((err, res) => {
@@ -316,7 +316,7 @@ describe('/api/v0/group/:groupId/message', () => {
   it('should add a message to a group', (done) => {
     const message = dummyData.Messages.thirdValidMessage;
     chai.request(server)
-    .post(`/api/v0/group/${validGroup.id}/message`)
+    .post(`/api/v1/group/${validGroup.id}/message`)
     .set('Authorization', `Bearer ${token}`)
     .send(message)
     .end((err, res) => {
@@ -328,7 +328,7 @@ describe('/api/v0/group/:groupId/message', () => {
   (done) => {
     const message = dummyData.Messages.thirdValidMessage;
     chai.request(server)
-    .post(`/api/v0/group/${emptyName.id}/message`)
+    .post(`/api/v1/group/${emptyName.id}/message`)
     .set('Authorization', `Bearer ${token}`)
     .send(message)
     .end((err, res) => {
@@ -340,7 +340,7 @@ describe('/api/v0/group/:groupId/message', () => {
   it('should return validation error for invalid message', (done) => {
     const message = dummyData.Messages.thirdValidMessage;
     chai.request(server)
-    .post(`/api/v0/group/${validGroup.id}/message`)
+    .post(`/api/v1/group/${validGroup.id}/message`)
     .set('Authorization', `Bearer ${token}`)
     .send(message)
     .end((err, res) => {
@@ -355,7 +355,7 @@ describe('/api/v0/group/:groupId/message', () => {
     stub.rejects();
     const message = dummyData.Messages.thirdValidMessage;
     chai.request(server)
-    .post(`/api/v0/group/${validGroup.id}/message`)
+    .post(`/api/v1/group/${validGroup.id}/message`)
     .set('Authorization', `Bearer ${token}`)
     .send(message)
     .end((err, res) => {
@@ -368,10 +368,10 @@ describe('/api/v0/group/:groupId/message', () => {
   });
 });
 
-describe('/api/v0/group/:groupId/messages', () => {
+describe('/api/v1/group/:groupId/messages', () => {
   it('should get all messages in a group', (done) => {
     chai.request(server)
-    .get(`/api/v0/group/${validGroup.id}/messages`)
+    .get(`/api/v1/group/${validGroup.id}/messages`)
     .set('Authorization', `Bearer ${token}`)
     .end((err, res) => {
       expect(res).to.have.status(200);
@@ -387,7 +387,7 @@ describe('/api/v0/group/:groupId/messages', () => {
   it('should return error if group does not exist',
   (done) => {
     chai.request(server)
-    .get(`/api/v0/group/${emptyName.id}/messages`)
+    .get(`/api/v1/group/${emptyName.id}/messages`)
     .set('Authorization', `Bearer ${token}`)
     .end((err, res) => {
       expect(res.body.error).to.equal('Error! Group does not exist');
@@ -399,7 +399,7 @@ describe('/api/v0/group/:groupId/messages', () => {
     const stub = sinon.stub(models.Group.prototype, 'getMessages');
     stub.rejects();
     chai.request(server)
-    .get(`/api/v0/group/${validGroup.id}/messages`)
+    .get(`/api/v1/group/${validGroup.id}/messages`)
     .set('Authorization', `Bearer ${token}`)
     .end((err, res) => {
       stub.restore();
@@ -411,10 +411,10 @@ describe('/api/v0/group/:groupId/messages', () => {
   });
 });
 
-describe('/api/v0/group/:groupId/users', () => {
+describe('/api/v1/group/:groupId/users', () => {
   it('should get all users in a group', (done) => {
     chai.request(server)
-    .get(`/api/v0/group/${validGroup.id}/users`)
+    .get(`/api/v1/group/${validGroup.id}/users`)
     .set('Authorization', `Bearer ${token}`)
     .end((err, res) => {
       expect(res).to.have.status(200);
@@ -430,7 +430,7 @@ describe('/api/v0/group/:groupId/users', () => {
   it('should return error if group does not exist',
   (done) => {
     chai.request(server)
-    .get(`/api/v0/group/${emptyName.id}/users`)
+    .get(`/api/v1/group/${emptyName.id}/users`)
     .set('Authorization', `Bearer ${token}`)
     .end((err, res) => {
       expect(res.body.error).to.equal('Error! Group does not exist');
@@ -442,7 +442,7 @@ describe('/api/v0/group/:groupId/users', () => {
     const stub = sinon.stub(models.Group.prototype, 'getUsers');
     stub.rejects();
     chai.request(server)
-    .get(`/api/v0/group/${validGroup.id}/users`)
+    .get(`/api/v1/group/${validGroup.id}/users`)
     .set('Authorization', `Bearer ${token}`)
     .end((err, res) => {
       stub.restore();
