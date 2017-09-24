@@ -59,8 +59,8 @@ Tests
 *  [enzyme](https://www.npmjs.com/package/enzyme) was used to mount components for tests
 *  Run the tests with `npm run frontend:test`
 
-Contributions
--------------
+How to Contribute
+-----------------
 **Contributions are welcome.** [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/tomipaul/PostIt/issues)
 1. Fork this repositry.
 2. Clone to your local environment: git clone git@github.com:your-username/inverted-index.git
