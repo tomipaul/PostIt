@@ -33,3 +33,5 @@ exclude_paths:
 - "server/seeders"
 - "client/tests"
 - "template/"
+- "client/bin"
+- "client/build"

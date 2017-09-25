@@ -147,7 +147,6 @@ export function getUsersWithMessageReadSuccess(response, messageId) {
  */
 export function createGroup(name, description) {
   return (dispatch) => {
-    const token = window.localStorage.getItem('auth_token');
     if (!name) {
       return dispatch(showErrorNotification({
         message: 'Group cannot have an empty name'
@@ -157,8 +156,6 @@ export function createGroup(name, description) {
     return axios.post('/api/v1/group', {
       name,
       description
-    }, {
-      headers: { Authorization: `Bearer ${token}` }
     })
     .then((response) => {
       dispatch(createGroupSuccess(response.data));
@@ -179,13 +176,10 @@ export function createGroup(name, description) {
 export function addUserToGroup(username) {
   return (dispatch, getState) => {
     const state = getState();
-    const token = window.localStorage.getItem('auth_token');
     const groupId = state.activeGroup;
     dispatch(sendRequest());
     return axios.post(`/api/v1/group/${groupId}/user`, {
       username
-    }, {
-      headers: { Authorization: `Bearer ${token}` }
     })
     .then((response) => {
       dispatch(addUserToGroupSuccess(response.data));
@@ -206,12 +200,9 @@ export function addUserToGroup(username) {
 export function addMessageToGroup(message) {
   return (dispatch, getState) => {
     const state = getState();
-    const token = window.localStorage.getItem('auth_token');
     const groupId = state.activeGroup;
     dispatch(sendRequest());
-    return axios.post(`/api/v1/group/${groupId}/message`, message, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
+    return axios.post(`/api/v1/group/${groupId}/message`, message)
     .then((response) => {
       dispatch(showSuccessNotification({ response }));
     })
@@ -230,12 +221,9 @@ export function addMessageToGroup(message) {
 export function removeUserFromGroup(username) {
   return (dispatch, getState) => {
     const state = getState();
-    const token = window.localStorage.getItem('auth_token');
     const groupId = state.activeGroup;
     dispatch(sendRequest());
-    return axios.delete(`/api/v1/group/${groupId}/user/${username}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
+    return axios.delete(`/api/v1/group/${groupId}/user/${username}`)
     .then((response) => {
       dispatch(removeUserFromGroupSuccess(response.data));
       dispatch(showSuccessNotification({ response }));
@@ -254,12 +242,9 @@ export function removeUserFromGroup(username) {
 export function getGroupUsers() {
   return (dispatch, getState) => {
     const state = getState();
-    const token = window.localStorage.getItem('auth_token');
     const groupId = state.activeGroup;
     dispatch(sendRequest());
-    return axios.get(`/api/v1/group/${groupId}/users`, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
+    return axios.get(`/api/v1/group/${groupId}/users`)
     .then((response) => {
       dispatch(getGroupUsersSuccess(response.data));
     })
@@ -277,12 +262,9 @@ export function getGroupUsers() {
 export function getGroupMessages() {
   return (dispatch, getState) => {
     const state = getState();
-    const token = window.localStorage.getItem('auth_token');
     const groupId = state.activeGroup;
     dispatch(sendRequest());
-    return axios.get(`/api/v1/group/${groupId}/messages`, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
+    return axios.get(`/api/v1/group/${groupId}/messages`)
     .then((response) => {
       dispatch(getGroupMessagesSuccess(response.data));
     })
