@@ -84,6 +84,19 @@ describe('Group async actions', () => {
         expect(dispatched).toMatchObject(expectedActions);
       });
     });
+
+    it('creates NOTIF_SEND when group creation fails',
+    () => {
+      const { description } = group;
+      const expectedActions = [
+        notifSend('danger', 'Group cannot have an empty name')
+      ];
+      const store = mockStore({});
+      store.dispatch(actions
+      .createGroup(null, description));
+      const dispatched = store.getActions();
+      expect(dispatched).toMatchObject(expectedActions);
+    });
   });
 
   describe('async action addUserToGroup', () => {

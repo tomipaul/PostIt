@@ -24,18 +24,17 @@ describe('components', () => {
       expect(enzymeWrapper.find('.form-div').exists()).toBe(true);
     });
 
-    it('should have state with keys showLogin and showSignup', () => {
-      expect(enzymeWrapper.state('showLogin')).toBe(true);
-      expect(enzymeWrapper.state('showSignup')).toBe(false);
+    it('should have state with key userAccess', () => {
+      expect(enzymeWrapper.state('userAccess')).toBe(true);
     });
 
-    it('should render SignUp when showSignup is true', () => {
+    it('should render SignUp when userAccess is false', () => {
       enzymeWrapper.find('SignIn').props().showSignup();
       expect(enzymeWrapper.find('SignUp').exists()).toBe(true);
       expect(enzymeWrapper.find('SignIn').exists()).toBe(false);
     });
 
-    it('should render SignIn when showLogin is true', () => {
+    it('should render SignIn when userAccess is true', () => {
       enzymeWrapper.find('SignUp').props().showLogin();
       expect(enzymeWrapper.find('SignIn').exists()).toBe(true);
       expect(enzymeWrapper.find('SignUp').exists()).toBe(false);

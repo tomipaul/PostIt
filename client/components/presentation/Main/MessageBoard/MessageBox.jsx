@@ -10,7 +10,7 @@ import Message from './Message';
  * @return {string} date localestring or time difference
  * between date and current date
  */
-const convertDateTimeString = (date) => {
+export const convertDateTimeString = (date) => {
   let dateString = new Date(date).toLocaleString();
   const timeDiff = Date.now() - Date.parse(dateString);
   if (timeDiff < 3600000) {

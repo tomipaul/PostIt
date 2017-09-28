@@ -10,7 +10,8 @@ const setup = () => {
     allUsers: state.users,
     getUser: jest.fn(),
     clearSelectedUser: jest.fn(),
-    addUserToGroup: jest.fn()
+    addUserToGroup: jest.fn(),
+    group: state.activeGroup
   };
   const enzymeWrapper = mount(<SearchUserView {...props} />);
   return {

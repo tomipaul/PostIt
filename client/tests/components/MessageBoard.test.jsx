@@ -14,7 +14,8 @@ const setup = () => {
   const props = {
     messages,
     nodeRef: jest.fn(),
-    onScroll: jest.fn()
+    onScroll: jest.fn(),
+    hasGroups: false
   };
   const enzymeWrapper = mount(
     <Provider store={store}>

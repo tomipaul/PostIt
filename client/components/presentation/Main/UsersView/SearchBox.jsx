@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
  * @return {object} SerachBox component
  */
 const SearchBox = ({
-  value,
+  value = '',
   onChange,
   onKeyPress,
   onClick
