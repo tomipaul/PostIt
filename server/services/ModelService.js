@@ -141,7 +141,7 @@ class ModelService {
   static processError(message, model, err) {
     if (!err.code) {
       if (err instanceof model.sequelize.ValidationError) {
-        err.code = 400;
+        err.code = 422;
       } else {
         err.code = 500;
         err.message = message;

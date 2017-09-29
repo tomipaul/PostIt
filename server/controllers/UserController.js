@@ -41,11 +41,11 @@ class UserController {
     return (req, res, next) => {
       if (req.method !== 'POST') {
         const err = new Error('POST request method expected');
-        err.code = 400;
+        err.code = 422;
         return next(err);
       } else if (!req.body.username || !req.body.password) {
         const err = new Error('non-empty username and password expected');
-        err.code = 400;
+        err.code = 422;
         return next(err);
       }
       return next();
@@ -67,7 +67,7 @@ class UserController {
       || req.cookies.token || req.query.token;
       if (!token) {
         const err = new Error('No Access token provided!');
-        err.code = 400;
+        err.code = 422;
         return next(err);
       }
       const matched = /^Bearer (\S+)$/.exec(token);

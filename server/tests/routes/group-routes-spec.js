@@ -14,8 +14,7 @@ const {
   validGroup,
   anotherValidGroup,
   twitter,
-  emptyName,
-  invalidName
+  emptyName
 } = dummyData.Groups;
 
 describe('/api/v1/group', () => {
@@ -80,7 +79,7 @@ describe('/api/v1/group', () => {
       name: 'newGroup'
     })
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
       expect(res.body.error).to.equal('id already exists!');
       return done();
@@ -95,7 +94,7 @@ describe('/api/v1/group', () => {
       name: validGroup.name
     })
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
       expect(res.body.error).to
       .equal('You have an existing group Nations_pledge');
@@ -108,7 +107,7 @@ describe('/api/v1/group', () => {
     .set('Authorization', `Bearer ${token}`)
     .send(emptyName)
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
       expect(res.body.error).to.have
       .string('Group name cannot be an empty string');
@@ -344,7 +343,7 @@ describe('/api/v1/group/:groupId/message', () => {
     .set('Authorization', `Bearer ${token}`)
     .send(message)
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
       expect(res.body.error).to.equal('id already exists!');
       return done();

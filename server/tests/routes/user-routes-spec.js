@@ -45,7 +45,7 @@ describe('/api/v1/user/signup', () => {
     .post('/api/v1/user/signup')
     .send(incompleteUser)
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
       expect(res.body.error).to
       .equal('Username, password, email and phoneNo required');
@@ -57,7 +57,7 @@ describe('/api/v1/user/signup', () => {
     .post('/api/v1/user/signup')
     .send(validUser)
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
       expect(res.body.error).to.equal('username is not available!');
       return done();
@@ -68,7 +68,7 @@ describe('/api/v1/user/signup', () => {
     .post('/api/v1/user/signup')
     .send({ ...validUser, username: 'emailexists' })
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
       expect(res.body.error).to.equal('email already exists!');
       return done();
@@ -80,7 +80,7 @@ describe('/api/v1/user/signup', () => {
     .post('/api/v1/user/signup')
     .send(emptyUsername)
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
       expect(res.body.error).to.have
       .string('username cannot be an empty string');
@@ -97,7 +97,7 @@ describe('/api/v1/user/signup', () => {
     .post('/api/v1/user/signup')
     .send(emptyEmail)
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
       expect(res.body.error).to.have
       .string('email is invalid');
@@ -112,7 +112,7 @@ describe('/api/v1/user/signup', () => {
     .post('/api/v1/user/signup')
     .send(emptyPassword)
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
       expect(res.body.error).to.have
       .string('password must be at least six characters long');
@@ -125,7 +125,7 @@ describe('/api/v1/user/signup', () => {
     .post('/api/v1/user/signup')
     .send(emptyPhoneNo)
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
       expect(res.body.error).to.have
       .string('mobile number cannot be an empty string');
@@ -164,7 +164,7 @@ describe('/api/v1/user/signin', () => {
       password: '1234567'
     })
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
       expect(res.body.error).to.be
       .equal('POST request method expected');
@@ -180,7 +180,7 @@ describe('/api/v1/user/signin', () => {
       password: ''
     })
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
       expect(res.body.error).to.be
       .equal('non-empty username and password expected');
@@ -196,7 +196,7 @@ describe('/api/v1/user/signin', () => {
       password: '123456'
     })
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
       expect(res.body.error).to.be
       .equal('non-empty username and password expected');
@@ -268,7 +268,7 @@ describe('/api/v1/user/:username', () => {
     chai.request(server)
     .get(`/api/v1/user/${validUser.username}`)
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
       expect(res.body.error).to.equal('No Access token provided!');
       return done();
@@ -321,7 +321,7 @@ describe('/api/v1/user/groups', () => {
     chai.request(server)
     .get('/api/v1/user/groups')
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
       expect(res.body.error).to.equal('No Access token provided!');
       return done();
@@ -376,7 +376,7 @@ describe('/api/v1/user/:username', () => {
       email: 'updateduser@andela.com'
     })
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
       expect(res.body.error).to.equal('No Access token provided!');
       return done();
@@ -390,7 +390,7 @@ describe('/api/v1/user/:username', () => {
       email: 'updateduser@andela.com'
     })
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(422);
       expect(res).to.be.json;
       expect(res.body.error).to.equal('No Access token provided!');
       return done();

@@ -96,7 +96,7 @@ class GroupController {
         if (group) {
           const err = new Error();
           err.message = `You have an existing group ${req.body.name}`;
-          err.code = 400;
+          err.code = 422;
           throw err;
         }
       })

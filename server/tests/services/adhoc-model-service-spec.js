@@ -110,7 +110,7 @@ describe('AdhocModelService.addUserToGroup', () => {
     return AdhocModelService
     .addUserToGroup(undefined, groupId)
     .catch((err) => {
-      expect(err.code).to.equal(400);
+      expect(err.code).to.equal(422);
       expect(err.message).to
       .equal('Username is invalid or not defined');
     });
@@ -121,7 +121,7 @@ describe('AdhocModelService.addUserToGroup', () => {
     return AdhocModelService
     .addUserToGroup(username, groupId)
     .catch((err) => {
-      expect(err.code).to.equal(400);
+      expect(err.code).to.equal(422);
       expect(err.message).to
       .equal('User already belong to group');
     });
@@ -246,7 +246,7 @@ describe('AdhocModelService.removeUserFromGroup', () => {
     return AdhocModelService
     .removeUserFromGroup(username, groupId)
     .catch((err) => {
-      expect(err.code).to.equal(400);
+      expect(err.code).to.equal(422);
       expect(err.message).to
       .equal('User does not exist in group');
     });
@@ -327,7 +327,7 @@ describe('AdhocModelService.addMessageToGroup', () => {
     return AdhocModelService
     .addMessageToGroup(message, groupId)
     .catch((err) => {
-      expect(err.code).to.equal(400);
+      expect(err.code).to.equal(422);
       expect(err.message).to
       .equal('Incomplete field; text is required');
     });

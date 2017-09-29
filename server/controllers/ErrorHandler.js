@@ -13,7 +13,7 @@ export default function errorHandler() {
     const sequelize = models.sequelize;
     if (!err.code || err.code > 499) {
       if (err instanceof sequelize.ValidationError) {
-        err.code = 400;
+        err.code = 422;
       } else {
         err.code = 500;
         err.message = 'Exception 500! Operation failed.';

@@ -17,7 +17,7 @@ class AdhocModelService {
    */
   static validateInputs(model, fields) {
     const error = new Error();
-    error.code = 400;
+    error.code = 422;
     if (model.name === 'Group') {
       const { name } = fields;
       if (name === undefined) {
@@ -68,7 +68,7 @@ class AdhocModelService {
     .then((groupInstance) => {
       if (!username) {
         const err = new Error('Username is invalid or not defined');
-        err.code = 400;
+        err.code = 422;
         throw err;
       } else {
         return Promise.all([
@@ -80,7 +80,7 @@ class AdhocModelService {
             const err = (isValid[0]) ?
             new Error('User already belong to group')
             : new Error('User does not exist');
-            err.code = 400;
+            err.code = 422;
             throw err;
           }
           return groupInstance.addUser(username)
@@ -111,7 +111,7 @@ class AdhocModelService {
           return user;
         }
         const err = new Error('User does not exist in group');
-        err.code = 400;
+        err.code = 422;
         throw err;
       });
     })
