@@ -17,7 +17,8 @@ import {
   AUTHENTICATION_SUCCESS,
   LOG_OUT_SUCCESS,
   SELECT_USER,
-  CLEAR_SELECTED_USER
+  CLEAR_SELECTED_USER,
+  UPLOAD_IMAGE_SUCCESS
 } from '../actionTypes/User';
 
 /**
@@ -55,7 +56,16 @@ export function authenticationSuccess(response) {
     response
   };
 }
-
+/**
+ * create action: upload image: success
+ * @function uploadImageSuccess
+ * @returns {object} action: type
+ */
+export function uploadImageSuccess() {
+  return {
+    type: UPLOAD_IMAGE_SUCCESS
+  };
+}
 /**
  * create action: log out user: success
  * @function logOutSuccess
@@ -423,10 +433,12 @@ export function getUnreadMessages() {
  */
 export function updateProfilePicture(image) {
   return (dispatch) => {
+    dispatch(sendRequest());
     const imageRef = firebase.storage()
     .ref().child(`images/${image.name}`);
     return imageRef.put(image)
     .then((snapshot) => {
+      dispatch(uploadImageSuccess());
       dispatch(updateUser({
         photoURL: snapshot.downloadURL
       }));
