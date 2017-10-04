@@ -22,9 +22,6 @@ const GroupOptions = ({ showSearchUserView, showGroupMemberView }) =>
         ><i className="material-icons">library_add</i>Add User</a>
       </li>
       <li>
-        <a href="#!"><i className="material-icons">delete</i>Delete Group</a>
-      </li>
-      <li>
         <a
           href="#!"
           onClick={showGroupMemberView}
