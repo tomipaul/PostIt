@@ -6,7 +6,9 @@
   "jest": {
     "verbose": true,
     "testURL": "http://localhost",
-    "setupFiles": ["<rootDir>/client/tests/test-env.js"],
+    "setupFiles": [
+      "<rootDir>/client/tests/test-env.js"
+    ],
     "coveragePathIgnorePatterns": [
       "<rootDir>/client/bin"
     ]
@@ -119,7 +121,8 @@
     "socket.io": "^2.0.3",
     "socket.io-client": "^2.0.3",
     "style-loader": "^0.18.2",
-    "webpack": "^3.1.0"
+    "webpack": "^3.1.0",
+    "winston": "^2.4.0"
   },
   "engines": {
     "node": "6.11.1"
