@@ -358,7 +358,7 @@ photo {
   border-radius: 5px;
   outline: #3c5d5d;
 }
-#modal1, #user1 {
+#create_group_modal, #user1 {
   height: 50%;
   width: 40%;
 }
@@ -617,7 +617,7 @@ span.badge {
   }
 }
 @media only screen and (max-width : 768px) {
-  #modal1, #user1 {
+  #create_group_modal, #user1 {
     width: 90%;
   }
   .error-404 {

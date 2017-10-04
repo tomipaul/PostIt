@@ -16,7 +16,7 @@ const CreateGroup = () => {
         className="btn-floating btn-large waves-effect waves-light modal-trigger group-add"
         role="button"
         data-tip="Add group"
-        href="#modal1"
+        href="#create_group_modal"
         tabIndex="-1"
       >
         <i className="material-icons">add</i>

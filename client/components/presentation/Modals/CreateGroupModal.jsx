@@ -55,7 +55,7 @@ class CreateGroupModal extends React.Component {
    */
   render() {
     return (
-      <div id="modal1" className="modal modal-fixed-footer">
+      <div id="create_group_modal" className="modal modal-fixed-footer">
         <div className="modal-content">
           <h4>Create a Group</h4>
           <form>
