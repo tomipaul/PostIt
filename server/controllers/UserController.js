@@ -102,7 +102,10 @@ class UserController {
         .then((token) => {
           const userInfo = UserController.extractFromUserObject(user);
           return res.status(200).json({
-            user: userInfo,
+            user: {
+              username: userInfo.username,
+              photoURL: userInfo.photoURL
+            },
             token,
             message: 'Authentication Successful'
           });
