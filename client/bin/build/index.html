@@ -351,17 +351,14 @@ You can use our API to access PostIt API endpoints, which serves different funct
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Frediel01"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Frediel01@gmail.com"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"phoneNo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+2348902342134"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"photoURL"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://image1.host.io"</span><span class="w">
+    </span><span class="s2">"photoURL"</span><span class="p">:</span><span class="w"> </span><span class="s2">null</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"token"</span><span class="p">:</span><span class="w">  </span><span class="s2">"*****************"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Authentication Successful"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre><h3 id='http-request'>HTTP Request</h3>
-<p><code>POST https://app-postit.herokuapp.com/api/v0/user/signup</code></p>
+<p><code>POST https://app-postit.herokuapp.com/api/v1/user/signup</code></p>
 <h3 id='request-payload'>Request Payload</h3>
 <table><thead>
 <tr>
@@ -409,17 +406,14 @@ You can use our API to access PostIt API endpoints, which serves different funct
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Frediel01"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Frediel01@gmail.com"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"phoneNo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+2348902342134"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"photoURL"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://image1.host.io"</span><span class="w">
+    </span><span class="s2">"photoURL"</span><span class="p">:</span><span class="w"> </span><span class="s2">null</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"****************"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Authentication Successful"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre><h3 id='http-request-2'>HTTP Request</h3>
-<p><code>POST https://app-postit.herokuapp.com/api/v0/user/signin</code></p>
+<p><code>POST https://app-postit.herokuapp.com/api/v1/user/signin</code></p>
 <h3 id='request-payload-2'>Request Payload</h3>
 <table><thead>
 <tr>
@@ -458,7 +452,7 @@ You can use our API to access PostIt API endpoints, which serves different funct
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre><h3 id='http-request-3'>HTTP Request</h3>
-<p><code>POST https://app-postit.herokuapp.com/api/v0/password/mail</code></p>
+<p><code>POST https://app-postit.herokuapp.com/api/v1/password/mail</code></p>
 <h3 id='request-payload-3'>Request Payload</h3>
 <table><thead>
 <tr>
@@ -496,13 +490,13 @@ You can use our API to access PostIt API endpoints, which serves different funct
     </span><span class="s2">"phoneNo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+2348902342134"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Frediel01@gmail.com"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"photoURL"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://image1.host.io"</span><span class="w">
+    </span><span class="s2">"photoURL"</span><span class="p">:</span><span class="w"> </span><span class="s2">null</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User account updated"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre><h3 id='http-request-4'>HTTP Request</h3>
-<p><code>POST https://app-postit.herokuapp.com/api/v0/user/password/reset</code></p>
+<p><code>POST https://app-postit.herokuapp.com/api/v1/user/password/reset</code></p>
 <h3 id='request-payload-4'>Request Payload</h3>
 <table><thead>
 <tr>
@@ -552,7 +546,7 @@ You can use our API to access PostIt API endpoints, which serves different funct
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre><h3 id='http-request-5'>HTTP Request</h3>
-<p><code>POST https://app-postit.herokuapp.com/api/v0/group</code></p>
+<p><code>POST https://app-postit.herokuapp.com/api/v1/group</code></p>
 <h3 id='request-payload-5'>Request Payload</h3>
 <table><thead>
 <tr>
@@ -592,13 +586,13 @@ groupId is part of the response returned when a group is created</p>
     </span><span class="s2">"phoneNo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+2348902342134"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Frediel01@gmail.com"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"photoURL"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://image1.host.io"</span><span class="w">
+    </span><span class="s2">"photoURL"</span><span class="p">:</span><span class="w"> </span><span class="s2">null</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User Frediel01 added to group"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre><h3 id='http-request-6'>HTTP Request</h3>
-<p><code>POST https://app-postit.herokuapp.com/api/v0/group/:groupId/user</code></p>
+<p><code>POST https://app-postit.herokuapp.com/api/v1/group/:groupId/user</code></p>
 <h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -652,7 +646,7 @@ groupId is part of the response returned when a group is created</p>
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre><h3 id='http-request-7'>HTTP Request</h3>
-<p><code>POST https://app-postit.herokuapp.com/api/v0/group/:groupId/message</code></p>
+<p><code>POST https://app-postit.herokuapp.com/api/v1/group/:groupId/message</code></p>
 <h3 id='url-parameters-2'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -706,7 +700,7 @@ groupId is part of the response returned when a group is created</p>
 </span><span class="p">]</span><span class="w">
 
 </span></code></pre><h3 id='http-request-8'>HTTP Request</h3>
-<p><code>GET https://app-postit.herokuapp.com/api/v0/group/:groupId/messages</code></p>
+<p><code>GET https://app-postit.herokuapp.com/api/v1/group/:groupId/messages</code></p>
 <h3 id='url-parameters-3'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -731,12 +725,12 @@ groupId is part of the response returned when a group is created</p>
     </span><span class="s2">"phoneNo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+2348902342134"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Frediel01@gmail.com"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"photoURL"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://image1.host.io"</span><span class="w">
+    </span><span class="s2">"photoURL"</span><span class="p">:</span><span class="w"> </span><span class="s2">null</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
 </span></code></pre><h3 id='http-request-9'>HTTP Request</h3>
-<p><code>GET https://app-postit.herokuapp.com/api/v0/group/:groupId/users</code></p>
+<p><code>GET https://app-postit.herokuapp.com/api/v1/group/:groupId/users</code></p>
 <h3 id='url-parameters-4'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -771,7 +765,7 @@ groupId is part of the response returned when a group is created</p>
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre><h3 id='http-request-10'>HTTP Request</h3>
-<p><code>POST https://app-postit.herokuapp.com/api/v0/group/:groupId/messages/read</code></p>
+<p><code>POST https://app-postit.herokuapp.com/api/v1/group/:groupId/messages/read</code></p>
 <h3 id='url-parameters-5'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -816,7 +810,7 @@ groupId is part of the response returned when a group is created</p>
 </span><span class="p">]</span><span class="w">
 
 </span></code></pre><h3 id='http-request-11'>HTTP Request</h3>
-<p><code>GET https://app-postit.herokuapp.com/api/v0/group/:groupId/message/:messageId/users</code></p>
+<p><code>GET https://app-postit.herokuapp.com/api/v1/group/:groupId/message/:messageId/users</code></p>
 <h3 id='url-parameters-6'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -845,12 +839,12 @@ groupId is part of the response returned when a group is created</p>
     </span><span class="s2">"phoneNo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+2348902342134"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Frediel01@gmail.com"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"photoURL"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://image1.host.io"</span><span class="w">
+    </span><span class="s2">"photoURL"</span><span class="p">:</span><span class="w"> </span><span class="s2">null</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre><h3 id='http-request-12'>HTTP Request</h3>
-<p><code>GET https://app-postit.herokuapp.com/api/v0/user/:username</code></p>
+<p><code>GET https://app-postit.herokuapp.com/api/v1/user/:username</code></p>
 <h3 id='url-parameters-7'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -873,7 +867,7 @@ groupId is part of the response returned when a group is created</p>
   </span><span class="s2">"phoneNo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+2348155129009"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Frediel04@gmail.com"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"photoURL"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://image1.host.io"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"photoURL"</span><span class="p">:</span><span class="w"> </span><span class="s2">https://app-postit.herokuapp.com/images/female-avatar.png</span><span class="p">,</span><span class="w">
   </span><span class="s2">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"************"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
@@ -887,13 +881,13 @@ groupId is part of the response returned when a group is created</p>
     </span><span class="s2">"phoneNo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+2348155129009"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Frediel04@gmail.com"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"photoURL"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://image1.host.io"</span><span class="w">
+    </span><span class="s2">"photoURL"</span><span class="p">:</span><span class="w"> </span><span class="s2">https://app-postit.herokuapp.com/images/female-avatar.png</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"User updated"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre><h3 id='http-request-13'>HTTP Request</h3>
-<p><code>PUT https://app-postit.herokuapp.com/api/v0/user/:username</code></p>
+<p><code>PUT https://app-postit.herokuapp.com/api/v1/user/:username</code></p>
 <h3 id='url-parameters-8'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -917,22 +911,22 @@ groupId is part of the response returned when a group is created</p>
 <tr>
 <td>email</td>
 <td>optional</td>
-<td>user email address</td>
+<td>new email address</td>
 </tr>
 <tr>
 <td>password</td>
 <td>optional</td>
-<td>user password</td>
+<td>new password</td>
 </tr>
 <tr>
 <td>phoneNo</td>
 <td>optional</td>
-<td>mobile number</td>
+<td>new mobile number</td>
 </tr>
 <tr>
 <td>photoURL</td>
 <td>optional</td>
-<td>link to the uploaded profile picture of user</td>
+<td>link to a newly uploaded profile picture of user</td>
 </tr>
 </tbody></table>
 
@@ -956,7 +950,7 @@ groupId is part of the response returned when a group is created</p>
 </span><span class="p">]</span><span class="w">
 
 </span></code></pre><h3 id='http-request-14'>HTTP Request</h3>
-<p><code>GET https://app-postit.herokuapp.com/api/v0/user/groups</code></p>
+<p><code>GET https://app-postit.herokuapp.com/api/v1/user/groups</code></p>
 <h2 id='get-all-users'>Get all users</h2>
 <p>This endpoint gets all users in the application</p>
 
@@ -969,24 +963,26 @@ groupId is part of the response returned when a group is created</p>
     </span><span class="s2">"phoneNo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+2348155129009"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Frediel04@gmail.com"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"photoURL"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://image1.host.io"</span><span class="w">
+    </span><span class="s2">"photoURL"</span><span class="p">:</span><span class="w"> </span><span class="s2">null</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
 </span></code></pre><h3 id='http-request-15'>HTTP Request</h3>
-<p><code>GET https://app-postit.herokuapp.com/api/v0/users</code></p>
+<p><code>GET https://app-postit.herokuapp.com/api/v1/users</code></p>
 <h2 id='get-unread-messages'>Get unread messages</h2>
 <p>This endpoint gets all the unread messages of a user. The messages are organized according to groups.</p>
 
 <blockquote>
-<p>Response: Object that maps group id to an array of unread message id</p>
+<p>Response: Object that maps a group to an array of user's unread messages in the group</p>
+<p>key: a UUID string that represents the group id</p>
+<p>value: an array of UUID strings that represents ids of unread messages in the group</p> 
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"009671b5-ee2a-4676-8c69-773effb3211f"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"0296dc45-7419-4302-b336-c017a76a2fc9"</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre><h3 id='http-request-16'>HTTP Request</h3>
-<p><code>GET https://app-postit.herokuapp.com/api/v0/messages/unread</code></p>
+<p><code>GET https://app-postit.herokuapp.com/api/v1/messages/unread</code></p>
 <h1 id='errors'>Errors</h1>
 <p>The PostIt API uses the following error codes:</p>
 
@@ -996,10 +992,6 @@ groupId is part of the response returned when a group is created</p>
 <th>Meaning</th>
 </tr>
 </thead><tbody>
-<tr>
-<td>400</td>
-<td>Bad Request -- You sent invalid url parameters or request payload</td>
-</tr>
 <tr>
 <td>401</td>
 <td>Unauthorized -- You are not authenticated or authentication fails</td>
@@ -1011,6 +1003,10 @@ groupId is part of the response returned when a group is created</p>
 <tr>
 <td>404</td>
 <td>Not Found -- The specified User or Group could not be found.</td>
+</tr>
+<tr>
+<td>422</td>
+<td>Unprocessable entity -- You sent invalid url parameters or request payload</td>
 </tr>
 <tr>
 <td>500</td>
