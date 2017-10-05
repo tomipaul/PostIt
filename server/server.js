@@ -6,7 +6,7 @@ import express from 'express';
 import groupRouter from './routes/GroupRoutes';
 import authRouter from './routes/AuthRoutes';
 import userRouter from './routes/UserRoutes';
-import errorHandler from './controllers/ErrorHandler';
+import errorHandler from './controllers/errorHandler';
 import SSEMiddleware from './controllers/SSE';
 
 const app = express();
