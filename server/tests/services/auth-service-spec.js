@@ -30,10 +30,8 @@ describe('AuthService.verifyTokenGetPayload', () => {
         expect(decoded).to.be.an('object');
         expect(decoded).to.have.property('username');
         expect(decoded).to.have.property('status');
-        expect(decoded).to.have.property('sub');
         expect(decoded.iss).to.equal('PostItAPI');
         expect(decoded.username).to.equal(user.username);
-        expect(decoded.sub).to.equal(user.email);
       });
     });
   });

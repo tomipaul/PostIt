@@ -39,8 +39,8 @@ describe('Create a message with text', () => {
   it('should have `GroupId` property', () => {
     expect(message).to.have.property('GroupId');
   });
-  it('should have `AuthorUsername` property', () => {
-    expect(message).to.have.property('AuthorUsername');
+  it('should have `AuthorId` property', () => {
+    expect(message).to.have.property('AuthorId');
   });
   it('id should default to a UUID4 when undefined', () => {
     expect(anotherMessage.id).to.be.a.uuid('v4');

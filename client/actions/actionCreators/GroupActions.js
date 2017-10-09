@@ -170,16 +170,16 @@ export function createGroup(name, description) {
 /**
  * async helper function: add a user to a group
  * @function addUserToGroup
- * @param {string} username
+ * @param {string} userId
  * @returns {function} asynchronous action
  */
-export function addUserToGroup(username) {
+export function addUserToGroup(userId) {
   return (dispatch, getState) => {
     const state = getState();
     const groupId = state.activeGroup;
     dispatch(sendRequest());
     return axios.post(`/api/v1/group/${groupId}/user`, {
-      username
+      userId
     })
     .then((response) => {
       dispatch(addUserToGroupSuccess(response.data));
@@ -215,15 +215,15 @@ export function addMessageToGroup(message) {
 /**
  * async helper function: remove a user from a group
  * @function removeUserFromGroup
- * @param {string} username
+ * @param {string} userId
  * @returns {function} asynchronous action
  */
-export function removeUserFromGroup(username) {
+export function removeUserFromGroup(userId) {
   return (dispatch, getState) => {
     const state = getState();
     const groupId = state.activeGroup;
     dispatch(sendRequest());
-    return axios.delete(`/api/v1/group/${groupId}/user/${username}`)
+    return axios.delete(`/api/v1/group/${groupId}/user/${userId}`)
     .then((response) => {
       dispatch(removeUserFromGroupSuccess(response.data));
       dispatch(showSuccessNotification({ response }));

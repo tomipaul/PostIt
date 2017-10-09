@@ -1,12 +1,6 @@
 import reducer from '../../reducers/selectedUser';
 import * as types from '../../actions/actionTypes/User';
-
-const user = {
-  username: 'tomipaul',
-  email: 'tomi@paul.com',
-  phoneNo: '00009992992',
-  status: 'user'
-};
+import { selectedUser } from '../__mocks__/dummyData';
 
 describe('selectedUser reducer', () => {
   it(`should return the initial state when passed an 
@@ -18,14 +12,14 @@ describe('selectedUser reducer', () => {
     expect(
       reducer({}, {
         type: types.SELECT_USER,
-        user
+        user: selectedUser
       })
-    ).toEqual(user);
+    ).toEqual(selectedUser);
   });
   it(`should handle CLEAR_SELECTED_USER action 
   by clearing the state`, () => {
     expect(
-      reducer(user, {
+      reducer(selectedUser, {
         type: types.CLEAR_SELECTED_USER,
       })
     ).toEqual({});
@@ -35,26 +29,17 @@ describe('selectedUser reducer', () => {
     expect(
       reducer({}, {
         type: types.GET_USER_SUCCESS,
-        response: { user }
+        response: { user: selectedUser }
       })
-    ).toEqual(user);
-  });
-  it(`should handle DELETE_USER_SUCCESS action by 
-  removing deleted user from state`, () => {
-    expect(
-      reducer({ username: user.username }, {
-        type: types.DELETE_USER_SUCCESS,
-        response: { username: user.username }
-      })
-    ).toEqual({});
+    ).toEqual(selectedUser);
   });
   it(`should handle UPDATE_USER_SUCCESS action by 
   setting the state to the updated user object`, () => {
     expect(
-      reducer({ username: user.username }, {
+      reducer({ username: selectedUser.username }, {
         type: types.UPDATE_USER_SUCCESS,
-        response: { user }
+        response: { user: selectedUser }
       })
-    ).toEqual(user);
+    ).toEqual(selectedUser);
   });
 });

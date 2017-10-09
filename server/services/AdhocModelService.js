@@ -59,21 +59,21 @@ class AdhocModelService {
    * @method addUserToGroup
    * @memberof AdhocModelService
    * @static
-   * @param {String|Array.<string>} username
+   * @param {String|Array.<string>} userId
    * @param {String|Object} group primary key or instance of group
    * @returns {Promise} A promise that resolves with null on success
    */
-  static addUserToGroup(username, group) {
+  static addUserToGroup(userId, group) {
     return AdhocModelService.returnModelInstance('Group', group)
     .then((groupInstance) => {
-      if (!username) {
+      if (!userId) {
         const err = new Error('Username is invalid or not defined');
         err.code = 422;
         throw err;
       } else {
         return Promise.all([
-          groupInstance.hasUser(username),
-          models.User.findById(username)
+          groupInstance.hasUser(userId),
+          models.User.findById(userId)
         ])
         .then((isValid) => {
           if (isValid[0] || !isValid[1]) {
@@ -83,7 +83,7 @@ class AdhocModelService {
             err.code = 422;
             throw err;
           }
-          return groupInstance.addUser(username)
+          return groupInstance.addUser(userId)
           .then(() => { return isValid[1]; });
         });
       }
@@ -98,14 +98,14 @@ class AdhocModelService {
    * @method removeUserFromGroup
    * @memberof AdhocModelService
    * @static
-   * @param {String|Array.<string>} username
+   * @param {String|Array.<string>} userId
    * @param {String} group primary key or instance of group
    * @returns {Promise} A promise that resolves with null on success
    */
-  static removeUserFromGroup(username, group) {
+  static removeUserFromGroup(userId, group) {
     return AdhocModelService.returnModelInstance('Group', group)
     .then((groupInstance) => {
-      return groupInstance.removeUser(username)
+      return groupInstance.removeUser(userId)
       .then((user) => {
         if (user) {
           return user;
@@ -132,13 +132,15 @@ class AdhocModelService {
     return AdhocModelService.returnModelInstance('Group', group)
     .then((groupInstance) => {
       return groupInstance.getUsers({
-        attributes: [
-          'username',
-          'email',
-          'phoneNo',
-          'status',
-          'photoURL'
-        ]
+        attributes: {
+          exclude: [
+            'password',
+            'createdAt',
+            'updatedAt',
+            'status'
+          ]
+        },
+        joinTableAttributes: []
       });
     })
     .catch((err) => {
@@ -203,7 +205,7 @@ class AdhocModelService {
       return groupInstance.getMessages({
         include: [{
           association: 'Author',
-          attributes: ['photoURL']
+          attributes: ['photoURL', 'username']
         }],
         order: ['createdAt']
       });
@@ -217,17 +219,18 @@ class AdhocModelService {
    * @method
    * @memberof AdhocModelService
    * @static
-   * @param {String} username
+   * @param {String} userId
    * @returns {Promise} resolve with an array of group instances
    */
-  static getUserGroups(username) {
-    return AdhocModelService.returnModelInstance('User', username)
+  static getUserGroups(userId) {
+    return AdhocModelService.returnModelInstance('User', userId)
     .then((user) => {
       return user.getGroups({
-        attributes: ['id', 'name', 'description', 'CreatorUsername']
+        attributes: ['id', 'name', 'description', 'CreatorId']
       });
     })
     .catch((err) => {
+      console.log(err);
       throw err;
     });
   }
@@ -241,12 +244,17 @@ class AdhocModelService {
    * @returns {Promise} resolves on success with an array of users
    */
   static getUsersWithMessageRead(messageId) {
-    return ModelService.getModelInstances({
-      model: models.UserMessages,
-      where: {
-        read: true,
-        MessageId: messageId
-      }
+    return AdhocModelService.returnModelInstance('Message', messageId)
+    .then((message) => {
+      return message.getUsers({
+        attributes: ['username'],
+        joinTableAttributes: [
+          'GroupId',
+          'MessageId',
+          'UserId',
+          'read'
+        ]
+      });
     })
     .catch((err) => {
       throw err;

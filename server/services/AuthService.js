@@ -20,11 +20,10 @@ class AuthService {
       const options = {
         expiresIn,
         algorithm: 'RS256',
-        issuer: 'PostItAPI',
-        subject: user.email
+        issuer: 'PostItAPI'
       };
-      const { username, status, email, phoneNo, photoURL } = user;
-      const auth = { username, status, email, phoneNo, photoURL };
+      const { id, username, status } = user;
+      const auth = { id, status, username };
       return jwt.sign(auth, rsaKey, options,
       (err, token) => {
         return (err) ? reject(err) : resolve(token);

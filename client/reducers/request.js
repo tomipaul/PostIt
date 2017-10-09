@@ -4,7 +4,8 @@ const requestCount = (state = 0, action) => {
   if (action.type === SEND_REQUEST) {
     return state + 1;
   }
-  if (action.type.includes('SUCCESS')) {
+  if (action.type.includes('SUCCESS')
+  && action.type !== 'GET_USERS_WITH_MESSAGE_READ_SUCCESS') {
     return state - 1;
   }
   if (action.type.includes('NOTIF')

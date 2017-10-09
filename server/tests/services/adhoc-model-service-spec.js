@@ -4,6 +4,7 @@ import models from '../../models';
 import AdhocModelService from '../../services/AdhocModelService';
 import dummyData from '../dummy.json';
 
+let users;
 const { Group, Message, User } = models;
 const { Groups, Messages, Users } = dummyData;
 const expect = chai.expect;
@@ -59,17 +60,20 @@ describe('AdhocModelService.addUserToGroup', () => {
       ], {
         individualHooks: true,
         validate: true
+      })
+      .then((createdUsers) => {
+        users = createdUsers;
       });
     });
   });
   it('should add a user to a group', () => {
-    const username = Users.validUser.username;
-    return AdhocModelService.addUserToGroup(username, groupId)
+    const userId = users[0].id;
+    return AdhocModelService.addUserToGroup(userId, groupId)
     .then(() => {
       return Group.findById(groupId);
     })
     .then((group) => {
-      return group.hasUser(username);
+      return group.hasUser(userId);
     })
     .then((hasUser) => {
       expect(hasUser).to.be.equal(true);
@@ -77,8 +81,8 @@ describe('AdhocModelService.addUserToGroup', () => {
   });
   it('should add multiple users to a group', () => {
     const usernames = [
-      Users.anotherValidUser.username,
-      Users.thirdValidUser.username
+      users[1].id,
+      users[2].id
     ];
     return Promise.all([
       AdhocModelService.addUserToGroup(usernames[0], groupId),
@@ -96,9 +100,9 @@ describe('AdhocModelService.addUserToGroup', () => {
   });
   it('should throw error if group does not exist',
   () => {
-    const username = Users.validUser.username;
+    const userId = users[0].id;
     return AdhocModelService
-    .addUserToGroup(username, Groups.anotherValidGroup.id)
+    .addUserToGroup(userId, Groups.anotherValidGroup.id)
     .catch((err) => {
       expect(err.code).to.equal(404);
       expect(err.message).to
@@ -117,9 +121,9 @@ describe('AdhocModelService.addUserToGroup', () => {
   });
   it('should throw error if username is already in group',
   () => {
-    const username = Users.validUser.username;
+    const userId = users[0].id;
     return AdhocModelService
-    .addUserToGroup(username, groupId)
+    .addUserToGroup(userId, groupId)
     .catch((err) => {
       expect(err.code).to.equal(422);
       expect(err.message).to
@@ -166,15 +170,15 @@ describe('AdhocModelService.getUsergroups', () => {
   before(() => {
     return Group.create(Groups.anotherValidGroup)
     .then((group) => {
-      return User.findById(Users.validUser.username)
+      return User.findById(users[0].id)
       .then((user) => {
         return user.addGroup(group);
       });
     });
   });
   it('should get all groups of a user', () => {
-    const username = Users.validUser.username;
-    return AdhocModelService.getUserGroups(username)
+    const userId = users[0].id;
+    return AdhocModelService.getUserGroups(userId)
     .then((groups) => {
       expect(groups).to.have.lengthOf(2);
       groups.forEach((group) => {
@@ -185,7 +189,7 @@ describe('AdhocModelService.getUsergroups', () => {
   it('should throw error if user does not exist',
   () => {
     return AdhocModelService
-    .getUserGroups('fronesy01')
+    .getUserGroups(Users.uuids[0])
     .catch((err) => {
       expect(err.code).to.equal(404);
       expect(err.message).to
@@ -197,14 +201,14 @@ describe('AdhocModelService.getUsergroups', () => {
 describe('AdhocModelService.removeUserFromGroup', () => {
   const groupId = Groups.validGroup.id;
   it('should remove a user from a group', () => {
-    const username = Users.validUser.username;
+    const userId = users[0].id;
     return AdhocModelService
-    .removeUserFromGroup(username, groupId)
+    .removeUserFromGroup(userId, groupId)
     .then(() => {
       return Group.findById(groupId);
     })
     .then((group) => {
-      return group.hasUser(username);
+      return group.hasUser(userId);
     })
     .then((hasUser) => {
       expect(hasUser).to.equal(false);
@@ -212,8 +216,8 @@ describe('AdhocModelService.removeUserFromGroup', () => {
   });
   it('should remove multiple users from a group', () => {
     const usernames = [
-      Users.anotherValidUser.username,
-      Users.thirdValidUser.username
+      users[1].id,
+      users[2].id
     ];
     return AdhocModelService
     .removeUserFromGroup(usernames, groupId)
@@ -230,9 +234,9 @@ describe('AdhocModelService.removeUserFromGroup', () => {
 
   it('should throw error if group does not exist',
   () => {
-    const username = Users.validUser.username;
+    const userId = users[0].id;
     return AdhocModelService
-    .removeUserFromGroup(username, Groups.emptyName.id)
+    .removeUserFromGroup(userId, Groups.emptyName.id)
     .catch((err) => {
       expect(err.code).to.equal(404);
       expect(err.message).to
@@ -242,9 +246,9 @@ describe('AdhocModelService.removeUserFromGroup', () => {
 
   it('should throw error if user does not exist in group',
   () => {
-    const username = Users.validUser.username;
+    const userId = users[0].id;
     return AdhocModelService
-    .removeUserFromGroup(username, groupId)
+    .removeUserFromGroup(userId, groupId)
     .catch((err) => {
       expect(err.code).to.equal(422);
       expect(err.message).to

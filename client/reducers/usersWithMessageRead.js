@@ -6,7 +6,7 @@ const usersWithMessageRead = (state = {}, action) => {
   switch (action.type) {
     case GET_USERS_WITH_MESSAGE_READ_SUCCESS: {
       const users = action.response.users.map(userMessage =>
-        (userMessage.UserUsername)
+        (userMessage.username)
       );
       return {
         ...state,

@@ -13,7 +13,7 @@ class ModelService {
    * matching model instance
    */
   static getModelInstance(model, attributes) {
-    const id = attributes.id || attributes.username;
+    const id = attributes.id;
     const promise = (id) ?
     model.findById(id) :
     model.findOne({ where: attributes });
@@ -44,10 +44,11 @@ class ModelService {
    * @returns {Promise.array.object} A promise which resolves to
    * an array of matching model instances
    */
-  static getModelInstances({ model, where, attributes }) {
+  static getModelInstances({ model, where, attributes, include }) {
     return model.findAll({
       where,
-      attributes
+      attributes,
+      include
     })
     .then((instanceArray) => {
       return instanceArray;

@@ -230,14 +230,14 @@ describe('Create a valid User and save to database', () => {
     });
   });
   it('should be written to database without errors', () => {
-    return User.findById('tomipaul')
+    return User.findOne({ where: { username: 'tomipaul' } })
     .then((fromDb) => {
       expect(fromDb.email).to.equal('tomipaul@aol.com');
       expect(fromDb.phoneNo).to.equal('23456789012');
     });
   });
   it('should run beforeCreate hook on create', () => {
-    return User.findById('tomipaul')
+    return User.findOne({ where: { username: 'tomipaul' } })
     .then((fromDb) => {
       return fromDb.verifyPassword('12345678abc')
       .then((isValid) => {
@@ -276,7 +276,7 @@ describe('Create a valid User and save to database', () => {
     });
   });
   it('should run beforeUpdate hook on update', () => {
-    return User.findById('tomipaul')
+    return User.findOne({ where: { username: 'tomipaul' } })
     .then((fromDb) => {
       return fromDb.update({ password: '12345678def' });
     })

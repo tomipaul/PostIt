@@ -270,7 +270,7 @@ describe('User async actions', () => {
     it('creates GET_USER_SUCCESS when getting a user is done ',
     () => {
       nock('http://localhost')
-      .get('/api/v1/user/tomipaul')
+      .get(`/api/v1/user/${user.id}`)
       .reply(200, {
         user
       });
@@ -283,7 +283,7 @@ describe('User async actions', () => {
       ];
       const store = mockStore({ auth: {} });
       return store.dispatch(actions
-      .getUser('tomipaul'))
+      .getUser(user.id))
       .then(() => {
         expect(store.getActions()).toMatchObject(expectedActions);
       });
@@ -292,7 +292,7 @@ describe('User async actions', () => {
     it('creates NOTIF_SEND when getting a user fails',
     () => {
       nock('http://localhost')
-      .get('/api/v1/user/thhgghg')
+      .get(`/api/v1/user/${user.id}`)
       .reply(400, {
         error: 'User does not exist'
       });
@@ -302,7 +302,7 @@ describe('User async actions', () => {
       ];
       const store = mockStore({ auth: {} });
       return store.dispatch(actions
-      .getUser('thhgghg'))
+      .getUser(user.id))
       .then(() => {
         expect(store.getActions()).toMatchObject(expectedActions);
       });
@@ -316,7 +316,7 @@ describe('User async actions', () => {
     it('creates UPDATE_USER_SUCCESS when updating a user is done ',
     () => {
       nock('http://localhost')
-      .put('/api/v1/user/tomipaul')
+      .put(`/api/v1/user/${user.id}`)
       .reply(200, {
         user
       });
@@ -332,7 +332,7 @@ describe('User async actions', () => {
         auth: { user }
       });
       return store.dispatch(actions
-      .updateUser(user))
+      .updateUser(user.id))
       .then(() => {
         expect(store.getActions()).toMatchObject(expectedActions);
       });
@@ -341,7 +341,7 @@ describe('User async actions', () => {
     it('creates NOTIF_SEND when updating a user fails',
     () => {
       nock('http://localhost')
-      .put('/api/v1/user/tomipaul')
+      .put(`/api/v1/user/${user.id}`)
       .reply(400, {
         error: 'User could not be updated'
       });
@@ -353,7 +353,7 @@ describe('User async actions', () => {
         auth: { user }
       });
       return store.dispatch(actions
-      .updateUser())
+      .updateUser(user.id))
       .then(() => {
         expect(store.getActions()).toMatchObject(expectedActions);
       });
@@ -367,7 +367,7 @@ describe('User async actions', () => {
     it('creates DELETE_USER_SUCCESS when deleting a user is done ',
     () => {
       nock('http://localhost')
-      .delete('/api/v1/user/tomipaul')
+      .delete(`/api/v1/user/${user.id}`)
       .reply(200, {
         username: user.username
       });
@@ -391,7 +391,7 @@ describe('User async actions', () => {
     it('creates NOTIF_SEND when deleting a user fails',
     () => {
       nock('http://localhost')
-      .delete('/api/v1/user/tomipaul')
+      .delete(`/api/v1/user/${user.id}`)
       .reply(400, {
         error: 'User could not be deleted'
       });

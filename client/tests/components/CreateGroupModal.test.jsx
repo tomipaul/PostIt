@@ -19,7 +19,7 @@ describe('components', () => {
     const { enzymeWrapper, props } = setup();
     it('should render self and subcomponents', () => {
       expect(enzymeWrapper.exists()).toBe(true);
-      expect(enzymeWrapper.find('#modal1').exists()).toBe(true);
+      expect(enzymeWrapper.find('#create_group_modal').exists()).toBe(true);
     });
 
     it('should set state when form input changes', () => {

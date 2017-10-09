@@ -2,10 +2,24 @@ import bcrypt from 'bcrypt';
 
 export default (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+      unique: {
+        args: true,
+        msg: 'id already exists!'
+      },
+      validate: {
+        isUUID: {
+          args: 4,
+          msg: 'id must be uuid'
+        }
+      }
+    },
     username: {
       type: DataTypes.STRING,
       allowNull: false,
-      primaryKey: true,
       unique: {
         args: true,
         msg: 'username is not available!'

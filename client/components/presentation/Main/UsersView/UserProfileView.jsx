@@ -26,9 +26,6 @@ const UserProfileView = ({ user }) =>
         <div className="info z-depth-1">
           <span>PhoneNo |</span> {user.phoneNo}
         </div>
-        <div className="info z-depth-1">
-          <span>Status |</span> {user.status}
-        </div>
       </div>
     </div>
   );

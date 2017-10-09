@@ -24,7 +24,7 @@ class GroupController {
         id: groupId
       })
       .then((group) => {
-        if (group.CreatorUsername === req.username ||
+        if (group.CreatorId === req.userId ||
         req.userStatus === 'admin') {
           req.group = group;
           return next();
@@ -55,7 +55,7 @@ class GroupController {
         id: groupId
       })
       .then((group) => {
-        return group.hasUser(req.username)
+        return group.hasUser(req.userId)
         .then((hasUser) => {
           if (hasUser || req.userStatus === 'admin') {
             req.group = group;
@@ -88,7 +88,7 @@ class GroupController {
         return groupModel.findOne({
           where: {
             name: req.body.name,
-            CreatorUsername: req.username
+            CreatorId: req.userId
           }
         });
       })
@@ -101,16 +101,16 @@ class GroupController {
         }
       })
       .then(() => {
-        req.body.CreatorUsername = req.username;
+        req.body.CreatorId = req.userId;
         return ModelService.createModelInstance(groupModel, req.body)
         .then((group) => {
-          return group.addUser(req.username)
+          return group.addUser(req.userId)
           .then(() => {
-            const { id, name, description, CreatorUsername } = group;
+            const { id, name, description, CreatorId } = group;
             req.res = {
               statusCode: 201,
               data: {
-                group: { id, name, description, CreatorUsername },
+                group: { id, name, description, CreatorId },
                 message: 'Group created'
               }
             };
@@ -134,8 +134,8 @@ class GroupController {
    */
   static addUserToGroup() {
     return (req, res, next) => {
-      const userName = req.body.username;
-      return AdhocModelService.addUserToGroup(userName, req.group)
+      const userId = req.body.userId;
+      return AdhocModelService.addUserToGroup(userId, req.group)
       .then((user) => {
         return AdhocModelService.getGroupMessages(req.group)
         .then((messages) => {
@@ -175,14 +175,14 @@ class GroupController {
     return (req, res, next) => {
       const message = {
         ...req.body,
-        AuthorUsername: req.username
+        AuthorId: req.userId
       };
       return AdhocModelService
       .addMessageToGroup(message, req.group)
       .then((createdMessage) => {
         return req.group.getUsers({
           where: {
-            username: { ne: createdMessage.AuthorUsername }
+            id: { ne: createdMessage.AuthorId }
           }
         })
         .then((users) => {
@@ -198,7 +198,8 @@ class GroupController {
         return createdMessage.getAuthor()
         .then((author) => {
           createdMessage.dataValues.Author = {
-            photoURL: author.photoURL
+            photoURL: author.photoURL,
+            username: author.username
           };
           req.res = {
             data: {
@@ -268,13 +269,13 @@ class GroupController {
    */
   static removeUserFromGroup() {
     return (req, res, next) => {
-      const username = req.body.username;
+      const userId = req.body.userId;
       return AdhocModelService
-      .removeUserFromGroup(username, req.group)
+      .removeUserFromGroup(userId, req.group)
       .then(() => {
         req.res = {
           data: {
-            username,
+            userId,
             message: 'User removed from group'
           }
         };
@@ -300,7 +301,7 @@ class GroupController {
       messages.split(' ') : messages;
       Promise.all(messagesArray.map((message) => {
         return ModelService.updateModelInstance(models.UserMessages, {
-          UserUsername: req.username,
+          UserId: req.userId,
           GroupId: req.group.id,
           MessageId: message
         }, {

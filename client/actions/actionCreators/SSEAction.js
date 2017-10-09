@@ -37,7 +37,7 @@ export function subscribeToMessages() {
     source.addEventListener('message', (event) => {
       const state = getState();
       const newMessage = JSON.parse(event.data);
-      const author = newMessage.AuthorUsername;
+      const author = newMessage.Author.username;
       const recipientGroupId = newMessage.GroupId;
       const activeGroup = state.activeGroup;
       const recipientGroup = state
@@ -48,6 +48,7 @@ export function subscribeToMessages() {
             createdMessage: newMessage
           }));
           if (author !== state.auth.user.username) {
+            dispatch(sendRequest());
             dispatch(addToUnreadMessages({
               groupId: recipientGroupId,
               messageId: newMessage.id
