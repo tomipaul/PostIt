@@ -496,7 +496,6 @@ describe('/api/v1/user/:userId', () => {
       email: 'updateduser@andela.com'
     })
     .end((err, res) => {
-      console.log(err);
       stub.restore();
       expect(res).to.have.status(500);
       expect(res).to.be.json;
