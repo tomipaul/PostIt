@@ -613,8 +613,8 @@ groupId is part of the response returned when a group is created</p>
 </tr>
 </thead><tbody>
 <tr>
-<td>username</td>
-<td>The username of the user to be added</td>
+<td>userId</td>
+<td>The Id of the user to be added</td>
 </tr>
 </tbody></table>
 <h2 id='post-message-to-group'>Post message to Group</h2>
@@ -844,7 +844,7 @@ groupId is part of the response returned when a group is created</p>
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre><h3 id='http-request-12'>HTTP Request</h3>
-<p><code>GET https://app-postit.herokuapp.com/api/v1/user/:username</code></p>
+<p><code>GET https://app-postit.herokuapp.com/api/v1/user/:userId</code></p>
 <h3 id='url-parameters-7'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -853,8 +853,8 @@ groupId is part of the response returned when a group is created</p>
 </tr>
 </thead><tbody>
 <tr>
-<td>username</td>
-<td>The username of the user to fetch</td>
+<td>userId</td>
+<td>The Id of the user to fetch</td>
 </tr>
 </tbody></table>
 <h2 id='update-a-user'>Update a user</h2>
@@ -887,7 +887,7 @@ groupId is part of the response returned when a group is created</p>
 </span><span class="p">}</span><span class="w">
 
 </span></code></pre><h3 id='http-request-13'>HTTP Request</h3>
-<p><code>PUT https://app-postit.herokuapp.com/api/v1/user/:username</code></p>
+<p><code>PUT https://app-postit.herokuapp.com/api/v1/user/:userId</code></p>
 <h3 id='url-parameters-8'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -896,8 +896,8 @@ groupId is part of the response returned when a group is created</p>
 </tr>
 </thead><tbody>
 <tr>
-<td>username</td>
-<td>The username of the user</td>
+<td>userId</td>
+<td>The id of the user</td>
 </tr>
 </tbody></table>
 <h3 id='request-payload-9'>Request payload</h3>
@@ -908,6 +908,11 @@ groupId is part of the response returned when a group is created</p>
 <th>Description</th>
 </tr>
 </thead><tbody>
+<tr>
+<td>username</td>
+<td>optional</td>
+<td>new username</td>
+</tr>
 <tr>
 <td>email</td>
 <td>optional</td>
@@ -933,8 +938,6 @@ groupId is part of the response returned when a group is created</p>
 <aside class="success"> You can provide one or more user properties to be updated
 </aside>
 
-<aside class="warning"> username cannot be changed
-</aside>
 <h2 id='get-user-groups'>Get user groups</h2>
 <p>This endpoint gets all the groups a user belongs to</p>
 
