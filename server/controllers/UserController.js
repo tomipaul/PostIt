@@ -7,7 +7,7 @@ import NotificationService from '../services/NotificationService.js';
 const userModel = models.User;
 
 /**
- * @class GroupController
+ * @class UserController
  */
 class UserController {
   /**
@@ -21,13 +21,35 @@ class UserController {
    */
   static extractFromUserObject(userObject) {
     const {
+      id,
       username,
       email,
       phoneNo,
       status,
       photoURL
     } = userObject;
-    return { username, email, phoneNo, status, photoURL };
+    return { id, username, email, phoneNo, status, photoURL };
+  }
+
+  /**
+   * generate pagination metadata
+   * @param {number} limit
+   * @param {number} offset
+   * @param {number} totalCount
+   * @param {number} pageSize
+   * @return {object} pagination metadata
+   */
+  static paginateUserSearch({ limit, offset, totalCount, pageSize }) {
+    const totalPages = Math.ceil(totalCount / limit);
+    const currentPage = Math.floor((offset + limit) / limit);
+    const nextPage = (totalPages > currentPage) ?
+    currentPage + 1 : null;
+    return {
+      currentPage,
+      pageSize: (currentPage) ? pageSize : null,
+      nextPage,
+      totalPages
+    };
   }
   /**
    * Check if authentication request is valid
@@ -103,6 +125,7 @@ class UserController {
           const userInfo = UserController.extractFromUserObject(user);
           return res.status(200).json({
             user: {
+              id: userInfo.id,
               username: userInfo.username,
               photoURL: userInfo.photoURL
             },
@@ -133,8 +156,9 @@ class UserController {
       .then((decodedPayload) => {
         const userInfo = UserController
         .extractFromUserObject(decodedPayload);
-        req.username = userInfo.username;
+        req.userId = userInfo.id;
         req.userStatus = userInfo.status;
+        req.username = userInfo.username;
         return next();
       })
       .catch(() => {
@@ -157,7 +181,7 @@ class UserController {
   static permitOwnerAndAdmin() {
     return (req, res, next) => {
       if (req.userStatus === 'admin' ||
-      req.params.username === req.username) {
+      req.params.userId === req.userId) {
         return next();
       }
       const msg = "Access denied! You don't have appropriate privileges";
@@ -197,7 +221,7 @@ class UserController {
    */
   static createUser() {
     return (req, res, next) => {
-      const { status, ...credentials } = req.body;
+      const { status, id, ...credentials } = req.body;
       AdhocModelService.validateInputs(userModel, credentials)
       .then(() => {
         return ModelService.createModelInstance(userModel, credentials);
@@ -224,7 +248,7 @@ class UserController {
   static deleteUser() {
     return (req, res, next) => {
       ModelService.deleteModelInstance(userModel, {
-        username: req.params.username
+        id: req.params.userId
       })
       .then(() => {
         return res.sendStatus(204);
@@ -246,7 +270,7 @@ class UserController {
   static updateUser() {
     return (req, res, next) => {
       ModelService.updateModelInstance(userModel, {
-        username: req.params.username || req.username
+        id: req.params.userId || req.userId
       }, req.body)
       .then((user) => {
         const userInfo = UserController.extractFromUserObject(user);
@@ -272,7 +296,7 @@ class UserController {
   static getUser() {
     return (req, res, next) => {
       ModelService.getModelInstance(userModel, {
-        username: req.params.username || req.username
+        id: req.params.userId || req.userId
       })
       .then((userObj) => {
         const userInfo = UserController
@@ -313,6 +337,48 @@ class UserController {
   }
 
   /**
+   * Search users in the application
+   * @method
+   * @memberof UserController
+   * @static
+   * @returns {function} Express middleware function that search
+   * users and sends response to client
+   */
+  static searchUsers() {
+    return (req, res, next) => {
+      const { limit, offset, searchString } = req.query;
+      return userModel.findAndCountAll({
+        limit,
+        offset,
+        where: {
+          username: {
+            $iLike: `%${searchString || ''}%`
+          }
+        },
+        attributes: {
+          exclude: ['password', 'createdAt', 'updatedAt']
+        }
+      })
+      .then((users) => {
+        const data = UserController.paginateUserSearch({
+          limit,
+          offset,
+          totalCount: users.count,
+          pageSize: users.rows.length
+        });
+        return res.status(200).json({
+          ...data,
+          totalCount: users.count,
+          users: users.rows
+        });
+      })
+      .catch((error) => {
+        return next(error);
+      });
+    };
+  }
+
+  /**
    * Get all the groups a user belong to
    * @method
    * @memberof UserController
@@ -322,7 +388,7 @@ class UserController {
    */
   static getUserGroups() {
     return (req, res, next) => {
-      AdhocModelService.getUserGroups(req.username)
+      AdhocModelService.getUserGroups(req.userId)
       .then((groups) => {
         return res.status(200).json({ groups });
       })
@@ -384,7 +450,7 @@ class UserController {
   static getUnreadMessages() {
     return (req, res, next) => {
       return AdhocModelService.getUnreadMessages({
-        UserUsername: req.username
+        UserId: req.userId
       })
       .then((unreadMessages) => {
         const unreadMessagesObject = unreadMessages
