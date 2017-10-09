@@ -36,7 +36,6 @@ const MessageBox = ({ message }) => {
   const {
     id,
     Author,
-    AuthorUsername,
     priority,
     text,
     createdAt,
@@ -51,7 +50,7 @@ const MessageBox = ({ message }) => {
       />
       <Message
         messageId={id}
-        Author={AuthorUsername}
+        Author={Author.username}
         priority={priority}
         text={text}
         createdAt={convertDateTimeString(createdAt)}
@@ -65,8 +64,10 @@ MessageBox.propTypes = {
     id: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
     priority: PropTypes.string.isRequired,
-    AuthorUsername: PropTypes.string.isRequired,
-    AuthorImageLink: PropTypes.string
+    Author: PropTypes.shape({
+      photoURL: PropTypes.string,
+      username: PropTypes.string
+    }).isRequired,
   }).isRequired
 };
 

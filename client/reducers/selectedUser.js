@@ -18,10 +18,7 @@ const selectedUser = (state = {}, action) => {
     }
     case UPDATE_USER_SUCCESS: {
       const updatedUser = action.response.user;
-      if (updatedUser.username === state.username) {
-        return { ...updatedUser };
-      }
-      return state;
+      return { ...updatedUser };
     }
     default:
       return state;

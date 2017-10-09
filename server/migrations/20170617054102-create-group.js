@@ -32,11 +32,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      CreatorUsername: {
-        type: Sequelize.STRING,
+      CreatorId: {
+        type: Sequelize.UUID,
         references: {
           model: 'Users',
-          key: 'username'
+          key: 'id'
         },
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE'

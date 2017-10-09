@@ -25,7 +25,7 @@ class UsersView extends React.Component {
    * @returns {void}
    */
   addUserToGroup(user) {
-    this.props.addUserToGroup(user.username);
+    this.props.addUserToGroup(user.id);
   }
   /**
    * render component

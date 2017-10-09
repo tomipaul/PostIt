@@ -19,12 +19,12 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       },
-      UserUsername: {
+      UserId: {
         primaryKey: true,
-        type: Sequelize.STRING,
+        type: Sequelize.UUID,
         references: {
           model: 'Users',
-          key: 'username'
+          key: 'id'
         },
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'

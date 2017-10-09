@@ -6,18 +6,20 @@ import models from '../../models';
 import server from '../../index';
 import dummyData from '../dummy.json';
 
-let userToken;
+let authenticatedUser, users, userToken;
 chai.use(chaiHTTP);
 const expect = chai.expect;
 const {
   validUser,
   anotherValidUser,
+  thirdValidUser,
   adminUser,
   incompleteUser,
   emptyUsername,
   emptyEmail,
   emptyPassword,
   emptyPhoneNo,
+  uuids
 } = dummyData.Users;
 
 describe('/api/v1/user/signup', () => {
@@ -148,6 +150,7 @@ describe('/api/v1/user/signin', () => {
       expect(res).to.be.json;
       expect(res.body.token).to.be.a('string');
       expect(res.body.token).to.match(/^\S+.\S+.\S$/);
+      authenticatedUser = res.body.user;
       userToken = res.body.token;
       if (err) { return done(err); }
       return done();
@@ -235,25 +238,37 @@ describe('/api/v1/user/signin', () => {
   });
 });
 
-describe('/api/v1/user/:username', () => {
+describe('/api/v1/user/:userId', () => {
+  before(() => {
+    return models.User.bulkCreate([
+      anotherValidUser,
+      thirdValidUser
+    ], {
+      individualHooks: true,
+      validate: true
+    })
+    .then((createdUsers) => {
+      users = createdUsers;
+    });
+  });
   it('should get an existing user', (done) => {
     chai.request(server)
-    .get(`/api/v1/user/${validUser.username}`)
+    .get(`/api/v1/user/${users[0].id}`)
     .set('Authorization', `Bearer ${userToken}`)
     .end((err, res) => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
       expect(res.body.user).to.include({
-        username: validUser.username,
-        email: validUser.email,
-        phoneNo: validUser.phoneNo
+        username: anotherValidUser.username,
+        email: anotherValidUser.email,
+        phoneNo: anotherValidUser.phoneNo
       });
       return done();
     });
   });
-  it('should return error if no matching username', (done) => {
+  it('should return error if no matching user', (done) => {
     chai.request(server)
-    .get('/api/v1/user/dende05')
+    .get(`/api/v1/user/${uuids[0]}`)
     .set('Authorization', `Bearer ${userToken}`)
     .end((err, res) => {
       expect(res).to.have.status(404);
@@ -264,7 +279,7 @@ describe('/api/v1/user/:username', () => {
   });
   it('should return error if no token', (done) => {
     chai.request(server)
-    .get(`/api/v1/user/${validUser.username}`)
+    .get(`/api/v1/user/${users[0].id}`)
     .end((err, res) => {
       expect(res).to.have.status(422);
       expect(res).to.be.json;
@@ -274,7 +289,7 @@ describe('/api/v1/user/:username', () => {
   });
   it('should return error message if invalid token', (done) => {
     chai.request(server)
-    .get(`/api/v1/user/${validUser.username}`)
+    .get(`/api/v1/user/${users[0].id}`)
     .set('Authorization', 'Bearer abcdefeighhth12332444200999')
     .end((err, res) => {
       expect(res).to.have.status(401);
@@ -295,7 +310,7 @@ describe('/api/v1/user/groups', () => {
       validate: true
     })
     .then((groups) => {
-      return models.User.findById(validUser.username)
+      return models.User.findById(authenticatedUser.id)
       .then((user) => {
         return user.addGroups(groups);
       });
@@ -341,12 +356,11 @@ describe('/api/v1/user/groups', () => {
   });
 });
 
-describe('/api/v1/user/:username', () => {
+describe('/api/v1/user/:userId', () => {
   let adminToken;
   before(() => {
     return models.User.bulkCreate([
-      adminUser,
-      anotherValidUser
+      adminUser
     ], {
       validate: true,
       individualHooks: true
@@ -369,7 +383,7 @@ describe('/api/v1/user/:username', () => {
   it('should return error message if request has no token',
   (done) => {
     chai.request(server)
-    .put(`/api/v1/user/${anotherValidUser.username}`)
+    .put(`/api/v1/user/${users[0].id}`)
     .send({
       email: 'updateduser@andela.com'
     })
@@ -383,7 +397,7 @@ describe('/api/v1/user/:username', () => {
   it('should return error message if request has no token',
   (done) => {
     chai.request(server)
-    .delete(`/api/v1/user/${anotherValidUser.username}`)
+    .delete(`/api/v1/user/${users[0].id}`)
     .send({
       email: 'updateduser@andela.com'
     })
@@ -397,7 +411,7 @@ describe('/api/v1/user/:username', () => {
   it('should update user if request is by owner',
   (done) => {
     chai.request(server)
-    .put(`/api/v1/user/${validUser.username}`)
+    .put(`/api/v1/user/${authenticatedUser.id}`)
     .send({
       token: userToken,
       email: 'updateduser@andela.com'
@@ -414,7 +428,7 @@ describe('/api/v1/user/:username', () => {
   it('should update user if request is by admin',
   (done) => {
     chai.request(server)
-    .put(`/api/v1/user/${validUser.username}`)
+    .put(`/api/v1/user/${users[0].id}`)
     .send({
       token: adminToken,
       email: 'updatedByAdmin@andela.com'
@@ -431,7 +445,7 @@ describe('/api/v1/user/:username', () => {
   it('should return error if update request is not by owner or admin',
   (done) => {
     chai.request(server)
-    .put(`/api/v1/user/${anotherValidUser.username}`)
+    .put(`/api/v1/user/${users[0].id}`)
     .send({
       token: userToken,
       email: 'updatedByAnother@andela.com'
@@ -447,7 +461,7 @@ describe('/api/v1/user/:username', () => {
   it('should return error if delete request is not by admin',
   (done) => {
     chai.request(server)
-    .delete(`/api/v1/user/${anotherValidUser.username}`)
+    .delete(`/api/v1/user/${users[0].id}`)
     .send({
       token: userToken,
       email: 'updatedByAnother@andela.com'
@@ -463,7 +477,7 @@ describe('/api/v1/user/:username', () => {
   it('should delete user if request is by admin',
   (done) => {
     chai.request(server)
-    .delete(`/api/v1/user/${anotherValidUser.username}`)
+    .delete(`/api/v1/user/${users[0].id}`)
     .send({
       token: adminToken
     })
@@ -476,12 +490,13 @@ describe('/api/v1/user/:username', () => {
     const stub = sinon.stub(models.User.prototype, 'update');
     stub.rejects();
     chai.request(server)
-    .put(`/api/v1/user/${validUser.username}`)
-    .set('Authorization', `Bearer ${userToken}`)
+    .put(`/api/v1/user/${users[1].id}`)
+    .set('Authorization', `Bearer ${adminToken}`)
     .send({
       email: 'updateduser@andela.com'
     })
     .end((err, res) => {
+      console.log(err);
       stub.restore();
       expect(res).to.have.status(500);
       expect(res).to.be.json;
@@ -493,7 +508,7 @@ describe('/api/v1/user/:username', () => {
     const stub = sinon.stub(models.User.prototype, 'destroy');
     stub.rejects();
     chai.request(server)
-    .delete(`/api/v1/user/${validUser.username}`)
+    .delete(`/api/v1/user/${users[1].id}`)
     .set('Authorization', `Bearer ${adminToken}`)
     .send({
       email: 'updateduser@andela.com'

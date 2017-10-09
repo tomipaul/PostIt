@@ -135,6 +135,7 @@ describe('/api/v1/group', () => {
 });
 
 describe('/api/v1/group/:groupId/user', () => {
+  let createdUsers;
   const userToBeAdded = dummyData.Users.anotherValidUser;
   const anotherAuthUser = dummyData.Users.validUser;
   before(() => {
@@ -145,7 +146,8 @@ describe('/api/v1/group/:groupId/user', () => {
       validate: true,
       individualHooks: true
     })
-    .then(() => {
+    .then((users) => {
+      createdUsers = users;
       return chai.request(server)
       .post('/api/v1/user/signin')
       .send({
@@ -167,9 +169,10 @@ describe('/api/v1/group/:groupId/user', () => {
     .post(`/api/v1/group/${validGroup.id}/user`)
     .set('Authorization', `Bearer ${token}`)
     .send({
-      username: userToBeAdded.username
+      userId: createdUsers[0].id
     })
     .end((err, res) => {
+      console.log(err, res, '>>>>>>>>>>>>>>>>>>>>>');
       expect(res).to.have.status(200);
       return done();
     });
@@ -181,7 +184,7 @@ describe('/api/v1/group/:groupId/user', () => {
     .post(`/api/v1/group/${validGroup.id}/user`)
     .set('Authorization', `Bearer ${token}`)
     .send({
-      username: userToBeAdded.username
+      userId: createdUsers[0].id
     })
     .end((err, res) => {
       stub.restore();
@@ -196,9 +199,10 @@ describe('/api/v1/group/:groupId/user', () => {
     .delete(`/api/v1/group/${validGroup.id}/user`)
     .set('Authorization', `Bearer ${token}`)
     .send({
-      username: userToBeAdded.username
+      userId: createdUsers[0].id
     })
     .end((err, res) => {
+      // console.log(err);
       expect(res).to.have.status(200);
       return done();
     });
@@ -210,7 +214,7 @@ describe('/api/v1/group/:groupId/user', () => {
     .delete(`/api/v1/group/${validGroup.id}/user`)
     .set('Authorization', `Bearer ${token}`)
     .send({
-      username: userToBeAdded.username
+      userId: createdUsers[0].id
     })
     .end((err, res) => {
       stub.restore();
@@ -225,7 +229,7 @@ describe('/api/v1/group/:groupId/user', () => {
     .post(`/api/v1/group/${validGroup.id}/user`)
     .set('Authorization', `Bearer ${token2}`)
     .send({
-      username: userToBeAdded.username
+      userId: createdUsers[0].id
     })
     .end((err, res) => {
       expect(res).to.have.status(403);
@@ -242,7 +246,7 @@ describe('/api/v1/group/:groupId/user', () => {
     .post(`/api/v1/group/${validGroup.id}/user`)
     .set('Authorization', `Bearer ${token}`)
     .send({
-      username: userToBeAdded.username
+      userId: createdUsers[0].id
     })
     .end((err, res) => {
       stub.restore();
@@ -257,7 +261,7 @@ describe('/api/v1/group/:groupId/user', () => {
     .delete(`/api/v1/group/${validGroup.id}/user`)
     .set('Authorization', `Bearer ${token2}`)
     .send({
-      username: userToBeAdded.username
+      userId: createdUsers[0].id
     })
     .end((err, res) => {
       expect(res).to.have.status(403);
@@ -274,7 +278,7 @@ describe('/api/v1/group/:groupId/user', () => {
     .delete(`/api/v1/group/${validGroup.id}/user`)
     .set('Authorization', `Bearer ${token}`)
     .send({
-      username: userToBeAdded.username
+      userId: createdUsers[0].id
     })
     .end((err, res) => {
       stub.restore();
@@ -290,7 +294,7 @@ describe('/api/v1/group/:groupId/user', () => {
     .post(`/api/v1/group/${anotherValidGroup.id}/user`)
     .set('Authorization', `Bearer ${token}`)
     .send({
-      username: userToBeAdded.username
+      userId: createdUsers[0].id
     })
     .end((err, res) => {
       expect(res.body.error).to.equal('Error! Group does not exist');

@@ -1,14 +1,25 @@
 module.exports = {
   up(queryInterface, Sequelize) {
     return queryInterface.createTable('Users', {
-      username: {
-        type: Sequelize.STRING,
-        allowNull: false,
+      id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
         unique: {
           args: true,
-          msg: 'username is not available!'
+          msg: 'id already exists!'
         },
+        validate: {
+          isUUID: {
+            args: 4,
+            msg: 'id must be uuid'
+          }
+        }
+      },
+      username: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
         validate: {
           notEmpty: {
             msg: 'username cannot be an empty string'

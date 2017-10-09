@@ -114,6 +114,12 @@
       "email": "epicot@aol.com",
       "password": "123456",
       "phoneNo": ""
+    },
+    "uuids": [
+      "74542edf-44a7-4b1f-8141-e46354f93d52"
+    ],
+    "signedInUser": {
+      "token": ""
     }
   }
 }

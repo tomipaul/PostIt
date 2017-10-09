@@ -49,11 +49,11 @@ module.exports = {
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE'
       },
-      AuthorUsername: {
-        type: Sequelize.STRING,
+      AuthorId: {
+        type: Sequelize.UUID,
         references: {
           model: 'Users',
-          key: 'username'
+          key: 'id'
         },
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE'

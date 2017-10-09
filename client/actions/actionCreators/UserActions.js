@@ -285,13 +285,13 @@ export function fetchUserGroups() {
 /**
  * aync helper function: get a user
  * @function getUser
- * @param {string} username
+ * @param {string} userId
  * @returns {function} asynchronous action
  */
-export function getUser(username) {
+export function getUser(userId) {
   return (dispatch) => {
     dispatch(sendRequest());
-    return axios.get(`/api/v1/user/${username}`)
+    return axios.get(`/api/v1/user/${userId}`)
     .then((response) => {
       dispatch(getUserSuccess(response.data));
     })
@@ -327,7 +327,7 @@ export function updateUser(newCredentials) {
   return (dispatch, getState) => {
     const { auth } = getState();
     dispatch(sendRequest());
-    return axios.put(`/api/v1/user/${auth.user.username}`, {
+    return axios.put(`/api/v1/user/${auth.user.id}`, {
       ...newCredentials
     }).then((response) => {
       dispatch(updateUserSuccess(response.data));
@@ -399,7 +399,7 @@ export function deleteUser() {
   return (dispatch, getState) => {
     const { auth } = getState();
     dispatch(sendRequest());
-    return axios.delete(`/api/v1/user/${auth.user.username}`)
+    return axios.delete(`/api/v1/user/${auth.user.id}`)
     .then((response) => {
       dispatch(deleteUserSuccess(response.data));
     })

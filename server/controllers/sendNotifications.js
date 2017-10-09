@@ -6,7 +6,7 @@ const sendNotifications = (req, res, next) => {
   const createdMessage = req.res.data.createdMessage;
   req.group.getUsers({
     where: {
-      username: { ne: createdMessage.AuthorUsername }
+      id: { ne: createdMessage.AuthorId }
     }
   })
   .then((users) => {
