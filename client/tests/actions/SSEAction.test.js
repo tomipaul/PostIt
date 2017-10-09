@@ -73,6 +73,7 @@ describe('sse async action', () => {
             createdMessage: savedMessage
           }
         },
+        sendRequest,
         {
           type: userActions.ADD_TO_UNREAD_MESSAGES,
           groupId: savedMessage.GroupId,

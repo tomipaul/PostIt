@@ -1,3 +1,11 @@
+export const userId = '74542edf-44a7-4b1f-8141-e46354f93d52';
+export const selectedUser = {
+  username: 'tomipaul',
+  email: 'tomi@paul.com',
+  phoneNo: '00009992992',
+  status: 'user'
+};
+
 export const group = {
   id: 3,
   name: 'first_group',
@@ -5,6 +13,7 @@ export const group = {
 };
 
 export const user = {
+  id: 'cb2f423a-36d2-4785-a61d-781a33b04098',
   username: 'tomipaul',
   email: 'tomi@paul.com',
   phoneNo: '353275632723',
@@ -21,12 +30,12 @@ export const savedMessage = {
   id: '62abb38b-6ce9-4ce6-b9f1-e2bee5bb8550',
   text: 'we are here',
   priority: 'critical',
-  AuthorUsername: 'alienyi01',
   GroupId: 'first',
   updatedAt: '2017-09-10T09:25:50.316Z',
   createdAt: '2017-09-10T09:25:50.316Z',
   Author: {
-    photoURL: null
+    photoURL: null,
+    username: 'alienyi01'
   }
 };
 
@@ -62,7 +71,7 @@ export const usersThatHaveReadMessage = [
     createdAt: '2017-08-28 12:30:00.377+01',
     updatedAt: '2017-08-30 16:51:23.131+01',
     MessageId: 1,
-    UserUsername: 'tomipaul',
+    username: 'tomipaul',
     GroupId: 1,
     read: true
   },
@@ -70,7 +79,7 @@ export const usersThatHaveReadMessage = [
     createdAt: '2017-08-28 12:30:00.377+01',
     updatedAt: '2017-08-30 16:51:23.131+01',
     MessageId: 1,
-    UserUsername: 'alienyi01',
+    username: 'alienyi01',
     GroupId: 2,
     read: true
   }
