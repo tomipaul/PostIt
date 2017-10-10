@@ -3,6 +3,7 @@ import AdhocModelService from '../services/AdhocModelService';
 import AuthService from '../services/AuthService';
 import models from '../models';
 import NotificationService from '../services/NotificationService.js';
+import paginate from '../services/paginate';
 
 const userModel = models.User;
 
@@ -31,26 +32,6 @@ class UserController {
     return { id, username, email, phoneNo, status, photoURL };
   }
 
-  /**
-   * generate pagination metadata
-   * @param {number} limit
-   * @param {number} offset
-   * @param {number} totalCount
-   * @param {number} pageSize
-   * @return {object} pagination metadata
-   */
-  static paginateUserSearch({ limit, offset, totalCount, pageSize }) {
-    const totalPages = Math.ceil(totalCount / limit);
-    const currentPage = Math.floor((offset + limit) / limit);
-    const nextPage = (totalPages > currentPage) ?
-    currentPage + 1 : null;
-    return {
-      currentPage,
-      pageSize: (currentPage) ? pageSize : null,
-      nextPage,
-      totalPages
-    };
-  }
   /**
    * Check if authentication request is valid
    * @method
@@ -360,15 +341,14 @@ class UserController {
         }
       })
       .then((users) => {
-        const data = UserController.paginateUserSearch({
+        const pagination = paginate({
           limit,
           offset,
           totalCount: users.count,
           pageSize: users.rows.length
         });
         return res.status(200).json({
-          ...data,
-          totalCount: users.count,
+          ...pagination,
           users: users.rows
         });
       })

@@ -1,7 +1,14 @@
 import NotificationService from '../services/NotificationService.js';
 
 const Notification = new NotificationService();
-
+/**
+ * send notifications to users based on message priority levels
+ * @function sendNotifications
+ * @param {object} req request object
+ * @param {object} res response object
+ * @param {function} next
+ * @returns {void}
+ */
 const sendNotifications = (req, res, next) => {
   const createdMessage = req.res.data.createdMessage;
   req.group.getUsers({
